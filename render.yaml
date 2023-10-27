@@ -1,0 +1,46 @@
+databases:
+  - name: cookingconfessions-postgres
+    databaseName: cookingconfessions
+    plan: free
+    user: cookingconfessions
+
+services:
+  - type: web
+    name: cookingconfessions-backend
+    plan: free
+    runtime: python
+    buildCommand: "./render_build_backend.sh"
+    startCommand: "poetry run gunicorn config.wsgi:application --chdir backend --limit-request-line 8188 --log-file -"
+    envVars:
+      - key: ENABLE_DJANGO_COLLECTSTATIC
+        sync: false
+      - key: AUTO_MIGRATE
+        sync: false
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cookingconfessions-postgres
+          property: connectionString
+      - fromGroup: python-services
+      - fromGroup: integrations-credentials
+
+envVarGroups:
+  - name: python-services
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.4
+      - key: POETRY_VERSION
+        value: 1.5.1
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings
+      - key: ALLOWED_HOSTS
+        value: "*"
+  - name: integrations-credentials
+    envVars:
+      - key: SENDGRID_USERNAME
+        value: apikey
+      - key: SENDGRID_PASSWORD
+        value: placeholder-value
