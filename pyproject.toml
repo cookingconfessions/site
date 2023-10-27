@@ -1,0 +1,77 @@
+[tool.black]
+line-length = 100
+target-version = ['py36']
+quiet = true
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.venv
+  | _build
+  | build
+  | dist
+  | [a-z_]+/migrations
+)/
+'''
+
+[tool.bandit]
+exclude_dirs = ["*/test_*.py", "*/tests.py", "tests", "./venv/", "./env/", "./node_modules/", "./cacheback/", "./.env"]
+skips = ["B101", "B311"]
+
+[tool.coverage.run]
+branch = true
+source = ["backend"]
+omit = ["**/env/*", "**/migrations/*", "**/settings/*", "**/tests/*"]
+
+[tool.isort]
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+known_django = "django"
+sections = ["FUTURE", "STDLIB", "DJANGO", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+lines_after_imports = 2
+atomic = true
+combine_star = true
+skip = ["venv", "env", "node_modules", "migrations", ".env", ".venv"]
+
+[tool.poetry]
+name = "{{project_name}}"
+version = "0.1.0"
+description = "Cooking confessions web app"
+authors = ["Vinta Software <contact@vinta.com.br>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+asgiref = "3.7.2"
+Django = "4.2.4"
+django-cors-headers = "4.2.0"
+djangorestframework = "3.14.0"
+mccabe = "0.7.0"
+Pillow = "10.0.0"
+psycopg2 = "2.9.9"
+psycopg2-binary = "2.9.9"
+pycodestyle = "2.11.0"
+pytz = "2023.3"
+sqlparse = "0.4.4"
+tzdata = "2023.3"
+python-decouple = "^3.8"
+
+[tool.poetry.group.dev.dependencies]
+bandit = "^1.7.5"
+black = "^23.3.0"
+coverage = "^7.2.7"
+isort = "^5.12.0"
+model-bakery = "^1.12.0"
+pre-commit = "^3.3.3"
+pylint-django = "^2.5.3"
+prospector = "^1.10.3"
+
+[build-system]
+requires = ["poetry-core>=1.2.0"]
+build-backend = "poetry.core.masonry.api"

@@ -11,6 +11,9 @@ test:
 test_reset:
 	poetry run backend/manage.py test backend/ $(ARG) --parallel
 
+run_server:
+	poetry run backend/manage.py runserver
+
 backend_format:
 	black backend
 
