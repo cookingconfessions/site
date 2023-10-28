@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "cloudinary",
     "rest_framework",
     "menu",
+    "home",
 ]
 
 MIDDLEWARE = [

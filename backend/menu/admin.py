@@ -3,7 +3,6 @@ from django.contrib import admin
 from .models import MenuItem, MenuItemCategory, MenuItemReview, MenuItemTag
 
 
-# Register your models here.
 class MenuItemAdmin(admin.ModelAdmin):
     list_display = (
         "name",
