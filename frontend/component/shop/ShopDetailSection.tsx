@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import ProductLightBoxModal from '../modal/ProductLightBoxModal';
 import ProductInfo from './ProductInfo';
 import ShopDescription from './ShopDescription';
 import ShopRecentProducts from './ShopRecentProducts';
@@ -37,7 +36,6 @@ const ShopDetailSection: React.FC<ShopDetailsProp> = ({ shopData }) => {
 					</div>
 				</div>
 			</div>
-			<ProductLightBoxModal />
 		</div>
 	);
 };

@@ -6,7 +6,7 @@ const UserLoginDropdown = () => {
 	const { openLoginModal } = useCafeuContext();
 	return (
 		<OverlayScrollbarsComponent className='cart-menu'>
-			<p className='mt-10 pl-25'>Logged in as Myke Testing</p>
+			<p className='mt-10 pl-25'>Logged in as Test User</p>
 			<div className='cart-modal-btn'>
 				<button onClick={openLoginModal} className='custom-btn'>
 					Logout

@@ -7,7 +7,7 @@ import ScheduleSection from '../schedule/ScheduleSection';
 
 const HomeMain = () => {
 	return (
-		<div className='body-wrapper'>
+		<>
 			<BannerSection theme='banner-3' endIndex={-3} />
 			<div className='cpy-8'>
 				<MenuProducts style='product-3' showMoreBtn={true} endIndex={8} />
@@ -15,7 +15,7 @@ const HomeMain = () => {
 			<FoodCategorySection />
 			<OrderFeatureSection />
 			<ScheduleSection />
-		</div>
+		</>
 	);
 };
 

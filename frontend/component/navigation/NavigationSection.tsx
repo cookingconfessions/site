@@ -8,7 +8,7 @@ const NavigationSection = () => {
 					<NavLink href='/'>Home</NavLink>
 				</li>
 				<li>
-					<NavLink href='/shop'>Menu</NavLink>
+					<NavLink href='/menu'>Menu</NavLink>
 				</li>
 				<li>
 					<NavLink href='/about'>About Us</NavLink>

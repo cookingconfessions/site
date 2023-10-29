@@ -6,16 +6,9 @@ import { Nav } from 'react-bootstrap';
 import ProductCard from './ProductCard';
 
 const MenuProducts: React.FC<MenuProps> = ({ style, showMoreBtn, endIndex }) => {
-	const {
-		activeMenuProductTab,
-		handleMenuProductTabChange,
-		filteredMenuProductList,
-		addToCart,
-		openLightBoxModal,
-		handleMenuShowMore,
-		handleMenuShowLess,
-	} = useCafeuContext();
+	const { activeMenuProductTab, handleMenuProductTabChange, filteredMenuProductList } = useCafeuContext();
 	const menuProductItems = filteredMenuProductList.slice(0, endIndex);
+
 	return (
 		<section>
 			<div className={`product ${style}`}>
@@ -74,17 +67,9 @@ const MenuProducts: React.FC<MenuProps> = ({ style, showMoreBtn, endIndex }) => 
 						{showMoreBtn && (
 							<div className='row'>
 								<div className='text-center  my-4'>
-									{menuProductItems.length === 8 ? (
-										<a className='custom-btn' role='button' href='/shop'>
-											Show More
-										</a>
-									) : menuProductItems.length > 8 ? (
-										<a className='custom-btn' role='button' onClick={handleMenuShowLess}>
-											Show Less
-										</a>
-									) : (
-										<></>
-									)}
+									<a className='custom-btn' role='button' href='/shop'>
+										Show More
+									</a>
 								</div>
 							</div>
 						)}

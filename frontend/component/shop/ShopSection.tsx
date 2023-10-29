@@ -1,5 +1,4 @@
 'use client';
-import ProductLightBoxModal from '../modal/ProductLightBoxModal';
 import ShopAllProductSection from './ShopAllProductSection';
 import ShopPriceFilter from './ShopPriceFilter';
 import ShopSearchBarSection from './ShopSearchBarSection';
@@ -26,7 +25,6 @@ const ShopSection = () => {
 					</div>
 				</div>
 			</div>
-			<ProductLightBoxModal />
 		</div>
 	);
 };

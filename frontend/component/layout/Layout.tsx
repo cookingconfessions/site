@@ -7,6 +7,7 @@ import Header from '../header/Header';
 import BookCateringModal from '../modal/BookCateringModal';
 import ContactModal from '../modal/ContactModal';
 import LoginModal from '../modal/LoginModal';
+import ProductLightBoxModal from '../modal/ProductLightBoxModal';
 import SearchModal from '../modal/SearchModal';
 import SidebarSection from '../sidebar/SidebarSection';
 
@@ -24,6 +25,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 			<ContactModal />
 			<LoginModal />
 			<BookCateringModal />
+			<ProductLightBoxModal />
 		</div>
 	);
 };
