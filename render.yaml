@@ -46,7 +46,7 @@ envVarGroups:
         value: placeholder-value
       - key: CLOUDINARY_API_KEY
         value: apikey
-      - key:: CLOUDINARY_API_SECRET
+      - key: CLOUDINARY_API_SECRET
         value: apikey
   - name: app-configurations
     envVars:
