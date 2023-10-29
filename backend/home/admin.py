@@ -3,15 +3,18 @@ from django.contrib import admin
 from .models import BannerItem, Booking, CompanyInfo, Faq, Message, Schedule
 
 
+@admin.register(BannerItem)
 class BannerItemAdmin(admin.ModelAdmin):
     list_display = ("menu_item", "image")
     list_display_links = ("menu_item",)
 
 
+@admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
     list_display = ("day", "opens_at", "closes_at")
 
 
+@admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     list_display = ("name", "email", "phone_number", "location", "message")
     search_fields = ("name", "phone_number")
@@ -19,6 +22,7 @@ class MessageAdmin(admin.ModelAdmin):
     sortable_by = ("created_at",)
 
 
+@admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = ("name", "email", "phone_number", "location", "date", "time", "message")
     search_fields = ("name", "email", "phone_number")
@@ -26,11 +30,13 @@ class BookingAdmin(admin.ModelAdmin):
     sortable_by = ("last_modified", "date")
 
 
+@admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
     list_display = ("question", "answer")
     search_fields = ("question", "answer")
 
 
+@admin.register(CompanyInfo)
 class CompanyInfoAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -42,11 +48,3 @@ class CompanyInfoAdmin(admin.ModelAdmin):
         "instagram_link",
         "tiktok_link",
     )
-
-
-admin.site.register(BannerItem, BannerItemAdmin)
-admin.site.register(Schedule, ScheduleAdmin)
-admin.site.register(Message, MessageAdmin)
-admin.site.register(Booking, BookingAdmin)
-admin.site.register(Faq, FaqAdmin)
-admin.site.register(CompanyInfo, CompanyInfoAdmin)

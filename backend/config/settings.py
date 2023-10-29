@@ -5,24 +5,24 @@ import cloudinary
 import cloudinary.api
 import cloudinary.uploader
 import dj_database_url
-from decouple import Csv, config
+from common.utils.config import Config
 
 
 # Configs
 cloudinary.config(
-    cloud_name=config("CLOUDINARY_CLOUD_NAME"),
-    api_key=config("CLOUDINARY_API_KEY"),
-    api_secret=config("CLOUDINARY_API_SECRET"),
+    cloud_name=Config.get("CLOUDINARY_CLOUD_NAME"),
+    api_key=Config.get("CLOUDINARY_API_KEY"),
+    api_secret=Config.get("CLOUDINARY_API_SECRET"),
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = Config.get("SECRET_KEY")
 
-DEBUG = config("ENVIRONMENT") != "production"
+DEBUG = Config.get("ENVIRONMENT") != "production"
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
+ALLOWED_HOSTS = Config.get_csv("ALLOWED_HOSTS")
 
 # Application definition
 INSTALLED_APPS = [
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "menu",
     "home",
+    "shop",
 ]
 
 MIDDLEWARE = [
@@ -72,7 +73,9 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {"default": dj_database_url.config(default=config("DATABASE_URL"), conn_max_age=600)}
+DATABASES = {
+    "default": dj_database_url.config(default=Config.get("DATABASE_URL"), conn_max_age=600)
+}
 
 
 # Password validation

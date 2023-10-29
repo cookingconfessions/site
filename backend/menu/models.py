@@ -1,21 +1,18 @@
-import random
-import string
-
 from django.db import models
 from django.utils.text import slugify
 
 from cloudinary.models import CloudinaryField
 from common.models import BaseModel
+from common.utils.generators import generate_code
 
 
 class MenuHelper:
     @staticmethod
     def generate_unique_product_code():
-        # Generate a unique 5-character product code
-        code = "".join(random.choice(string.ascii_uppercase + string.digits) for _ in range(5))
+        code = generate_code()
 
         while MenuItem.objects.filter(code=code).exists():
-            code = "".join(random.choice(string.ascii_uppercase + string.digits) for _ in range(5))
+            code = generate_code()
 
         return code
 

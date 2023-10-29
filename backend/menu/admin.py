@@ -1,8 +1,11 @@
 from django.contrib import admin
 
+from common.utils.config import Config
+
 from .models import MenuItem, MenuItemCategory, MenuItemReview, MenuItemTag
 
 
+@admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -32,6 +35,7 @@ class MenuItemAdmin(admin.ModelAdmin):
     display_tags.short_description = "Tags"
 
 
+@admin.register(MenuItemCategory)
 class MenuItemCategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "description", "image", "last_modified")
     list_display_links = ("name",)
@@ -39,6 +43,7 @@ class MenuItemCategoryAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 
+@admin.register(MenuItemTag)
 class MenuItemTagAdmin(admin.ModelAdmin):
     list_display = ("name", "last_modified")
     list_display_links = ("name",)
@@ -46,6 +51,7 @@ class MenuItemTagAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 
+@admin.register(MenuItemReview)
 class MenuItemReviewAdmin(admin.ModelAdmin):
     list_display = ("name", "email", "message", "menu_item")
     list_display_links = ("message",)
@@ -53,12 +59,7 @@ class MenuItemReviewAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 
-admin.site.site_header = "Cooking Confessions Admin"
-admin.site.index_title = "Cooking Confessions"
-admin.site.site_title = "Cooking Confessions"
-# admin.site.site_url = "" => Todo: Update it to dynamic value based on environment
-
-admin.site.register(MenuItemCategory, MenuItemCategoryAdmin)
-admin.site.register(MenuItemTag, MenuItemTagAdmin)
-admin.site.register(MenuItem, MenuItemAdmin)
-admin.site.register(MenuItemReview, MenuItemReviewAdmin)
+admin.site.site_header = Config.get("ADMIN_SITE_HEADER")
+admin.site.index_title = Config.get("ADMIN_INDEX_TITLE")
+admin.site.site_title = Config.get("ADMIN_SITE_TITLE")
+admin.site.site_url = Config.get("SITE_URL")
