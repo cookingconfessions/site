@@ -64,6 +64,7 @@ python-decouple = "^3.8"
 dj-database-url = "^2.1.0"
 whitenoise = {extras = ["brotli"], version = "^6.6.0"}
 cloudinary = "^1.36.0"
+gunicorn = "^21.2.0"
 
 [tool.poetry.group.dev.dependencies]
 bandit = "^1.7.5"
