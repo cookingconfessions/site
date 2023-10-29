@@ -1,10 +1,4 @@
 echo "-----> Build hook"
-
-echo "-----> Build frontend"
-npm install
-npm run build
-echo "-----> Build frontend done"
-
 echo "-----> Poetry install"
 poetry install --no-interaction --without dev
 chmod u+rwx backend/manage.py

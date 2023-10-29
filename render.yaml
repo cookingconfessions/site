@@ -28,6 +28,8 @@ services:
 envVarGroups:
   - name: python-services
     envVars:
+      - key: ENVIRONMENT
+        value: "production"
       - key: PYTHON_VERSION
         value: 3.11.4
       - key: POETRY_VERSION
@@ -40,7 +42,19 @@ envVarGroups:
         value: "*"
   - name: integrations-credentials
     envVars:
-      - key: SENDGRID_USERNAME
-        value: apikey
-      - key: SENDGRID_PASSWORD
+      - key: CLOUDINARY_CLOUD_NAME
         value: placeholder-value
+      - key: CLOUDINARY_API_KEY
+        value: apikey
+      - key:: CLOUDINARY_API_SECRET
+        value: apikey
+  - name: app-configurations
+    envVars:
+      - key: SITE_URL
+        value: "https://cookingconfessions.onrender.com"
+      - key: ADMIN_SITE_HEADER
+        value: "Cooking Confessions Admin"
+      - key: ADMIN_INDEX_TITLE
+        value: "Cooking Confessions"
+      - key: ADMIN_SITE_TITLE
+        value: "Cooking Confessions"
