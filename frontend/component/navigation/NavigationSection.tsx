@@ -14,7 +14,7 @@ const NavigationSection = () => {
 					<NavLink href='/about'>About Us</NavLink>
 				</li>
 				<li>
-					<NavLink href='/faq'>Help</NavLink>
+					<NavLink href='/help'>Help</NavLink>
 				</li>
 			</ul>
 		</nav>

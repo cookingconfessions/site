@@ -8,7 +8,7 @@ import UserLoginDropdown from '../login/UserLoginDropdown';
 import NavigationSection from '../navigation/NavigationSection';
 
 const Header: React.FC<HeaderProp> = ({ logo, theme }) => {
-	const { openSearchbarModal, isHeaderFixed, cartItemAmount, openSidebar } = useCafeuContext();
+	const { isHeaderFixed, cartItemAmount, openSidebar } = useCafeuContext();
 
 	return (
 		<header>
@@ -26,11 +26,6 @@ const Header: React.FC<HeaderProp> = ({ logo, theme }) => {
 							</div>
 							<div className='right-menu-icon'>
 								<ul className='d-flex align-items-center'>
-									<li className='nav-list'>
-										<a className='nav-link icon-item' id='search' role='button' onClick={openSearchbarModal}>
-											<span className='icofont-search-1'></span>
-										</a>
-									</li>
 									<li className='nav-list'>
 										<a className='nav-link icon-item'>
 											<span className='icofont-shopping-cart'>

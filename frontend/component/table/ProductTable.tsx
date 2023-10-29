@@ -54,7 +54,7 @@ const ProductTable: React.FC<ProductProps> = ({ array, removeItem, cartTable }) 
 												</div>
 											</td>
 											<td>
-												<Link href={`/shop/${item.slug}`}>{item.name}</Link>
+												<Link href={`/menu/${item.slug}`}>{item.name}</Link>
 											</td>
 											<td>${item.price}</td>
 											{cartTable && (
@@ -93,7 +93,7 @@ const ProductTable: React.FC<ProductProps> = ({ array, removeItem, cartTable }) 
 					</div>
 					{cartTable ? (
 						<div className='shopping-btn'>
-							<Link href='/shop' className='custom-btn'>
+							<Link href='/menu' className='custom-btn'>
 								Continue Shopping
 							</Link>
 							<Link href='/checkout' className='custom-btn'>
@@ -102,7 +102,7 @@ const ProductTable: React.FC<ProductProps> = ({ array, removeItem, cartTable }) 
 						</div>
 					) : (
 						<div className='shopping-btn'>
-							<Link href='/shop' className='custom-btn'>
+							<Link href='/menu' className='custom-btn'>
 								Continue Shopping
 							</Link>
 							<Link href='/cart' className='custom-btn'>

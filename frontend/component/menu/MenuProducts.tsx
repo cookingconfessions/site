@@ -67,7 +67,7 @@ const MenuProducts: React.FC<MenuProps> = ({ style, showMoreBtn, endIndex }) => 
 						{showMoreBtn && (
 							<div className='row'>
 								<div className='text-center  my-4'>
-									<a className='custom-btn' role='button' href='/shop'>
+									<a className='custom-btn' role='button' href='/menu'>
 										Show More
 									</a>
 								</div>

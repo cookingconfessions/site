@@ -59,7 +59,7 @@ const FoodCategorySection = () => {
 													<img src={item.imgSrc} alt='category img' />
 													<div className='cb-category-card-text'>
 														<h4>
-															<Link href='/shop' className='cb-category-cart-name'>
+															<Link href='/menu' className='cb-category-cart-name'>
 																{item.name}
 															</Link>
 														</h4>

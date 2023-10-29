@@ -20,31 +20,6 @@ const ProductInfo: React.FC<InfoProp> = ({ shopData }) => {
 	return (
 		<div className='product-main-info mb-50'>
 			<h4 className='name'>{shopData.name}</h4>
-			<div className='rating-div'>
-				<ul className='rating'>
-					<li>
-						{' '}
-						<span className='icofont-ui-rating'></span>
-					</li>
-					<li>
-						{' '}
-						<span className='icofont-ui-rating'></span>
-					</li>
-					<li>
-						{' '}
-						<span className='icofont-ui-rating'></span>
-					</li>
-					<li>
-						{' '}
-						<span className='icofont-ui-rating'></span>
-					</li>
-					<li>
-						{' '}
-						<span className='icofont-ui-rating unrated'></span>
-					</li>
-				</ul>
-				<p>(3) Rating</p>
-			</div>
 			<div className='price-section'>
 				<p>Price: ${shopData.price}</p>
 			</div>
@@ -68,20 +43,7 @@ const ProductInfo: React.FC<InfoProp> = ({ shopData }) => {
 			</p>
 
 			<div className='size-qty'>
-				<div className='mb-3 select-box'>
-					<label htmlFor='exampleFormControlInput1' className='form-label'>
-						Size
-					</label>
-					<Form.Select className='wide'>
-						<option data-display='Select'>Select</option>
-						<option value='1'>L</option>
-						<option value='2'>X</option>
-						<option value='3'>XL</option>
-						<option value='4'>XXL</option>
-						<option value='5'>XXXL</option>
-					</Form.Select>
-				</div>
-				<div className='mb-3 select-box'>
+				<div className='col-6 mb-3 select-box'>
 					<label htmlFor='exampleFormControlInput1' className='form-label'>
 						QTY
 					</label>

@@ -10,7 +10,7 @@ const DropdownCartSection = () => {
 				{cart.length === 0 ? (
 					<div className='no-product-cart-dropdown-container'>
 						<p className='no-product-dropdown-text'>No Product In Cart</p>
-						<Link href='/shop' className='custom-btn'>
+						<Link href='/menu' className='custom-btn'>
 							Add Products
 						</Link>
 					</div>
@@ -22,7 +22,7 @@ const DropdownCartSection = () => {
 									<img src={item.imgSrc} alt={item.name} />
 								</div>
 								<div className='cart-product-details'>
-									<Link href={`/shop/${item.slug}`} className='product-name cart-px-name'>
+									<Link href={`/menu/${item.slug}`} className='product-name cart-px-name'>
 										{item.name}
 									</Link>
 									<p className='price'>${item.price}</p>

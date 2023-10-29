@@ -1,4 +1,5 @@
 'use client';
+
 import ShopAllProductSection from './ShopAllProductSection';
 import ShopPriceFilter from './ShopPriceFilter';
 import ShopSearchBarSection from './ShopSearchBarSection';

@@ -11,7 +11,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 			<div className='shop-product-item mb-30'>
 				<div className='shop-product-item-inner'>
 					<div className='shop-product-img w-100'>
-						<a href={`/shop/${item.slug}`}>
+						<a href={`/menu/${item.slug}`}>
 							<img src={`/${item.imgSrc}`} alt={item.name} />
 						</a>
 						{item.sale && <span className='shop-onsale'>Sale!</span>}
@@ -26,7 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 					</div>
 					<div className='shop-product-content'>
 						<h4 className='shop-product-title'>
-							<a href={`/shop/${item.slug}`}>{item.name}</a>
+							<a href={`/menu/${item.slug}`}>{item.name}</a>
 						</h4>
 						<div className='shop-product-price'>
 							<span className='shop-price'>$ {item.price}</span>

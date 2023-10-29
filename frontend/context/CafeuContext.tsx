@@ -160,7 +160,6 @@ export const CafeuProvider: React.FC<CafeuProviderProps> = ({ children }) => {
 	const [message, setMessage] = useState<Message | null>(null);
 
 	const openContactModal = () => {
-		console.log('Opening contact modal');
 		setIsContactModalOpen(true);
 	};
 	const closeContactModal = () => {
@@ -189,7 +188,6 @@ export const CafeuProvider: React.FC<CafeuProviderProps> = ({ children }) => {
 	const [loginDetails, setLoginDetails] = useState<LoginDetails | null>(null);
 
 	const openLoginModal = () => {
-		console.log('Opening login modal');
 		setIsLoginModalOpen(true);
 	};
 	const closeLoginModal = () => {
