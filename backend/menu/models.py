@@ -49,6 +49,7 @@ class MenuItem(BaseModel):
     category = models.ForeignKey(MenuItemCategory, on_delete=models.SET_NULL, null=True)
     image = CloudinaryField("image")
     tags = models.ManyToManyField(MenuItemTag)
+    sales_count = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -67,8 +68,9 @@ class MenuItemReview(BaseModel):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     message = models.TextField()
+    is_visible = models.BooleanField(default=True)
     parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
-    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name="reviews")
 
     def __str__(self):
         return f"Review by {self.name} on {self.menu_item}"

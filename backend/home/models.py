@@ -5,6 +5,7 @@ from django.db import models
 
 from cloudinary.models import CloudinaryField
 from common.models import BaseModel
+from django_countries.fields import CountryField
 from menu.models import MenuItem
 
 from .utils.validators import validate_closing_time_gt_opening_time
@@ -110,6 +111,7 @@ class CompanyInfo(BaseModel):
     tiktok_link = models.CharField(
         max_length=100, help_text="https://www.tiktok.com/@username", unique=True
     )
+    countries = CountryField(multiple=True)
 
     class Meta:
         verbose_name = "Company Info"

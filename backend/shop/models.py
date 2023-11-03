@@ -77,11 +77,12 @@ class DiscountCode(BaseModel):
 
 class Order(BaseModel):
     ORDER_STATUS = (
-        (1, "Received"),
+        (1, "New"),
         (2, "Cooking"),
         (3, "Packaging"),
-        (4, "OnDelivery"),
+        (4, "On Delivery"),
         (5, "Delivered"),
+        (6, "Cancelled"),
     )
 
     status = models.IntegerField(choices=ORDER_STATUS, default=1)
