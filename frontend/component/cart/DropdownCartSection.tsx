@@ -1,9 +1,9 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import Link from 'next/link';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 const DropdownCartSection = () => {
-	const { cart, removeFromCart } = useCafeuContext();
+	const { cart, removeFromCart } = useAppContext();
 	return (
 		<OverlayScrollbarsComponent className='cart-menu'>
 			<ul className='cart-ul'>

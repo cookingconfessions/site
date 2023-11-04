@@ -1,40 +1,24 @@
-'use client';
 import { productList } from '@/data/Data';
-import { LoginDetails } from '@/types/auth';
-import { Booking, Message } from '@/types/help';
+import { Product } from '@/types/menu';
 import Aos from 'aos';
-import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-// Define the interface for your context data
-interface CafeuContextData {
+export interface ShopContextData {
 	isHeaderFixed: boolean;
-	isSearchbarModalOpen: boolean;
-	openSearchbarModal: () => void;
-	closeSearchbarModal: () => void;
-	activeMenuTab: string;
-	handleMenuTabChange: (tab: any) => void;
-	filteredItemList: Product[];
-	currentYear: number;
-	activeMenuProductTab: string;
-	handleMenuProductTabChange: (tab: any) => void;
-	filteredMenuProductList: Product[];
-	openAccordion: number | null;
-	handleAccordionBtn: (itemId: number) => void;
-	isLightBoxModalOpen: boolean;
-	openLightBoxModal: (product: Product | null) => void;
-	closeLightBoxModal: () => void;
-	product: Product | null;
 	startIndex: number;
 	endIndex: number;
 	setSortingOption: (option: string) => void;
 	sortingOption: string;
 	filteredProducts: Product[];
+	setFilteredProducts: (value: SetStateAction<Product[]>) => void;
 	itemsPerPage: number;
 	currentItems: Product[];
 	currentPage: number;
+	setCurrentPage: (value: SetStateAction<number>) => void;
 	handlePageChange: (newPage: number) => void;
 	totalPages: number;
+	setCart: (value: SetStateAction<Product[]>) => void;
 	addToCart: (productId: number) => void;
 	searchQuery: string;
 	setSearchQuery: (query: string) => void;
@@ -50,166 +34,12 @@ interface CafeuContextData {
 	handleQuantityChange: (productId: number, newQuantity: number) => void;
 	cartTotal: number;
 	addToCartWithQuantity: (productId: number, quantity: number) => void;
-	menuItemsToShow: number;
-	handleMenuShowMore: () => void;
-	handleMenuShowLess: () => void;
-	isSidebarOpen: boolean;
-	openSidebar: () => void;
-	closeSidebar: () => void;
-	handleDropdownToggle: (dropdownName: keyof DropdownState) => void;
-	isDropdownOpen: DropdownState;
 	cartItemAmount: number;
 	haveCoupon: boolean;
 	handleCouponBtn: () => void;
-	passwordVisible: boolean;
-	togglePasswordVisibility: () => void;
-	isContactModalOpen: boolean;
-	openContactModal: () => void;
-	closeContactModal: () => void;
-	handleContactFormSubmit: (message: Message) => void;
-	isLoginModalOpen: boolean;
-	openLoginModal: () => void;
-	closeLoginModal: () => void;
-	handleUserLogin: (loginDetails: LoginDetails) => void;
-	isBookingModalOpen: boolean;
-	openBookingModal: () => void;
-	closeBookingModal: () => void;
-	handleBookingFormSubmit: (booking: Booking) => void;
 }
 
-interface DropdownState {
-	home: boolean;
-	pages: boolean;
-	blog: boolean;
-}
-
-export type Product = {
-	id: number;
-	imgSrc: string;
-	name: string;
-	priceRange: string;
-	slug: string;
-	sale?: boolean;
-	category: string;
-	isInCart: boolean; // New property
-	isInWishlist: boolean; // New property
-	price: number;
-	quantity: number;
-	total: number;
-	foodType?: string[];
-	status?: string;
-	rating?: string;
-	desc: string;
-};
-// Create the context with an initial value
-const CafeuContext = createContext<CafeuContextData | undefined>(undefined);
-
-interface CafeuProviderProps {
-	children: ReactNode;
-}
-
-export const CafeuProvider: React.FC<CafeuProviderProps> = ({ children }) => {
-	// Sticky Header Section on Scroll
-	const [isHeaderFixed, setIsHeaderFixed] = useState<boolean>(false);
-
-	// Searchbar Modal function
-	const [isSearchbarModalOpen, setIsSearchbarModalOpen] = useState<boolean>(false);
-
-	const openSearchbarModal = () => {
-		setIsSearchbarModalOpen(true);
-	};
-
-	const closeSearchbarModal = () => {
-		setIsSearchbarModalOpen(false);
-	};
-
-	// Current Year
-	const currentYear = new Date().getFullYear();
-
-	// Menu Product Filter
-	const [activeMenuProductTab, setActiveMenuProductTab] = useState<string>('all');
-	const handleMenuProductTabChange = (tab: any) => {
-		setActiveMenuProductTab(tab);
-	};
-
-	// Menu Products Section
-	const filteredMenuProductList =
-		activeMenuProductTab === 'all'
-			? productList.slice(9, 19)
-			: productList.slice(9, 17).filter((item) => item.foodType && item.foodType.includes(activeMenuProductTab));
-	const initialMenuItemsToShow = 8; // Number of items to initially show
-	const [menuItemsToShow, setMenuItemsToShow] = useState<number>(initialMenuItemsToShow);
-
-	const handleMenuShowMore = () => {
-		// When the "Show More" button is clicked, set itemsToShow to the total number of items in the list
-		setMenuItemsToShow(filteredMenuProductList.length);
-	};
-	const handleMenuShowLess = () => {
-		setMenuItemsToShow(initialMenuItemsToShow);
-	};
-
-	// FAQ accordion
-	const [openAccordion, setOpenAccordion] = useState<number | null>(0);
-
-	const handleAccordionBtn = (itemId: number) => {
-		setOpenAccordion((prevState) => (prevState === itemId ? null : itemId));
-	};
-
-	// Contact us
-	const [isContactModalOpen, setIsContactModalOpen] = useState<boolean>(false);
-	const [message, setMessage] = useState<Message | null>(null);
-
-	const openContactModal = () => {
-		setIsContactModalOpen(true);
-	};
-	const closeContactModal = () => {
-		setIsContactModalOpen(false);
-	};
-	const handleContactFormSubmit = (message: Message) => {
-		setMessage(message);
-	};
-
-	// Contact us
-	const [isBookingModalOpen, setIsBookingModalOpen] = useState<boolean>(false);
-	const [booking, setBooking] = useState<Booking | null>(null);
-
-	const openBookingModal = () => {
-		setIsBookingModalOpen(true);
-	};
-	const closeBookingModal = () => {
-		setIsBookingModalOpen(false);
-	};
-	const handleBookingFormSubmit = (booking: Booking) => {
-		setBooking(booking);
-	};
-
-	// Log in
-	const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
-	const [loginDetails, setLoginDetails] = useState<LoginDetails | null>(null);
-
-	const openLoginModal = () => {
-		setIsLoginModalOpen(true);
-	};
-	const closeLoginModal = () => {
-		setIsLoginModalOpen(false);
-	};
-	const handleUserLogin = (loginDetails: LoginDetails) => {
-		setLoginDetails(loginDetails);
-	};
-
-	// LightBox Modal function
-	const [isLightBoxModalOpen, setIsLightBoxModalOpen] = useState<boolean>(false);
-	const [product, setProduct] = useState<Product | null>(null);
-
-	const openLightBoxModal = (product: Product | null) => {
-		setIsLightBoxModalOpen(true);
-		setProduct(product);
-	};
-	const closeLightBoxModal = () => {
-		setIsLightBoxModalOpen(false);
-	};
-
-	//  All Logic for Shop Section
+export const useShopContext = (): ShopContextData => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [priceRange, setPriceRange] = useState<number[]>([0, 60]); // State for price range
 	const [sortingOption, setSortingOption] = useState<string>('default');
@@ -356,42 +186,6 @@ export const CafeuProvider: React.FC<CafeuProviderProps> = ({ children }) => {
 	// Use the calculateCartTotal function to get the total price
 	const cartTotal = calculateCartTotal(cart);
 
-	// Menu Section filter
-
-	const [activeMenuTab, setActiveMenuTab] = useState<string>('all');
-	const handleMenuTabChange = (tab: any) => {
-		setActiveMenuTab(tab);
-	};
-	const filteredItemList =
-		activeMenuTab === 'all'
-			? productList.slice(1, 7)
-			: productList.slice(1, 7).filter((item) => item.foodType && item.foodType.includes(activeMenuTab));
-
-	// Mobile Sidebar
-	const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
-
-	const openSidebar = () => {
-		setIsSidebarOpen(true);
-	};
-
-	const closeSidebar = () => {
-		setIsSidebarOpen(false);
-	};
-
-	const [isDropdownOpen, setIsDropdownOpen] = useState<DropdownState>({
-		home: false,
-		pages: false,
-		blog: false,
-	});
-
-	// Define the function for handling dropdown toggle
-	const handleDropdownToggle = (dropdownName: keyof DropdownState) => {
-		setIsDropdownOpen((prevState) => ({
-			...prevState,
-			[dropdownName]: !prevState[dropdownName],
-		}));
-	};
-
 	// Coupon Section
 	const [haveCoupon, setHaveCoupon] = useState<boolean>(false);
 
@@ -399,14 +193,8 @@ export const CafeuProvider: React.FC<CafeuProviderProps> = ({ children }) => {
 		setHaveCoupon(!haveCoupon);
 	};
 
-	// Password Visible
-	const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-
-	const togglePasswordVisibility = () => {
-		setPasswordVisible(!passwordVisible);
-	};
-
-	// UseEffect
+	// Sticky Header Section on Scroll
+	const [isHeaderFixed, setIsHeaderFixed] = useState<boolean>(false);
 
 	useEffect(() => {
 		// header sticky
@@ -477,35 +265,21 @@ export const CafeuProvider: React.FC<CafeuProviderProps> = ({ children }) => {
 		};
 	}, [sortingOption, priceRange, selectedCategory, searchQuery, selectedTags]);
 
-	// Define the context value based on the interface
-	const contextValue: CafeuContextData = {
+	return {
 		isHeaderFixed,
-		isSearchbarModalOpen,
-		openSearchbarModal,
-		closeSearchbarModal,
-		activeMenuTab,
-		handleMenuTabChange,
-		filteredItemList,
-		currentYear,
-		activeMenuProductTab,
-		handleMenuProductTabChange,
-		filteredMenuProductList,
-		openAccordion,
-		handleAccordionBtn,
-		isLightBoxModalOpen,
-		openLightBoxModal,
-		closeLightBoxModal,
-		product,
 		startIndex,
 		endIndex,
 		setSortingOption,
 		sortingOption,
 		filteredProducts,
+		setFilteredProducts,
 		itemsPerPage,
 		currentItems,
 		currentPage,
+		setCurrentPage,
 		handlePageChange,
 		totalPages,
+		setCart,
 		addToCart,
 		searchQuery,
 		setSearchQuery,
@@ -521,40 +295,8 @@ export const CafeuProvider: React.FC<CafeuProviderProps> = ({ children }) => {
 		handleQuantityChange,
 		cartTotal,
 		addToCartWithQuantity,
-		menuItemsToShow,
-		handleMenuShowMore,
-		handleMenuShowLess,
-		isSidebarOpen,
-		openSidebar,
-		closeSidebar,
-		handleDropdownToggle,
-		isDropdownOpen,
 		cartItemAmount,
 		haveCoupon,
 		handleCouponBtn,
-		passwordVisible,
-		togglePasswordVisibility,
-		isContactModalOpen,
-		openContactModal,
-		closeContactModal,
-		handleContactFormSubmit,
-		isLoginModalOpen,
-		openLoginModal,
-		closeLoginModal,
-		handleUserLogin,
-		isBookingModalOpen,
-		openBookingModal,
-		closeBookingModal,
-		handleBookingFormSubmit,
 	};
-
-	return <CafeuContext.Provider value={contextValue}>{children}</CafeuContext.Provider>;
-};
-
-export const useCafeuContext = () => {
-	const context = useContext(CafeuContext);
-	if (!context) {
-		throw new Error('useCafeuContext must be used within an CafeuProvider');
-	}
-	return context;
 };

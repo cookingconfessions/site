@@ -1,4 +1,4 @@
-from rest_framework import generics, status, viewsets
+from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.parsers import JSONParser, MultiPartParser
 from rest_framework.response import Response
@@ -80,7 +80,7 @@ class CategoriesView(viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data)
 
 
-class TagsView(generics.ListAPIView):
+class TagsView(viewsets.ViewSet):
     serializer_class = MenuItemTagSerializer
     parser_classes = (MultiPartParser,)
     queryset = MenuItemTag.objects.all()

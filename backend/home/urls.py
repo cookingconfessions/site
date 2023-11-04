@@ -1,11 +1,14 @@
-from django.urls import path
+from rest_framework.routers import DefaultRouter
 
 from .views import *
 
 
-urlpatterns = [
-    path("booking/", BookingView.as_view(), name="bookings"),
-    path("faqs/", FaqView.as_view(), name="faqs"),
-    path("contact/", MessageView.as_view(), name="contact"),
-    path("info/", CompanyInfoView.as_view(), name="info"),
-]
+router = DefaultRouter()
+
+router.register("bookings", BookingView, basename="bookings")
+router.register("faqs", FaqView, basename="faqs")
+router.register("contact", MessageView, basename="contact")
+router.register("info", CompanyInfoView, basename="info")
+router.register("banner-items", BannerItemView, basename="banneritems")
+
+urlpatterns = router.urls

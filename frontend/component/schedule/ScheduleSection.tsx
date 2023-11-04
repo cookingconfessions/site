@@ -1,9 +1,9 @@
 'use client';
 
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 
 const ScheduleSection = () => {
-	const { openBookingModal } = useCafeuContext();
+	const { openBookingModal } = useAppContext();
 
 	return (
 		<section>

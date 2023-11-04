@@ -1,9 +1,9 @@
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import Link from 'next/link';
 import ProductCard from '../menu/ProductCard';
 
 const ShopAllProductSection = () => {
-	const { currentItems, currentPage, handlePageChange, totalPages } = useCafeuContext();
+	const { currentItems, currentPage, handlePageChange, totalPages } = useAppContext();
 
 	return (
 		<div className='shop-products-wrapper'>

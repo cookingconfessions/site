@@ -1,9 +1,9 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import { accordionData } from '@/data/Data';
 
 const FaqSection = () => {
-	const { openAccordion, handleAccordionBtn, openContactModal } = useCafeuContext();
+	const { openAccordion, handleAccordionBtn, openContactModal } = useAppContext();
 
 	return (
 		<section className='faq' id='faq'>

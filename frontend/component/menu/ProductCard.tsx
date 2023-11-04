@@ -1,10 +1,10 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import { ProductCardProps } from '@/types/menu';
 import React from 'react';
 
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
-	const { addToCart, openLightBoxModal } = useCafeuContext();
+	const { addToCart, openLightBoxModal } = useAppContext();
 
 	return (
 		<div className='col' key={item.id}>

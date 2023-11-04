@@ -1,9 +1,9 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 const UserLoginDropdown = () => {
-	const { openLoginModal } = useCafeuContext();
+	const { openLoginModal } = useAppContext();
 	return (
 		<OverlayScrollbarsComponent className='cart-menu'>
 			<p className='mt-10 pl-25'>Logged in as Test User</p>

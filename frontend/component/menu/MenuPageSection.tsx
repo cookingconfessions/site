@@ -1,9 +1,9 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import MenuProducts from './MenuProducts';
 
 const MenuPageSection = () => {
-	const { menuItemsToShow } = useCafeuContext();
+	const { menuItemsToShow } = useAppContext();
 	return (
 		<>
 			<MenuProducts style='product-3' showMoreBtn={false} endIndex={menuItemsToShow} />

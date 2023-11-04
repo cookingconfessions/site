@@ -1,10 +1,10 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import BillingSection from './BillingSection';
 import OrderSection from './OrderSection';
 
 const CheckoutSection = () => {
-	const { haveCoupon, handleCouponBtn } = useCafeuContext();
+	const { haveCoupon, handleCouponBtn } = useAppContext();
 	return (
 		<div className='page-area pb-85'>
 			<div className='container'>

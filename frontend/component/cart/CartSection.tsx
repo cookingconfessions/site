@@ -1,11 +1,11 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import ProductTable from '../table/ProductTable';
 import CartReccomendationts from './CartReccomendation';
 import CouponSection from './CouponSection';
 
 const CartSection = () => {
-	const { cart, removeFromCart } = useCafeuContext();
+	const { cart, removeFromCart } = useAppContext();
 	return (
 		<>
 			<ProductTable array={cart} removeItem={removeFromCart} cartTable={true} />

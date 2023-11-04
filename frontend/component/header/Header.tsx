@@ -1,5 +1,5 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import { HeaderProp } from '@/types/home';
 import Link from 'next/link';
 import React from 'react';
@@ -8,7 +8,7 @@ import UserLoginDropdown from '../login/UserLoginDropdown';
 import NavigationSection from '../navigation/NavigationSection';
 
 const Header: React.FC<HeaderProp> = ({ logo, theme }) => {
-	const { isHeaderFixed, cartItemAmount, openSidebar } = useCafeuContext();
+	const { isHeaderFixed, cartItemAmount, openSidebar } = useAppContext();
 
 	return (
 		<header>

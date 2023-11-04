@@ -1,10 +1,10 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 
 const BookCateringModal: React.FC = () => {
-	const { isBookingModalOpen, closeBookingModal } = useCafeuContext();
+	const { isBookingModalOpen, closeBookingModal } = useAppContext();
 
 	return (
 		<Modal

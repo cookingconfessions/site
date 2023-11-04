@@ -1,10 +1,10 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 
 const ContactModal: React.FC = () => {
-	const { isContactModalOpen, closeContactModal } = useCafeuContext();
+	const { isContactModalOpen, closeContactModal } = useAppContext();
 
 	return (
 		<Modal

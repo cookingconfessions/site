@@ -1,10 +1,10 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 const LoginForm = () => {
-	const { passwordVisible, togglePasswordVisibility, handleUserLogin } = useCafeuContext();
+	const { passwordVisible, togglePasswordVisibility, handleUserLogin } = useAppContext();
 	const [userName, setUserName] = useState('');
 	const [password, setPassword] = useState('');
 	const handleFormSubmit = (e: React.FormEvent) => {

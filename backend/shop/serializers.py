@@ -30,8 +30,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 class CreateCustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ("user", "phone_number", "country",
-                  "street_address", "address_line_2")
+        fields = ("user", "phone_number", "country", "street_address", "address_line_2")
 
 
 class OrderItemSerializer(serializers.ModelSerializer):

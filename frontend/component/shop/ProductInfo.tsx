@@ -1,4 +1,4 @@
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import React, { ChangeEvent, useState } from 'react';
 import { Form } from 'react-bootstrap';
 interface InfoProp {
@@ -9,7 +9,7 @@ interface InfoProp {
 	};
 }
 const ProductInfo: React.FC<InfoProp> = ({ shopData }) => {
-	const { addToCartWithQuantity } = useCafeuContext();
+	const { addToCartWithQuantity } = useAppContext();
 	const [quantity, setQuantity] = useState<number>(1); // Initialize quantity state
 
 	const handleQuantityChange = (event: ChangeEvent<HTMLSelectElement>) => {

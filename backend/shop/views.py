@@ -3,14 +3,14 @@ import secrets
 import string
 from typing import List
 
-from rest_framework import generics, status, viewsets
+from rest_framework import status, viewsets
 from rest_framework.response import Response
 
 from .models import *
 from .serializers import *
 
 
-class DiscountCodeView(viewsets.ReadOnlyModelViewSet):
+class DiscountCodeView(viewsets.ViewSet):
     serializer_class = DiscountCodeSerializer
     queryset = DiscountCode.objects.all()
     lookup_field = "code"
@@ -32,7 +32,7 @@ class DiscountCodeView(viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class CustomerView(generics.ListAPIView, generics.CreateAPIView):
+class CustomerView(viewsets.ViewSet):
     serializer_class = CreateCustomerSerializer
     queryset = Customer.objects.all()
 
@@ -95,7 +95,7 @@ class CustomerView(generics.ListAPIView, generics.CreateAPIView):
         return username
 
 
-class OrderView(generics.CreateAPIView):
+class OrderView(viewsets.ViewSet):
     serializer_class = CreateOrderSerializer
     queryset = Order.objects.all()
 

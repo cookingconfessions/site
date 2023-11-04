@@ -1,12 +1,12 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import { MenuProps } from '@/types/menu';
 import React from 'react';
 import { Nav } from 'react-bootstrap';
 import ProductCard from './ProductCard';
 
 const MenuProducts: React.FC<MenuProps> = ({ style, showMoreBtn, endIndex }) => {
-	const { activeMenuProductTab, handleMenuProductTabChange, filteredMenuProductList } = useCafeuContext();
+	const { activeMenuProductTab, handleMenuProductTabChange, filteredMenuProductList } = useAppContext();
 	const menuProductItems = filteredMenuProductList.slice(0, endIndex);
 
 	return (

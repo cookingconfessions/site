@@ -1,5 +1,5 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import Link from 'next/link';
 import React from 'react';
 interface ProductProps {
@@ -16,7 +16,7 @@ type ProductArray = {
 	slug: string;
 };
 const ProductTable: React.FC<ProductProps> = ({ array, removeItem, cartTable }) => {
-	const { handleQuantityChange } = useCafeuContext();
+	const { handleQuantityChange } = useAppContext();
 
 	return (
 		<div className='cart-section cpy-8'>

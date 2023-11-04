@@ -1,10 +1,11 @@
 import Layout from '@/component/layout/Layout';
 import HomeMain from '@/component/main/HomeMain';
-import { Metadata } from '@/types/home';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: 'Cooking confessions',
-	description: 'Best african dishes in Slovakia',
+	description:
+		'We sell best African meals in Slovakia. Our team of Chef from Kenya are also available for booking to offer catering services.',
 };
 
 export default function Home() {

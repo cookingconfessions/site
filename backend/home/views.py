@@ -1,15 +1,12 @@
-from rest_framework import generics, status, viewsets
-from rest_framework.decorators import action
-from rest_framework.parsers import JSONParser, MultiPartParser
+from rest_framework import status, viewsets
 from rest_framework.response import Response
 
 from .models import *
 from .serializers import *
 
 
-class BookingView(generics.CreateAPIView):
+class BookingView(viewsets.ViewSet):
     serializer_class = BookingSerializer
-    queryset = Booking.objects.all()
 
     def create(self, request, *args, **kwargs):
         serializer = BookingSerializer(data=request.data)
@@ -19,17 +16,16 @@ class BookingView(generics.CreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class FaqView(generics.ListAPIView):
+class FaqView(viewsets.ViewSet):
     serializer_class = FaqSerializer
     queryset = Faq.objects.all()
 
     def list(self, request, *args, **kwargs):
-        faqs = self.get_queryset()
-        serializer = self.get_serializer(faqs, many=True)
+        serializer = self.serializer_class(self.queryset, many=True)
         return Response(serializer.data)
 
 
-class MessageView(generics.CreateAPIView):
+class MessageView(viewsets.ViewSet):
     serializer_class = MessageSerializer
     queryset = Message.objects.all()
 
@@ -41,11 +37,19 @@ class MessageView(generics.CreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CompanyInfoView(generics.ListAPIView):
+class CompanyInfoView(viewsets.ViewSet):
     serializer_class = CompanyInfoSerializer
     queryset = CompanyInfo.objects.all().first()
 
     def list(self, request, *args, **kwargs):
-        info = self.get_queryset()
-        serializer = self.get_serializer(info, many=False)
+        serializer = self.serializer_class(self.queryset, many=False)
+        return Response(serializer.data)
+
+
+class BannerItemView(viewsets.ViewSet):
+    serializer_class = BannerItemSerializer
+    queryset = BannerItem.objects.all()
+
+    def list(self, request, *args, **kwargs):
+        serializer = self.serializer_class(self.queryset, many=True)
         return Response(serializer.data)

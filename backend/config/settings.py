@@ -24,6 +24,9 @@ DEBUG = Config.get("ENVIRONMENT") != "production"
 
 ALLOWED_HOSTS = Config.get_csv("ALLOWED_HOSTS")
 
+CORS_ALLOWED_ORIGINS = Config.get_csv("CORS_ALLOWED_ORIGINS")
+CORS_ALLOW_CREDENTIALS = True
+
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -32,6 +35,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "cloudinary",
     "rest_framework",
     "rest_framework_swagger",
@@ -43,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

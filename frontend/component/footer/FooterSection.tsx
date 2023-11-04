@@ -1,11 +1,11 @@
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import Link from 'next/link';
 import React from 'react';
 interface FooterProp {
 	style: string;
 }
 const FooterSection: React.FC<FooterProp> = ({ style }) => {
-	const { currentYear } = useCafeuContext();
+	const { currentYear } = useAppContext();
 	return (
 		<footer>
 			<div className={`footer-section ${style}`} data-background='/img/footer-bg.png'>

@@ -1,10 +1,10 @@
 'use client';
-import { useCafeuContext } from '@/context/CafeuContext';
+import { useAppContext } from '@/context/AppContext';
 import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 
 const ProductLightBoxModal: React.FC = () => {
-	const { isLightBoxModalOpen, closeLightBoxModal, product, addToCartWithQuantity } = useCafeuContext();
+	const { isLightBoxModalOpen, closeLightBoxModal, product, addToCartWithQuantity } = useAppContext();
 
 	const defaultQuickViewQuantity = 1;
 	const [quickViewQuantity, setQuickViewQuantity] = useState<number>(defaultQuickViewQuantity);
