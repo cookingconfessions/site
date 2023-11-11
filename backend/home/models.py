@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.utils.text import slugify
 
 from cloudinary.models import CloudinaryField
 from common.models import BaseModel
@@ -13,8 +14,15 @@ from .utils.validators import validate_closing_time_gt_opening_time
 
 # Create your models here.
 class BannerItem(BaseModel):
-    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, blank=True)
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    slug = models.SlugField(unique=True)
     image = CloudinaryField("image")
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+
+        super(MenuItem, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"Banner {self.id} {self.menu_item.name}"
@@ -96,6 +104,7 @@ class Faq(BaseModel):
 
 class CompanyInfo(BaseModel):
     name = models.CharField(max_length=100, default="Cooking Confessions", unique=True)
+    description = models.TextField()
     address_line_1 = models.CharField(max_length=100, help_text="Somewhere 1", unique=True)
     address_line_2 = models.CharField(max_length=100, help_text="Dinner City", unique=True)
     email = models.EmailField(max_length=100, help_text="someone@company.com", unique=True)

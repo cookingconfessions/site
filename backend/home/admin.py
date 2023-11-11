@@ -5,8 +5,8 @@ from .models import BannerItem, Booking, CompanyInfo, Faq, Message, Schedule
 
 @admin.register(BannerItem)
 class BannerItemAdmin(admin.ModelAdmin):
-    list_display = ("menu_item", "image")
-    list_display_links = ("menu_item",)
+    list_display = ("name", "description", "slug", "image", "last_modified")
+    list_display_links = ("name",)
 
 
 @admin.register(Schedule)
@@ -40,6 +40,7 @@ class FaqAdmin(admin.ModelAdmin):
 class CompanyInfoAdmin(admin.ModelAdmin):
     list_display = (
         "name",
+        "description",
         "address_line_1",
         "address_line_2",
         "email",

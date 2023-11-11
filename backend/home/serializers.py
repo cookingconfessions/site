@@ -30,19 +30,7 @@ class CompanyInfoSerializer(CountryFieldMixin, serializers.ModelSerializer):
 
 
 class BannerItemSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField()
-    description = serializers.SerializerMethodField()
     image = CloudinaryResourceURLField()
-    slug = serializers.SerializerMethodField()
-
-    def get_name(self, instance):
-        return instance.menu_item.name
-
-    def get_description(self, instance):
-        return instance.menu_item.description
-
-    def get_slug(self, instance):
-        return instance.menu_item.slug
 
     class Meta:
         model = BannerItem
