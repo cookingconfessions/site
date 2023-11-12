@@ -1,12 +1,8 @@
 import { useAppContext } from '@/context/AppContext';
+import { MenuItem } from '@/types/menu';
 import React, { ChangeEvent, useState } from 'react';
-import { Form } from 'react-bootstrap';
 interface InfoProp {
-	shopData: {
-		name: string;
-		price: number;
-		id: number;
-	};
+	shopData: MenuItem;
 }
 const ProductInfo: React.FC<InfoProp> = ({ shopData }) => {
 	const { addToCartWithQuantity } = useAppContext();
@@ -26,37 +22,17 @@ const ProductInfo: React.FC<InfoProp> = ({ shopData }) => {
 			<ul className='info-list'>
 				<li>
 					<span>Availability:</span>
-					<p>In Stock</p>
+					<p>{shopData.isAvailable ? 'In Stock' : 'Not available'} </p>
 				</li>
 				<li>
 					<span>Product Code:</span>
-					<p>#859234</p>
+					<p>#{shopData.code}</p>
 				</li>
 				<li>
 					<span>Tags:</span>
-					<p>Food, BBQ, First Food</p>
+					<p>{shopData.tags.map((tag) => tag.name).join(',')}</p>
 				</li>
 			</ul>
-			<p className='sm-des'>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit, se d mod tempor ncididunt ut abore et dolore magna
-				aliqua. Quis ipsum pendisse ultrices gravida.
-			</p>
-
-			<div className='size-qty'>
-				<div className='col-6 mb-3 select-box'>
-					<label htmlFor='exampleFormControlInput1' className='form-label'>
-						QTY
-					</label>
-					<Form.Select className='wide' onChange={handleQuantityChange} value={quantity ?? ''}>
-						<option data-display='Select'>Select</option>
-						<option value={1}>1</option>
-						<option value={2}>2</option>
-						<option value={3}>3</option>
-						<option value={4}>4</option>
-						<option value={5}>5</option>
-					</Form.Select>
-				</div>
-			</div>
 
 			<div className='cart-sec'>
 				<h4>Clear Section</h4>
@@ -65,35 +41,6 @@ const ProductInfo: React.FC<InfoProp> = ({ shopData }) => {
 						Add To Cart
 					</a>
 				</div>
-			</div>
-
-			<div className='share-link'>
-				<p>Share Link</p>
-				<ul className='social-ul'>
-					<li className='social-list'>
-						<a href='' className='social-link'>
-							<span className='icofont-facebook'></span>
-						</a>
-					</li>
-
-					<li className='social-list'>
-						<a href='' className='social-link'>
-							<span className='icofont-twitter'></span>
-						</a>
-					</li>
-
-					<li className='social-list'>
-						<a href='' className='social-link'>
-							<span className='icofont-skype'></span>
-						</a>
-					</li>
-
-					<li className='social-list'>
-						<a href='' className='social-link'>
-							<span className='icofont-instagram'></span>
-						</a>
-					</li>
-				</ul>
 			</div>
 		</div>
 	);

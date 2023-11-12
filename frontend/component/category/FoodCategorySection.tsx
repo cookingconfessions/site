@@ -1,10 +1,12 @@
-import { foodCategoryData } from '@/data/Data';
+import { useHomeContext } from '@/context/HomeContext';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
 const FoodCategorySection = () => {
 	const [slides, setSlides] = useState<number>(0);
+	const { categories } = useHomeContext();
 
 	const setSlidesPerview = () => {
 		setSlides(
@@ -23,13 +25,10 @@ const FoodCategorySection = () => {
 	};
 
 	useEffect(() => {
-		// Initially set the amount of slides on page load
 		setSlidesPerview();
 
-		// Add the event listener on component mount
 		window.addEventListener('resize', setSlidesPerview);
 
-		// Remove the listener when component unmounts
 		return () => {
 			window.removeEventListener('resize', setSlidesPerview);
 		};
@@ -53,17 +52,16 @@ const FoodCategorySection = () => {
 										autoplay={{ delay: 3000 }}
 										modules={[Autoplay]}
 										loop={true}>
-										{foodCategoryData.map((item) => (
+										{categories.map((item) => (
 											<SwiperSlide className='swiper-slide' key={item.id}>
 												<div className='cb-category-card'>
-													<img src={item.imgSrc} alt='category img' />
+													<img src={item.image} alt='category img' />
 													<div className='cb-category-card-text'>
 														<h4>
 															<Link href='/menu' className='cb-category-cart-name'>
 																{item.name}
 															</Link>
 														</h4>
-														<span className='cb-category-cart-price'>{item.price}</span>
 													</div>
 												</div>
 											</SwiperSlide>

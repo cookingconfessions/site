@@ -3,7 +3,7 @@
 import { useAppContext } from '@/context/AppContext';
 
 const ScheduleSection = () => {
-	const { openBookingModal } = useAppContext();
+	const { openBookingModal, schedules } = useAppContext();
 
 	return (
 		<section>
@@ -19,7 +19,7 @@ const ScheduleSection = () => {
 										</h2>
 										<p className='mb-0'>
 											Do you have a grill party, wedding, baby shower or an event? We got you sorted! <br /> We are
-											available for booking. All we promise is great delicacies from our team.
+											available for booking. We promise great delicacies from our team.
 										</p>
 									</div>
 									<div className='banner-btn-sec mt-3' onClick={openBookingModal}>
@@ -33,26 +33,12 @@ const ScheduleSection = () => {
 												<span className='sm-title mb-0'>Opening Hours</span>
 											</div>
 											<ul className='note-ul'>
-												<li className='note-li'>
-													<p className='day'>Sunday to Tuesday</p>
-													<p className='time'>09:00 - 06:00</p>
-												</li>
-												<li className='note-li'>
-													<p className='day'>Friday to Sunday</p>
-													<p className='time'>06:00 - 09:00</p>
-												</li>
-												<li className='note-li'>
-													<p className='day'>Sunday to Tuesday</p>
-													<p className='time'>09:00 - 06:00</p>
-												</li>
-												<li className='note-li'>
-													<p className='day'>Monday to Friday</p>
-													<p className='time'>06:00 - 09:00</p>
-												</li>
-												<li className='note-li'>
-													<p className='day'>Monday to Saturday</p>
-													<p className='time'>06:00 - 09:00</p>
-												</li>
+												{schedules.map((schedule) => (
+													<li className='note-li' key={schedule.day}>
+														<p className='day'>{schedule.day}</p>
+														<p className='time'>{`${schedule.opensAt} - ${schedule.closesAt}`}</p>
+													</li>
+												))}
 											</ul>
 
 											<div className='note-footer'>

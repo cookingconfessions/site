@@ -52,14 +52,14 @@ p {
   margin-bottom: 15px;
 }
 ul {
-  padding: 0;
+  padding: 0 !important;
   list-style: none;
 }
 
 ul,
 ol,
 li {
-  list-style: none;
+  list-style: none !important;
 }
 
 a {

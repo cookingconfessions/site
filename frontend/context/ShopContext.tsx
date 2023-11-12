@@ -1,5 +1,6 @@
-import { productList } from '@/data/Data';
-import { Product } from '@/types/menu';
+import { CartItem, MenuItem } from '@/types/menu';
+import { useApiClient } from '@/utils/api-client';
+import { ShopHelper } from '@/utils/shop-helper';
 import Aos from 'aos';
 import { SetStateAction, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -10,16 +11,16 @@ export interface ShopContextData {
 	endIndex: number;
 	setSortingOption: (option: string) => void;
 	sortingOption: string;
-	filteredProducts: Product[];
-	setFilteredProducts: (value: SetStateAction<Product[]>) => void;
+	filteredProducts: MenuItem[];
+	setFilteredProducts: (value: SetStateAction<MenuItem[]>) => void;
 	itemsPerPage: number;
-	currentItems: Product[];
+	currentItems: MenuItem[];
 	currentPage: number;
 	setCurrentPage: (value: SetStateAction<number>) => void;
 	handlePageChange: (newPage: number) => void;
 	totalPages: number;
-	setCart: (value: SetStateAction<Product[]>) => void;
-	addToCart: (productId: number) => void;
+	setCart: (value: SetStateAction<CartItem[]>) => void;
+	addToCart: (productId: string) => void;
 	searchQuery: string;
 	setSearchQuery: (query: string) => void;
 	selectedCategory: string;
@@ -29,30 +30,38 @@ export interface ShopContextData {
 	handlePriceChange: (event: Event, newValue: number | number[]) => void;
 	selectedTags: string[];
 	handleTagChange: (tag: string) => void;
-	cart: Product[];
-	removeFromCart: (productId: number) => void;
-	handleQuantityChange: (productId: number, newQuantity: number) => void;
+	cart: MenuItem[];
+	removeFromCart: (productId: string) => void;
+	handleQuantityChange: (productId: string, newQuantity: number) => void;
 	cartTotal: number;
-	addToCartWithQuantity: (productId: number, quantity: number) => void;
+	addToCartWithQuantity: (productId: string, quantity: number) => void;
 	cartItemAmount: number;
 	haveCoupon: boolean;
 	handleCouponBtn: () => void;
 }
 
+const menuItems: MenuItem[] = [];
+
+useApiClient()
+	.getMenuItems()
+	.then((items) => menuItems.push(...items));
+
 export const useShopContext = (): ShopContextData => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
-	const [priceRange, setPriceRange] = useState<number[]>([0, 60]); // State for price range
 	const [sortingOption, setSortingOption] = useState<string>('default');
 	const [selectedCategory, setSelectedCategory] = useState<string>('All');
 	const [searchQuery, setSearchQuery] = useState('');
 	const [selectedTags, setSelectedTags] = useState<string[]>([]);
-	const [cart, setCart] = useState<Product[]>([]);
+	const [cart, setCart] = useState<CartItem[]>([]);
 	const itemsPerPage: number = 9;
 	const cartItemAmount = cart.reduce((total, item) => total + item.quantity, 0);
-	const [filteredProducts, setFilteredProducts] = useState<Product[]>(productList);
+	const maximumPrice = ShopHelper.getMaximumPrice(menuItems);
+	const [priceRange, setPriceRange] = useState<number[]>([0, maximumPrice]); // State for price range
+	const [filteredProducts, setFilteredProducts] = useState<MenuItem[]>(menuItems);
 
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
+	() => setFilteredProducts(menuItems);
 	const currentItems = filteredProducts.slice(startIndex, endIndex);
 
 	const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -80,15 +89,21 @@ export const useShopContext = (): ShopContextData => {
 	};
 
 	// Function to add a product to the cart
-	const addToCart = (productId: number) => {
+	const addToCart = (productId: string) => {
 		// Find the item from filteredProducts using productId
-		const itemToAdd = productList.find((item) => item.id === productId);
+		const itemToAdd = menuItems.find((item) => item.id === productId);
 
 		if (itemToAdd) {
 			const existingItemIndex = cart.findIndex((item) => item.id === productId);
+			const cartItem: CartItem = {
+				...itemToAdd,
+				quantity: 1,
+				total: 1 * itemToAdd.price,
+				isInCart: true,
+			};
 
 			if (existingItemIndex === -1) {
-				setCart((prevCart) => [...prevCart, itemToAdd]);
+				setCart((prevCart) => [...prevCart, cartItem]);
 
 				// Update local storage with the updated cart
 				const updatedCart = [...cart, itemToAdd];
@@ -113,7 +128,7 @@ export const useShopContext = (): ShopContextData => {
 	};
 
 	// Function to remove a product from the cart
-	const removeFromCart = (productId: number) => {
+	const removeFromCart = (productId: string) => {
 		// Create an updated cart by filtering out the product with the matching id
 		const updatedCart = cart.filter((product) => product.id !== productId);
 
@@ -130,7 +145,7 @@ export const useShopContext = (): ShopContextData => {
 		localStorage.setItem('cart', JSON.stringify(updatedCart));
 	};
 
-	const handleQuantityChange = (productId: number, newQuantity: number) => {
+	const handleQuantityChange = (productId: string, newQuantity: number) => {
 		if (newQuantity < 1) {
 			// Prevent quantity from going below 1
 			return;
@@ -144,15 +159,16 @@ export const useShopContext = (): ShopContextData => {
 		}
 	};
 
-	const addToCartWithQuantity = (productId: number, quantity: number) => {
-		const itemToAdd = productList.find((item) => item.id === productId);
+	const addToCartWithQuantity = (productId: string, quantity: number) => {
+		const itemToAdd = menuItems.find((item) => item.id === productId);
 
 		if (itemToAdd) {
 			const existingItemIndex = cart.findIndex((item) => item.id === productId);
 
 			if (!cart.some((item) => item.id === productId)) {
-				const newItem = {
+				const newItem: CartItem = {
 					...itemToAdd,
+					isInCart: true,
 					quantity: quantity, // Set the provided quantity
 					total: itemToAdd.price * quantity,
 				};
@@ -173,7 +189,7 @@ export const useShopContext = (): ShopContextData => {
 	};
 
 	// Calculate the total price of items in the cart
-	const calculateCartTotal = (cartItems: Product[]) => {
+	const calculateCartTotal = (cartItems: CartItem[]) => {
 		let total = 0;
 
 		for (const cartItem of cartItems) {
@@ -215,7 +231,7 @@ export const useShopContext = (): ShopContextData => {
 		});
 
 		// Shop Section
-		let sortedProducts = [...productList];
+		let sortedProducts = [...menuItems];
 
 		if (sortingOption === 'lowToHigh') {
 			sortedProducts.sort((a, b) => (a.price ?? 0) - (b.price ?? 0));

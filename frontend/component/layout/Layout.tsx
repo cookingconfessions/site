@@ -1,4 +1,3 @@
-'use client';
 import { LayoutProps } from '@/types/home';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';

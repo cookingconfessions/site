@@ -5,24 +5,51 @@ export interface MenuProps {
 }
 
 export interface ProductCardProps {
-    item: Product;
+    item: MenuItem;
 }
 
-export type Product = {
-    id: number;
-    imgSrc: string;
+export interface MenuItemReview {
+    id: string;
     name: string;
-    priceRange: string;
-    slug: string;
-    sale?: boolean;
+    email: string;
+    message: string;
+    isVisible: boolean;
+    createdAt: string;
+    replies: MenuItemReview[];
+}
+
+export interface MenuItemTag {
+    id: string;
+    name: string;
+}
+
+export interface MenuItem {
+    id: string;
+    name: string;
+    description: string;
     category: string;
-    isInCart: boolean; // New property
-    isInWishlist: boolean; // New property
+    slug: string;
     price: number;
+    image: string;
+    isAvailable: boolean;
+    code: string;
+    tags: MenuItemTag[];
+    reviews: MenuItemReview[];
+};
+
+export interface CartItem extends MenuItem {
+    isInCart: boolean; // New property
     quantity: number;
     total: number;
-    foodType?: string[];
-    status?: string;
-    rating?: string;
-    desc: string;
-};
+}
+
+export interface MenuItemCategory {
+    id: string,
+    name: string;
+    description: string;
+    image: string;
+}
+
+export interface ShopDetailsProp {
+    shopData: MenuItem;
+}

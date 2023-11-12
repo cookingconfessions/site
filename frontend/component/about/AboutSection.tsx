@@ -17,7 +17,7 @@ const AboutSection = () => {
 							<div className='h-100 d-flex align-items-center pl-40'>
 								<div className='about-details'>
 									<span className='theme-3 sm-title'>About Us</span>
-									<h2 className='about-title mb-3'>Why We Are The Best</h2>
+									<h2 className='about-title mb-3'>Why Choose Us</h2>
 									<p className='about-des mb-4'>
 										Quis autem vel eum iure reprehenderit qui in evoluptate velit esse qua nihil
 										<br /> molestiae consequatur, vel illum qui dolorem eum fugiat quvoluptas nulla <br /> pariatureaque
@@ -30,9 +30,9 @@ const AboutSection = () => {
 													<img src='img/icon/5.png' alt='' />
 												</div>
 												<div className='service-name-des'>
-													<h4 className='service-name mb-1'>Buffet Service</h4>
+													<h4 className='service-name mb-1'>Catering Service</h4>
 													<p className='service-des'>
-														Qariatureaque ipsa quae a illo inventore <br /> veritatis et quasi architecto
+														We offer catering services grill parties and <br /> any of your special events.
 													</p>
 												</div>
 											</li>
@@ -41,9 +41,10 @@ const AboutSection = () => {
 													<img src='img/icon/6.png' alt='' />
 												</div>
 												<div className='service-name-des'>
-													<h4 className='service-name mb-1'>Online Booking</h4>
+													<h4 className='service-name mb-1'>Top African Dishes</h4>
 													<p className='service-des'>
-														Qariatureaque ipsa quae a illo inventore <br /> veritatis et quasi architecto
+														Order an African dish from our menu and
+														<br /> experience African taste in SK
 													</p>
 												</div>
 											</li>

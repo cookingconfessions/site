@@ -1,10 +1,11 @@
 'use client';
+import { ShopDetailsProp } from '@/types/menu';
 import { useState } from 'react';
 import { Nav, Tab } from 'react-bootstrap';
 import ShopDescriptionPane from './ShopDescriptionPane';
 import ShopReviewPane from './ShopReviewPane';
 
-const ShopDescription = () => {
+const ShopDescription: React.FC<ShopDetailsProp> = ({ shopData }) => {
 	const [activeTab, setActiveTab] = useState<string>('description');
 	const handleTabChange = (tab: any) => {
 		setActiveTab(tab);
@@ -30,14 +31,14 @@ const ShopDescription = () => {
 					id='pills-description'
 					role='tabpanel'
 					aria-labelledby='pills-description-tab'>
-					<ShopDescriptionPane />
+					<ShopDescriptionPane shopData={shopData} />
 				</Tab.Pane>
 				<Tab.Pane
 					className={`tab-pane fade ${activeTab === 'review' ? 'active show' : ''}`}
 					id='pills-review'
 					role='tabpanel'
 					aria-labelledby='pills-review-tab'>
-					<ShopReviewPane />
+					<ShopReviewPane shopData={shopData} />
 				</Tab.Pane>
 			</Tab.Content>
 		</div>

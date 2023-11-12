@@ -12,9 +12,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 				<div className='shop-product-item-inner'>
 					<div className='shop-product-img w-100'>
 						<a href={`/menu/${item.slug}`}>
-							<img src={`/${item.imgSrc}`} alt={item.name} />
+							<img src={item.image} alt={item.name} />
 						</a>
-						{item.sale && <span className='shop-onsale'>Sale!</span>}
+						{/* {item.sale && <span className='shop-onsale'>Sale!</span>} */}
 						<div className='shop-product-action'>
 							<a role='button' onClick={() => addToCart(item.id)}>
 								<i className='icofont-shopping-cart'></i>

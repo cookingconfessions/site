@@ -46,6 +46,13 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class GetOrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
+    status = serializers.SerializerMethodField()
+
+    def get_day(self, instance: Order):
+        for key, value in instance.ORDER_STATUS:
+            if key == instance.status:
+                return value
+        return instance.status
 
     class Meta:
         model = Order

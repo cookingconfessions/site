@@ -9,30 +9,43 @@ class MenuItemCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MenuItemCategory
-        fields = "__all__"
+        fields = ("id", "name", "description", "image")
 
 
 class MenuItemTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuItemTag
-        fields = "__all__"
+        exclude = ("created_at", "last_modified")
 
 
 class MenuItemReviewSerializer(serializers.ModelSerializer):
+    replies = serializers.SerializerMethodField()
+
     class Meta:
         model = MenuItemReview
-        exclude = ("created_at", "last_modified")
+        fields = ("id", "name", "email", "message",
+                  "is_visible", "created_at", "replies")
+
+    def get_replies(self, obj):
+        # Get the child reviews (replies) for the current review
+        replies = MenuItemReview.objects.filter(parent=obj)
+        # Serialize child reviews using the same serializer
+        reply_serializer = MenuItemReviewSerializer(replies, many=True)
+        return reply_serializer.data
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
     image = CloudinaryResourceURLField()
-    category = MenuItemCategorySerializer()
-    tags = MenuItemTagSerializer(many=True)
+    category = serializers.SerializerMethodField()
     reviews = MenuItemReviewSerializer(many=True)
+    tags = MenuItemTagSerializer(many=True)
+
+    def get_category(self, instance):
+        return instance.category.name
 
     class Meta:
         model = MenuItem
-        fields = "__all__"
+        exclude = ("created_at", "last_modified", "sales_count")
 
 
 class CreateMenuItemReviewSerializer(serializers.ModelSerializer):

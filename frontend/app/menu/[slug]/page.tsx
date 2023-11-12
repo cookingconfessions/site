@@ -1,15 +1,14 @@
+'use client';
 import BreadcrumbSection from '@/component/breadcrumb/BreadcrumbSection';
 import Layout from '@/component/layout/Layout';
 import ShopDetailSection from '@/component/shop/ShopDetailSection';
-import { productList } from '@/data/Data';
-import { Metadata } from 'next';
+import { useAppContext } from '@/context/AppContext';
 import Link from 'next/link';
-export const metadata: Metadata = {
-	title: 'Menu details page',
-	description: 'Cooking confessions',
-};
+
 export default function ShopDetails({ params }: { params: { slug: string } }) {
-	const shopData = productList.find((item) => item.slug === params.slug);
+	const { menuItems } = useAppContext();
+
+	const shopData = menuItems.find((item) => item.slug === params.slug);
 
 	return (
 		<Layout>

@@ -65,7 +65,7 @@ class CategoriesView(viewsets.ReadOnlyModelViewSet):
     parser_classes = (MultiPartParser,)
     queryset = MenuItemCategory.objects.all()
 
-    def list(self):
+    def list(self, *args, **kwargs):
         categories = self.get_queryset()
         serializer = self.get_serializer(categories, many=True)
         return Response(serializer.data)

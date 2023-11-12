@@ -53,3 +53,12 @@ class BannerItemView(viewsets.ViewSet):
     def list(self, request, *args, **kwargs):
         serializer = self.serializer_class(self.queryset, many=True)
         return Response(serializer.data)
+
+
+class ScheduleView(viewsets.ViewSet):
+    serializer_class = ScheduleSerializer
+    queryset = Schedule.objects.all()
+
+    def list(self, request, *args, **kwargs):
+        serializer = self.serializer_class(self.queryset, many=True)
+        return Response(serializer.data)

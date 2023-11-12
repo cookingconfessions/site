@@ -10,7 +10,7 @@ const HomeMain = () => {
 		<>
 			<BannerSection theme='banner-3' endIndex={-3} />
 			<div className='cpy-8'>
-				<MenuProducts style='product-3' showMoreBtn={true} endIndex={8} />
+				<MenuProducts style='product-3' showMoreBtn={true} endIndex={10} />
 			</div>
 			<FoodCategorySection />
 			<OrderFeatureSection />

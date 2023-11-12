@@ -6,7 +6,7 @@ import { Nav } from 'react-bootstrap';
 import ProductCard from './ProductCard';
 
 const MenuProducts: React.FC<MenuProps> = ({ style, showMoreBtn, endIndex }) => {
-	const { activeMenuProductTab, handleMenuProductTabChange, filteredMenuProductList } = useAppContext();
+	const { activeMenuProductTab, handleMenuProductTabChange, filteredMenuProductList, categories } = useAppContext();
 	const menuProductItems = filteredMenuProductList.slice(0, endIndex);
 
 	return (
@@ -18,7 +18,7 @@ const MenuProducts: React.FC<MenuProps> = ({ style, showMoreBtn, endIndex }) => 
 							<div className='section-head text-center' data-aos='fade-up' data-aos-duration='500'>
 								<span className='sm-title '>Special Menu</span>
 								<h2 className='sec-title'>Our Specials Menu</h2>
-								<div className='product-cat ' data-aos='fade-up' data-aos-duration='1500'>
+								<div className='product-cat' data-aos='fade-up' data-aos-duration='1500'>
 									<div className='controls'>
 										<Nav
 											className='cat-menu justify-content-center'
@@ -29,26 +29,13 @@ const MenuProducts: React.FC<MenuProps> = ({ style, showMoreBtn, endIndex }) => 
 													<span className='cat-name'>All Categories</span>
 												</Nav.Link>
 											</Nav.Item>
-											<Nav.Item>
-												<Nav.Link className='cat-menu-li' eventKey='perch-fish'>
-													<span className='cat-name'>Perch Fish</span>
-												</Nav.Link>
-											</Nav.Item>
-											<Nav.Item>
-												<Nav.Link className='cat-menu-li' eventKey='lobster'>
-													<span className='cat-name'>Lobster</span>
-												</Nav.Link>
-											</Nav.Item>
-											<Nav.Item>
-												<Nav.Link className='cat-menu-li' eventKey='shrimps'>
-													<span className='cat-name'>Shrimps</span>
-												</Nav.Link>
-											</Nav.Item>
-											<Nav.Item>
-												<Nav.Link className='cat-menu-li' eventKey='red_crab'>
-													<span className='cat-name'>Red Crab</span>
-												</Nav.Link>
-											</Nav.Item>
+											{categories.map((category) => (
+												<Nav.Item key={category.id}>
+													<Nav.Link className='cat-menu-li' eventKey={category.name.toLowerCase()}>
+														<span className='cat-name'>{category.name}</span>
+													</Nav.Link>
+												</Nav.Item>
+											))}
 										</Nav>
 									</div>
 								</div>

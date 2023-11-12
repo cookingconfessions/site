@@ -2,8 +2,7 @@
 import { useAppContext } from '@/context/AppContext';
 
 const ShopTagFilter = () => {
-	const { selectedTags, handleTagChange } = useAppContext();
-	const categories = ['Appetizers', 'Salads', 'Entrees', 'Sides', 'Beverages', 'Desserts', 'Specials'];
+	const { selectedTags, handleTagChange, categories } = useAppContext();
 
 	return (
 		<div className='sidebar-single mb-50' data-aos='fade-up' data-aos-duration='3000'>
@@ -11,11 +10,11 @@ const ShopTagFilter = () => {
 			<ul className='sidebar-tags'>
 				{categories.map((category) => (
 					<li
-						key={category}
-						className={selectedTags.includes(category) ? 'active' : ''}
-						onClick={() => handleTagChange(category)} // Change this line
+						key={category.id}
+						className={selectedTags.includes(category.name) ? 'active' : ''}
+						onClick={() => handleTagChange(category.name)} // Change this line
 					>
-						{category}
+						{category.name}
 					</li>
 				))}
 			</ul>

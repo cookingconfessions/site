@@ -14,7 +14,7 @@ class BookingSerializer(serializers.ModelSerializer):
 class FaqSerializer(serializers.ModelSerializer):
     class Meta:
         model = Faq
-        fields = ("question", "answer")
+        fields = ("id", "question", "answer")
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -26,7 +26,7 @@ class MessageSerializer(serializers.ModelSerializer):
 class CompanyInfoSerializer(CountryFieldMixin, serializers.ModelSerializer):
     class Meta:
         model = CompanyInfo
-        exclude = ("created_at", "last_modified")
+        exclude = ("id", "created_at", "last_modified")
 
 
 class BannerItemSerializer(serializers.ModelSerializer):
@@ -34,4 +34,18 @@ class BannerItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BannerItem
-        fields = ("name", "description", "image", "slug")
+        fields = ("id", "name", "description", "image", "slug")
+
+
+class ScheduleSerializer(serializers.ModelSerializer):
+    day = serializers.SerializerMethodField()
+
+    def get_day(self, instance: Schedule):
+        for key, value in instance.DAYS_OF_WEEK:
+            if key == instance.day:
+                return value
+        return instance.day
+
+    class Meta:
+        model = Schedule
+        exclude = ("id", "created_at", "last_modified")

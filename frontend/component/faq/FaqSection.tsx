@@ -1,9 +1,9 @@
 'use client';
 import { useAppContext } from '@/context/AppContext';
-import { accordionData } from '@/data/Data';
 
 const FaqSection = () => {
-	const { openAccordion, handleAccordionBtn, openContactModal } = useAppContext();
+	const { openAccordion, handleAccordionBtn, openContactModal, faqs } = useAppContext();
+	const halfIndex = faqs.length === 0 ? -1 : Math.floor(faqs.length / 2);
 
 	return (
 		<section className='faq' id='faq'>
@@ -15,10 +15,10 @@ const FaqSection = () => {
 				<div className='row mt-40'>
 					<div className='col-md-6 col-lg-6'>
 						<div className='faq__main'>
-							{accordionData.slice(0, 3).map((item) => (
+							{faqs.slice(0, halfIndex).map((item) => (
 								<div className='faq__content' data-aos='fade-up' data-aos-duration='1000' key={item.id}>
 									<div className='faq__que'>
-										<button onClick={() => handleAccordionBtn(item.id)}>{item.title}</button>{' '}
+										<button onClick={() => handleAccordionBtn(item.id)}>{item.question}</button>{' '}
 										<i
 											className={`${openAccordion === item.id ? 'icofont-minus' : 'icofont-plus'}`}
 											role='button'
@@ -26,7 +26,7 @@ const FaqSection = () => {
 									</div>
 									{openAccordion === item.id && (
 										<div className='faq__ans'>
-											<p>{item.desc}</p>
+											<p>{item.answer}</p>
 										</div>
 									)}
 								</div>
@@ -35,10 +35,10 @@ const FaqSection = () => {
 					</div>
 					<div className='col-md-6 col-lg-6'>
 						<div className='faq__main'>
-							{accordionData.slice(-4).map((item) => (
+							{faqs.slice(halfIndex).map((item) => (
 								<div className='faq__content' data-aos='fade-up' data-aos-duration='1000' key={item.id}>
 									<div className='faq__que'>
-										<button onClick={() => handleAccordionBtn(item.id)}>{item.title}</button>
+										<button onClick={() => handleAccordionBtn(item.id)}>{item.question}</button>
 										<i
 											className={`${openAccordion === item.id ? 'icofont-minus' : 'icofont-plus'}`}
 											role='button'
@@ -46,7 +46,7 @@ const FaqSection = () => {
 									</div>
 									{openAccordion === item.id && (
 										<div className='faq__ans'>
-											<p>{item.desc}</p>
+											<p>{item.answer}</p>
 										</div>
 									)}
 								</div>
