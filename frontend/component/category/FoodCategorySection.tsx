@@ -39,11 +39,17 @@ const FoodCategorySection = () => {
 				<div className='cb-category-inner'>
 					<div className='container-fluid g-0'>
 						<div className='row align-items-center justify-content-center'>
-							<div className='section-head text-center' data-aos='fade-up' data-aos-duration='500'>
+							<div
+								className='section-head text-center'
+								data-aos='fade-up'
+								data-aos-duration='500'>
 								<span className='theme-3 sm-title'>All tastes</span>
-								<h2 className='sec-title'>We got you sorted..</h2>
+								<h2 className='sec-title mb-5'>We got you sorted..</h2>
 							</div>
-							<div className='col-xl-10 col-lg-9 col-md-8' data-aos='fade-up' data-aos-duration='1500'>
+							<div
+								className='col-xl-10 col-lg-9 col-md-8'
+								data-aos='fade-up'
+								data-aos-duration='1500'>
 								<div className='cb-category-inner-slider-wrapper'>
 									<Swiper
 										className='swiper-container swiper cb-category-active'
@@ -58,7 +64,9 @@ const FoodCategorySection = () => {
 													<img src={item.image} alt='category img' />
 													<div className='cb-category-card-text'>
 														<h4>
-															<Link href='/menu' className='cb-category-cart-name'>
+															<Link
+																href='/menu'
+																className='cb-category-cart-name'>
 																{item.name}
 															</Link>
 														</h4>

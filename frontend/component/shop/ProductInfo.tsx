@@ -37,7 +37,10 @@ const ProductInfo: React.FC<InfoProp> = ({ shopData }) => {
 			<div className='cart-sec'>
 				<h4>Clear Section</h4>
 				<div className='btn-sec'>
-					<a className='custom-btn' role='button' onClick={() => addToCartWithQuantity(shopData.id, quantity)}>
+					<a
+						className='custom-btn'
+						role='button'
+						onClick={() => addToCartWithQuantity(shopData.id, quantity)}>
 						Add To Cart
 					</a>
 				</div>

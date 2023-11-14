@@ -10,7 +10,10 @@ const BreadcrumbSection: React.FC<BreadcrumbSectionProps> = ({ title }) => {
 		<div className='breadcrumb-section mb-10'>
 			<div className='container'>
 				<div className='row'>
-					<div className='breadcrumb-list' data-aos='fade-up' data-aos-duration='1500'>
+					<div
+						className='breadcrumb-list'
+						data-aos='fade-up'
+						data-aos-duration='1500'>
 						<Breadcrumb>
 							<Breadcrumb.Item href='/' className='page-route-link'>
 								Home

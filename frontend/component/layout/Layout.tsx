@@ -12,8 +12,8 @@ import SidebarSection from '../sidebar/SidebarSection';
 const Layout: React.FC<LayoutProps> = ({ children }) => {
 	return (
 		<div className='wrapper theme-3' suppressHydrationWarning={true}>
-			<Header theme='theme-3' logo='img/logo/logo-3.png' />
-			<SidebarSection logo='/img/logo/logo-3.png' />
+			<Header theme='theme-3' logo='img/logo/logo.png' />
+			<SidebarSection logo='/img/logo/logo.png' />
 			<div className='body-wrapper'>
 				{children}
 				<FooterSection style='footer-3' />

@@ -16,7 +16,10 @@ const LoginModal: React.FC = () => {
 			size='lg'
 			centered>
 			<Modal.Body className='lightbox-modal-body'>
-				<div className='contact cpy-6' data-aos='fade-up' data-aos-duration='1000'>
+				<div
+					className='contact cpy-6'
+					data-aos='fade-up'
+					data-aos-duration='1000'>
 					<div className='container'>
 						<div className='row'>
 							<div className='col-xl-12'>

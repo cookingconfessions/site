@@ -12,12 +12,20 @@ const Header: React.FC<HeaderProp> = ({ logo, theme }) => {
 
 	return (
 		<header>
-			<div className={`header header-2 ${theme} ${isHeaderFixed ? 'navbar-fixed' : ''}`}>
+			<div
+				className={`header header-2 ${theme} ${
+					isHeaderFixed ? 'navbar-fixed' : ''
+				}`}>
 				<div className='container'>
 					<div className='header-inner second-home-nav'>
 						<div className='logo'>
 							<Link href='/'>
-								<img src={`/${logo}`} alt='Logo not found' className='logo-img' />
+								<img
+									src={`/${logo}`}
+									alt='Logo not found'
+									className='logo-img'
+								/>{' '}
+								<span className='sm-title'>Cooking Confessions</span>
 							</Link>
 						</div>
 						<div className='header-right'>

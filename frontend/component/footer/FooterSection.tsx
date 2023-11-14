@@ -22,7 +22,16 @@ const FooterSection: React.FC<FooterProp> = ({ style }) => {
 							data-aos-duration='500'>
 							<div className='footer-content-wrapper'>
 								<div className='footer-logo mb-4'>
-									<img src='/img/logo/logo-white.png' alt='' />
+									<Link href='/'>
+										<img
+											src='/img/logo/logo.png'
+											alt='Logo not found'
+											className='logo-img'
+										/>{' '}
+										<span className='footer-widget-title'>
+											Cooking Confessions
+										</span>
+									</Link>
 								</div>
 								<p> {companyInfo.description}</p>
 								<ul className='address'>

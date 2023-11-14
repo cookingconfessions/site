@@ -4,7 +4,11 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 const LoginForm = () => {
-	const { passwordVisible, togglePasswordVisibility, handleUserLogin } = useAppContext();
+	const {
+		passwordVisible,
+		togglePasswordVisibility,
+		handleUserLogin,
+	} = useAppContext();
 	const [userName, setUserName] = useState('');
 	const [password, setPassword] = useState('');
 	const handleFormSubmit = (e: React.FormEvent) => {
@@ -26,7 +30,9 @@ const LoginForm = () => {
 	};
 
 	return (
-		<form className='login-form login-form-login login' onSubmit={handleFormSubmit}>
+		<form
+			className='login-form login-form-login login'
+			onSubmit={handleFormSubmit}>
 			<p className='login-form-row login-form-row--wide form-row form-row-wide'>
 				<label htmlFor='username'>
 					Username or email address&nbsp;
@@ -56,7 +62,10 @@ const LoginForm = () => {
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 					/>
-					<span className='show-password-input' role='button' onClick={togglePasswordVisibility}></span>
+					<span
+						className='show-password-input'
+						role='button'
+						onClick={togglePasswordVisibility}></span>
 				</span>
 			</p>
 

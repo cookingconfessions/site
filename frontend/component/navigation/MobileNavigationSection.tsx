@@ -4,7 +4,10 @@ import NavLink from './NavLink';
 const MobileNavigationSection = () => {
 	return (
 		<div className='mobile-menu-container'>
-			<a href='#nav' className='mobile-menu-reveal' style={{ right: 0, left: 'auto', display: 'inline' }}>
+			<a
+				href='#nav'
+				className='mobile-menu-reveal'
+				style={{ right: 0, left: 'auto', display: 'inline' }}>
 				<span>
 					<span>
 						<span></span>
@@ -13,7 +16,10 @@ const MobileNavigationSection = () => {
 			</a>
 			<nav className='mobile-menu-nav'>
 				<div className='mobile-menu-bar'>
-					<a href='#nav' className='mobile-menu-reveal' style={{ right: 0, left: 'auto', display: 'inline' }}>
+					<a
+						href='#nav'
+						className='mobile-menu-reveal'
+						style={{ right: 0, left: 'auto', display: 'inline' }}>
 						<span>
 							<span>
 								<span></span>

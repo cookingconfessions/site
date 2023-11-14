@@ -13,47 +13,48 @@ const OrderFeatureSection = () => {
 							<span className='sm-title theme-3'>How we do it</span>
 							<h2 className='section-title'>Treat yourself</h2>
 							<p>
-								Dorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor <br />
+								Dorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+								eiusmod tempor <br />
 								incididunt ut labore et dolore magna aliqua. Quis ipsum susp
 							</p>
 						</div>
 					</div>
 				</div>
 				<div className='row'>
-					<div className='col-xl-4 col-lg-4 col-md-6 col-sm-6' data-aos='fade-up' data-aos-duration='2000'>
+					<div
+						className='col-xl-4 col-lg-4 col-md-6 col-sm-6'
+						data-aos='fade-up'
+						data-aos-duration='2000'>
 						<div className='order-feature-single text-center mb-30'>
 							<span className='order-feature-icon'>
-								<img src='img/feature/feature3.png' alt='icon' />
+								<img src='img/feature/african-meal-order.png' alt='icon' />
 							</span>
 							<h4 className='order-feature-title'>Easily Order</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore{' '}
-							</p>
+							<p>Order one of our African cuisines. </p>
 						</div>
 					</div>
-					<div className='col-xl-4 col-lg-4 col-md-6 col-sm-6' data-aos='fade-up' data-aos-duration='1500'>
+					<div
+						className='col-xl-4 col-lg-4 col-md-6 col-sm-6'
+						data-aos='fade-up'
+						data-aos-duration='1500'>
 						<div className='order-feature-single text-center mb-30'>
 							<span className='order-feature-icon'>
-								<img src='img/feature/feature2.png' alt='icon' />
+								<img src='img/feature/african-meal-delivery.png' alt='icon' />
 							</span>
 							<h4 className='order-feature-title'>Quick Delivery</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore{' '}
-							</p>
+							<p>We delivers instantly. </p>
 						</div>
 					</div>
-					<div className='col-xl-4 col-lg-4 col-md-6 col-sm-6' data-aos='fade-up' data-aos-duration='1000'>
+					<div
+						className='col-xl-4 col-lg-4 col-md-6 col-sm-6'
+						data-aos='fade-up'
+						data-aos-duration='1000'>
 						<div className='order-feature-single text-center mb-30'>
 							<span className='order-feature-icon'>
-								<img src='img/feature/feature.png' alt='icon' />
+								<img src='img/feature/african-meal-enjoy.png' alt='icon' />
 							</span>
 							<h4 className='order-feature-title'>Enjoy</h4>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore{' '}
-							</p>
+							<p>Enjoy, you only live once! </p>
 						</div>
 					</div>
 				</div>

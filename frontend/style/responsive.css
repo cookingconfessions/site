@@ -140,15 +140,6 @@
         height: 700px;
     }
 
-    .pricing-2 .plan-price {
-        font-size: 36px;
-    }
-
-    .pricing-2 .custom-btn-alt {
-        padding: 10px 15px;
-        font-size: 13px;
-    }
-
     .customer-1 .review-pagination {
         margin-left: 25px;
     }
@@ -359,23 +350,6 @@
         margin-left: 25px;
     }
 
-    .postbox__thumb.w-img img {
-        height: 300px;
-    }
-
-    .postbox__content {
-        padding: 20px;
-        padding-top: 15px;
-    }
-
-    .post-details {
-        padding: 20px;
-    }
-
-    .post-img img {
-        height: 300px;
-    }
-
     .all-product-1 .product-details {
         padding: 20px;
     }
@@ -420,10 +394,6 @@
         line-height: 15px;
       }
       /* quick view */
-
-    .delivery-area.delivery-area-3 .video-btn {
-        margin: 0;
-    }
 
     .order-feature-area.pt-100.pb-70 {
         padding-top: 50px;
@@ -479,10 +449,6 @@
         font-size: 20px;
     }
 
-    .cb-team-single-name {
-        font-size: 20px;
-    }
-
     .hero4-search {
         width: 100%;
     }
@@ -513,19 +479,8 @@
         font-size: inherit;
     }
 
-    .delivery-area.delivery-area-3 .video-btn {
-        margin: 0;
-    }
-
     .commenter-img img {
         width: 50px;
-    }
-
-    .delivery {
-        height: auto;
-        display: block;
-        padding: 30px 25px;
-        padding-bottom: 35px;
     }
 
     .store img {
@@ -605,16 +560,6 @@
         padding-bottom: 45px;
     }
 
-    .cb-top-rated-restaurant {
-        padding-top: 50px;
-        padding-bottom: 50px;
-    }
-
-    .cb-team-area {
-        padding-top: 50px;
-        padding-bottom: 50px;
-    }
-
     .cb-slide-price {
         font-size: 18px;
     }
@@ -627,15 +572,6 @@
         margin-bottom: 40px;
     }
 
-    .postbox__content {
-        padding: 15px;
-        padding-top: 10px;
-    }
-
-    .postbox__thumb.w-img img {
-        height: 300px;
-    }
-
     .faq__ans {
         padding: 12px 15px;
     }
@@ -646,14 +582,6 @@
 
     .sec-title {
         font-size: 24px;
-    }
-
-    .service-details-img img {
-        height: 250px;
-    }
-
-    .service-heding {
-        font-size: 22px;
     }
 
     .shop-area {
@@ -733,10 +661,6 @@
 
     .delivery {
         background-size: cover;
-    }
-
-    .delivery-img img {
-        top: 0;
     }
 
     .about-3 .about-img {
@@ -888,15 +812,6 @@
         font-size: 20px;
     }
 
-    .delivery {
-        background-position: center;
-        text-align: center;
-    }
-
-    .cb-team-single-name {
-        font-size: 20px;
-    }
-
     .cb-offer-cta-content-subtitle {
         font-size: 20px;
     }
@@ -933,10 +848,6 @@
         font-size: 32px;
     }
 
-    .team-about-details-wrapper.pl-30 {
-        padding-left: 0;
-    }
-
     .banner-3 .banner-slider {
         padding-top: 60px;
     }
@@ -951,14 +862,6 @@
 
     .call-sec-title {
         font-size: 28px;
-    }
-
-    .pricing-card-sec {
-        margin-top: 10px;
-    }
-
-    .delivery-img {
-        display: none;
     }
 
     .about-title {
@@ -1072,16 +975,6 @@
         padding: 70px 0;
     }
 
-    .video-area {
-        padding-top: 60px;
-        height: 300px;
-    }
-
-    .delivery-area-3 .video-area {
-        height: 385px;
-        padding-top: 75px;
-    }
-
     .form-wrapper {
         margin-top: -150px;
     }
@@ -1096,10 +989,6 @@
 
     .service-list {
         margin-bottom: 0 !important;
-    }
-
-    .pricing-card-sec.cmy-5 {
-        margin-bottom: 0;
     }
 
     .m-mr-0 {
@@ -1197,10 +1086,6 @@
 
     .smpadright40 .footer-content-wrapper {
         padding-right: 0;
-    }
-
-    .postbox__title {
-        font-size: 20px;
     }
 
     .page-banner {

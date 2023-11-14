@@ -12,21 +12,30 @@ const ScheduleSection = () => {
 					<div className='container'>
 						<div className='position-relative'>
 							<div className='row'>
-								<div className='col-md-6 col-xl-8 col-lg-7 my-2' data-aos='fade-right' data-aos-duration='1000'>
+								<div
+									className='col-md-6 col-xl-8 col-lg-7 my-2'
+									data-aos='fade-right'
+									data-aos-duration='1000'>
 									<div className='available-content'>
 										<h2 className='available-head'>
 											You confess, we cook <br /> and deliver African taste.
 										</h2>
 										<p className='mb-0'>
-											Do you have a grill party, wedding, baby shower or an event? We got you sorted! <br /> We are
-											available for booking. We promise great delicacies from our team.
+											Do you have a special dinner, grill party, baby shower or
+											any other event? We got you sorted! <br /> Book us now and
+											experience great delicacies from our team.
 										</p>
 									</div>
-									<div className='banner-btn-sec mt-3' onClick={openBookingModal}>
+									<div
+										className='banner-btn-sec mt-3'
+										onClick={openBookingModal}>
 										<a className='custom-btn'>Book catering</a>
 									</div>
 								</div>
-								<div className='col-md-6 col-xl-4 col-lg-5 my-2' data-aos='fade-left' data-aos-duration='1000'>
+								<div
+									className='col-md-6 col-xl-4 col-lg-5 my-2'
+									data-aos='fade-left'
+									data-aos-duration='1000'>
 									<div className='avail-inner'>
 										<div className='available-note'>
 											<div className='note-head'>
@@ -43,7 +52,9 @@ const ScheduleSection = () => {
 
 											<div className='note-footer'>
 												<h4 className='note-footer-text'>Call Us Now</h4>
-												<a className='note-footer-text' href='tel:+993240-765230'>
+												<a
+													className='note-footer-text'
+													href='tel:+993240-765230'>
 													+993240-765230
 												</a>
 											</div>

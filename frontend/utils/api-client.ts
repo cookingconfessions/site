@@ -19,8 +19,8 @@ interface ApiClient {
 }
 
 const api = axios.create({
-    baseURL: "http://127.0.0.1:8000/api",
-    timeout: 10000,
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    timeout: parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT ?? '5000'),
     headers: {
         'Content-Type': 'application/json',
         // Authorization: 'Bearer your-token',

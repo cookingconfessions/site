@@ -1,16 +1,11 @@
 /*========================================
-Author Name:   Codebasket
+Author Name:   Michael Murithi
 Template Type: Restaurant Management
 Brand Color:   #cc3333, #79a1bb, #FBB217
 Icon:          Ico font
 Text font:     Lobster Two, Roboto
 Version:       v1.0.01
 -----------------------------
-
-Thanks for purchasing the template. I hope the template will come in handy. If you want to develop this template then you can contact me, I will develop you at a very reasonable price. In addition, I am available for any kind of support.
-
-By the way,
-Don't forgot your feedback or ratings.
 
 /* ======all font use====== */
 
@@ -20,8 +15,6 @@ Don't forgot your feedback or ratings.
   margin: 0;
   box-sizing: border-box;
 }
-
-
 
 /* ====end CSS Variable=== */
 
@@ -770,11 +763,6 @@ img.cat-icon {
   margin: 10px 0;
 }
 
-.delivery {
-  color: #cc3333;
-  background-position: right center;
-  background-image: url(../public/img/delevery-bg.png);
-}
 .pb-70 {
   padding-bottom: 70px;
 }
@@ -831,85 +819,6 @@ img.cat-icon {
   background: #cc3333;
 }
 
-/* ==================app section ============= */
-
-.app-inner {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url(../public/img/app/app-bg.png);
-}
-
-.app-feature {
-  padding: 50px;
-}
-
-.app-title {
-  font-size: 36px;
-  line-height: 1.3;
-}
-
-.app-store {
-  display: flex;
-}
-
-.store img {
-  width: 151px;
-  margin: 15px 10px 0 0;
-}
-
-.app-img {
-  position: relative;
-}
-
-img.app-one {
-  position: absolute;
-  right: 0;
-  animation-delay: 2s;
-  width: 48%;
-  animation: second-app 1.5s linear infinite alternate;
-  -webkit-animation: second-app 1.5s linear infinite alternate;
-}
-
-@-webkit-keyframes second-app {
-  0% {
-    margin-top: -13px;
-  }
-  100% {
-    margin-top: -20%;
-  }
-}
-
-@keyframes second-app {
-  0% {
-    transform: translateY(-13px);
-  }
-  100% {
-    transform: translateY(-30px);
-  }
-}
-
-.app-section-1 img.app-tow {
-  margin-top: 50px;
-}
-
-@-webkit-keyframes first-app {
-  0% {
-    margin-top: -20%;
-  }
-  100% {
-    margin-top: -15%;
-  }
-}
-
-@keyframes first-app {
-  0% {
-    transform: translateY(0px);
-  }
-  100% {
-    transform: translateY(15px);
-  }
-}
-
 /* ============availability===== */
 
 
@@ -926,74 +835,6 @@ img.app-one {
 .note-footer-text:hover {
   color: #FBB217;
 }
-
-
-/* ====================================================
-                Team
-==================================================== */
-
-.team {
-  padding-top: 105px;
-}
-
-.member-img img {
-  width: 100%;
-  transition: 0.6s;
-}
-.member-img a {
-  display: block;
-}
-
-.team-card:hover .member-img img {
-  transform: scale(1.05);
-}
-.team-card.team-details-card:hover .member-img img {
-  transform: scale(1);
-}
-
-.member-img {
-  overflow: hidden;
-}
-.team-card {
-  text-align: center;
-  box-shadow: 0px 9px 20px 1px #98767626;
-}
-
-.member-details {
-  padding: 15px 10px;
-}
-
-.team-card::after {
-  content: "";
-  height: 2px;
-  width: 65%;
-  background: #000;
-  display: block;
-  margin: auto;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  -moz-transition: 0.3s;
-  -ms-transition: 0.3s;
-  -o-transition: 0.3s;
-}
-
-.member-name {
-  font-size: 20px;
-  padding-bottom: 7px;
-  color: #292929;
-  font-weight: 600;
-  transition: 0.3s;
-  display: block;
-}
-
-.member-name:hover {
-  color: #cc3333;
-}
-
-.team-card:hover::after {
-  background: #cc3333;
-}
-
 
 /* ====================================================================
                     Customer Review
@@ -1069,23 +910,6 @@ img.app-one {
 }
 .banner-3 .text-inner .sm-title {
   color: #FBB217;
-}
-.banner-img-one {
-  background-image: url(../public/img/slider/banner-2.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.banner-img-two {
-  background-image: url(../public/img/slider/baner21.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.banner-img-three {
-  background-image: url(../public/img/slider/baner22.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 
 .about-img {
@@ -1291,13 +1115,6 @@ ul.about-ul {
 }
 /* ===============describes=========== */
 
-.describe {
-  background-image: url(../public/img/call-2.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  padding: 95px 0;
-}
-
 .describe-content {
   text-align: center;
   color: #fff;
@@ -1434,17 +1251,6 @@ ul.rating li span.unrated {
 }
 /* ========================video area and contact section============ */
 
-.video-area {
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding-top: 75px;
-  padding-bottom: 200px;
-  height: 500px;
-  background-image: url(../public/img/video.png);
-}
-.delivery-area-3 .video-area {
-  height: 385px;
-}
 .right-input-icon {
   position: absolute;
   right: 0;
@@ -1479,132 +1285,6 @@ ul.rating li span.unrated {
 
 .form-inside {
   padding: 40px 30px;
-}
-
-/* ====================================pricing table ========= */
-
-.pricing-card {
-  text-align: center;
-  background: #cc3333;
-  padding: 50px 30px;
-  color: #fff;
-  border: 2px solid #cc3333;
-  transition: 0.3s;
-}
-
-.pricing-card.active {
-  transform: scale(1.2);
-  background: #fff;
-  color: #292929;
-  -webkit-transform: scale(1.2);
-  -moz-transform: scale(1.2);
-  -ms-transform: scale(1.2);
-  -o-transform: scale(1.2);
-}
-.pricing-2 .pricing-card {
-  background: #79a1bb;
-  border: 2px solid #79a1bb;
-}
-.pricing-2.theme-1 .pricing-card {
-  background: #cc3333;
-  border: 2px solid #cc3333;
-}
-.pricing-2 .pricing-card.active {
-  background: #fff;
-}
-.pricing-2 .custom-btn-alt {
-  color: #79a1bb;
-  margin-top: 10px;
-}
-.pricing-2.theme-1 .custom-btn-alt {
-  color: #cc3333;
-}
-.pricing-2 .custom-btn-alt:hover {
-  background: #79a1bb;
-}
-.pricing-2.theme-1 .custom-btn-alt:hover {
-  background: #cc3333;
-}
-.pricing-2 .pricing-card:hover .custom-btn-alt {
-  background: #79a1bb;
-  color: #fff;
-}
-.pricing-2.theme-1 .pricing-card:hover .custom-btn-alt {
-  background: #cc3333;
-  color: #fff;
-}
-.pricing-2 .pricing-card.active .custom-btn-alt {
-  background: #79a1bb;
-}
-.pricing-2.theme-1 .pricing-card.active .custom-btn-alt {
-  background: #cc3333;
-}
-.plan-name {
-  font-size: 20px;
-  margin-bottom: 15px;
-  color: #fff;
-}
-.pricing-2 .sm-title {
-  color: #79a1bb;
-}
-.pricing-2.theme-1 .sm-title {
-  color: #cc3333;
-}
-ul.future-list {
-  padding: 10px 0;
-}
-
-ul.future-list li {
-  margin: 5px 0;
-}
-
-.currency-type {
-  font-size: 18px;
-  display: inline;
-}
-
-.plan-price {
-  color: #fff;
-  font-size: 45px;
-}
-
-.package-time {
-  font-size: 15px;
-}
-
-.pricing-card.active .plan-name {
-  color: #292929;
-}
-
-.pricing-card.active .plan-price {
-  color: #292929;
-}
-
-.pricing-card:hover .plan-name {
-  color: #292929;
-}
-
-.pricing-card:hover .plan-price {
-  color: #292929;
-}
-
-.pricing-card:hover .custom-btn-alt {
-  background: #cc3333;
-  color: #fff;
-}
-
-.pricing-card.active ul.future-list {
-  color: #666666;
-}
-
-.pricing-card.active .custom-btn-alt {
-  background: #cc3333;
-  color: #fff;
-}
-
-.pricing-card-sec {
-  margin-top: 52px;
-  margin-bottom: 20px;
 }
 
 /* =============================================
@@ -1917,74 +1597,6 @@ ul.about-ul li {
   padding-left: 25px;
 }
 
-/* ==========================================
-        Subscribe
-========================================== */
-.mb-120 {
-  margin-bottom: 120px;
-}
-.subscribe-wrapper {
-  background-image: url(../public/img/image/ad-ban-bg.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.hero-text {
-  height: 100%;
-  align-items: center;
-  display: flex;
-}
-
-.subscribe {
-  padding: 100px 0;
-  background: #0000007d;
-  position: relative;
-}
-
-.content-subs {
-  z-index: 5;
-}
-
-.subscribe::before {
-  content: "";
-  clip-path: polygon(0% 0%, 100% 0%, 76% 100%, 0% 100%);
-  background: #FBB217e3;
-  height: 100%;
-  display: block;
-  width: 60%;
-  position: absolute;
-  top: 0;
-}
-.subscribe-wrapper-1 .subscribe::before {
-  display: none;
-}
-.contact-area-2 .form-control:focus {
-  border-color: #79a1bb;
-}
-.subscribe-wrapper-1 .form-control {
-  padding: 0.775rem 0.75rem;
-  border-radius: 0;
-}
-
-.subs-des {
-  color: #fff;
-  font-size: 15px;
-}
-
-.input-group-text {
-  border: none;
-  border-radius: 0;
-}
-
-.hero-text {
-  align-items: center;
-  display: flex;
-}
-
-.hero-form {
-  width: 100%;
-}
-
 /* ==========================Product section style ================= */
 
 .product {
@@ -2072,51 +1684,6 @@ ul.rating li span.unrated {
   -o-transition: 0.3s;
 }
 
-/* =======================================================Delivery========== */
-
-.delivery {
-  background-repeat: no-repeat;
-  background-size: 100%;
-  height: 315px;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 30px;
-  padding-bottom: 40px;
-}
-
-.delivery-img img {
-  width: 100%;
-  position: absolute;
-  right: 0%;
-  top: -65px;
-}
-
-.delivery-img {
-  text-align: center;
-  position: relative;
-}
-
-.delivery-content {
-  color: #fff;
-}
-
-.delivery-title {
-  color: #fff;
-}
-
-.delivery-content p {
-  padding: 20px 0;
-}
-
-.delivery {
-  margin-top: -175px;
-}
-
-.delivery .row {
-  width: 100%;
-}
-
 /* =============================================
         customer
 =========================================== */
@@ -2176,35 +1743,6 @@ ul.rating li span.unrated {
 }
 .latest-blog-2 .sm-title {
   color: #79a1bb;
-}
-
-/* ================================service =================== */
-
-.pl-40 {
-  padding-left: 40px;
-}
-.mt-40 {
-  margin-top: 40px;
-}
-.service-icon img {
-  transition: 0.3s;
-  width: 60px;
-  height: 60px;
-}
-.about-1 .service-icon img {
-  width: auto;
-  height: auto;
-}
-.service-card:hover .service-name {
-  color: #fff;
-}
-
-.service-card:hover .service-sm-des {
-  color: #fff;
-}
-
-.service-card:hover .show-btn {
-  color: #fff;
 }
 
 /* ==================app section ============= */
@@ -2329,13 +1867,6 @@ img.app-tow {
 
 /* ===============describes=========== */
 
-.describe {
-  background-image: url(../public/img/call-2.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  padding: 95px 0;
-}
-
 .describe-content {
   text-align: center;
   color: #fff;
@@ -2354,56 +1885,6 @@ img.app-tow {
 .call-number {
   font-size: 20px;
   padding-bottom: 13px;
-}
-
-/* ====================================================
-                Team
-==================================================== */
-
-.member-img img {
-  width: 100%;
-}
-
-.team-card {
-  text-align: center;
-  box-shadow: 0px 9px 20px 1px #98767626;
-}
-
-.member-details {
-  padding: 20px 15px;
-}
-
-.team-card::after {
-  content: "";
-  height: 2px;
-  width: 65%;
-  background: #000;
-  display: block;
-  margin: auto;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  -moz-transition: 0.3s;
-  -ms-transition: 0.3s;
-  -o-transition: 0.3s;
-}
-
-.member-name {
-  font-size: 20px;
-  padding-bottom: 7px;
-  color: #292929;
-  font-weight: 600;
-  transition: 0.3s;
-  display: block;
-}
-
-.member-name:hover {
-  color: #cc3333;
-}
-.team-details-card .member-name:hover {
-  color: #292929;
-}
-.team-card:hover::after {
-  background: #cc3333;
 }
 
 /* ============availability===== */
@@ -2494,170 +1975,8 @@ img.app-tow {
   font-size: 20px;
 }
 
-
 /* =====================About page end ========= */
 
-/* ================================service =================== */
-
-.service-card {
-  padding: 28px;
-  border: 1px solid #ddd;
-  text-align: center;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  -moz-transition: 0.3s;
-  -ms-transition: 0.3s;
-  -o-transition: 0.3s;
-}
-
-.service-icon.serv-icon {
-  width: 100%;
-  background: none;
-}
-
-.service-name {
-  font-size: 20px;
-  margin: 15px 0;
-  transition: 0.3s;
-}
-
-.service-sm-des {
-  margin-bottom: 20px;
-  transition: 0.3s;
-}
-
-.show-btn {
-  font-size: 17px;
-  text-decoration: revert;
-  font-weight: 400;
-  color: #cc3333;
-  transition: 0.3s;
-}
-
-.service-card:hover {
-  background: #cc3333;
-}
-
-.service-card:hover .service-icon img {
-  filter: invert(1);
-}
-
-.service-card:hover .service-name {
-  color: #fff;
-}
-
-.service-card:hover .service-sm-des {
-  color: #fff;
-}
-
-.service-card:hover .show-btn {
-  color: #fff;
-}
-
-/* ========================service details ==================== */
-
-.post-inner-img {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-ul.service-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px dashed #ddd;
-  padding: 8px 0;
-}
-
-.service-link {
-  color: #666666;
-  transition: 0.3s;
-}
-
-.service-link:hover {
-  color: #cc3333;
-}
-
-.title-name {
-  font-size: 20px;
-  display: inline-block;
-}
-
-.service-list {
-  margin-top: 10px;
-}
-.note-head.bars {
-  text-align: left;
-}
-
-.note-head.bars h2 {
-  font-size: 20px;
-}
-
-.note-head.bars h4 {
-  font-size: 15px;
-}
-.pl-50 {
-  padding-left: 50px;
-}
-.product-slider img {
-  width: 100%;
-}
-.mt-25 {
-  margin-top: 25px;
-}
-.product-slider {
-  position: relative;
-}
-.about-2-button .custom-btn {
-  background: #79a1bb;
-}
-.about-2-button .custom-btn:hover {
-  background: #292929;
-}
-.arrow-btn {
-  background: #fff;
-  padding: 0 15px;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  -moz-transition: 0.3s;
-  -ms-transition: 0.3s;
-  -o-transition: 0.3s;
-}
-
-.arrow-btn:hover {
-  background: #cc3333;
-}
-
-.arrow-btn::after {
-  font-size: 20px;
-  color: #292929;
-  transition: 0.3s;
-  -webkit-transition: 0.3s;
-  -moz-transition: 0.3s;
-  -ms-transition: 0.3s;
-  -o-transition: 0.3s;
-}
-
-.arrow-btn:hover::after {
-  color: #fff;
-}
-
-.service-info img {
-  width: 100%;
-}
-
-@media screen and (max-width: 767px) {
-  .single-service-right-bar {
-    margin-top: 30px;
-    padding: 0;
-  }
-  .image-content {
-    margin-left: 0;
-  }
-}
 
 /* ==========================Product section style ================= */
 
@@ -2710,74 +2029,6 @@ ul.service-list li {
 
 tbody.table-body-text tr td {
   padding-top: 0;
-}
-
-/* ====================================pricing table ========= */
-
-.pricing-card.active {
-  transform: scale(1.2);
-  background: #fff;
-  color: #292929;
-}
-
-.plan-name {
-  font-size: 20px;
-  margin-bottom: 15px;
-  color: #fff;
-}
-
-ul.future-list {
-  padding: 10px 0;
-}
-
-ul.future-list li {
-  margin: 10px 0;
-}
-
-.currency-type {
-  font-size: 18px;
-  display: inline;
-}
-
-.plan-price {
-  color: #fff;
-  font-size: 45px;
-}
-
-.package-time {
-  font-size: 15px;
-}
-
-.pricing-card.active .plan-name {
-  color: #292929;
-}
-
-.pricing-card.active .plan-price {
-  color: #292929;
-}
-
-.pricing-card:hover {
-  transform: scale(1.2);
-  background: #fff;
-  color: #292929;
-}
-
-.pricing-card:hover .plan-name {
-  color: #292929;
-}
-
-.pricing-card:hover .plan-price {
-  color: #292929;
-}
-
-.pricing-card:hover a.custom-btn-alt {
-  background: #cc3333;
-  color: #fff;
-}
-
-.pricing-card.active a.custom-btn-alt {
-  background: #cc3333;
-  color: #fff;
 }
 
 /* =====================menu====================== */
@@ -2931,97 +2182,7 @@ ul.rating li span.unrated {
                     <!-- FAQ STYLE END -->
 ==================================================================*/
 
-/* ============================================================================
-                                Blog and news
-============================================================================ */
-
-.latest-blog.blog-bg {
-  background: none;
-}
-
-.post-title {
-  font-size: 20px;
-  line-height: 28px;
-  color: #292929;
-  font-weight: 600;
-  transition: 0.3s;
-  display: block;
-}
-
-.post-title:hover {
-  color: #cc3333;
-}
-
-.post-details {
-  padding: 20px 25px;
-}
-
-.post-des {
-  padding: 15px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.post-card {
-  background: #fff;
-  box-shadow: 0px 5px 20px 1px #00000029;
-}
-
-.view-more {
-  color: #666666;
-  transition: 0.3s;
-  border-bottom: 2px solid #7a7a7a;
-  font-weight: 600;
-}
-
-
-/* =================================================single blog post ========= */
-
-.l-post-title {
-  font-size: 36px;
-  margin-bottom: 17px;
-}
-
-.blog-img img {
-  width: 100%;
-}
-
-.recent-post-title {
-  font-weight: 600;
-  color: #292929;
-  transition: 0.3s;
-}
-
-.recent-post-title:hover {
-  color: #cc3333;
-}
-
-ul.post-date-time {
-  padding: 10px 0;
-  display: flex;
-  align-items: center;
-}
-
-ul.post-date-time li {
-  margin-right: 15px;
-}
-
-.blog-inside-img {
-  width: 100%;
-}
-
-.mark-des {
-  padding: 33px;
-  background: #f9f9f9;
-  margin: 26px;
-}
-
-.client {
-  text-align: right;
-}
-
-.client-name {
-  font-size: 20px;
-}
+/* =======================Comments design start===================== */
 
 .single-comment {
   display: flex;
@@ -3251,66 +2412,6 @@ input.qty.form-control {
   min-width: 50px;
   max-width: 50px;
   text-align: center;
-}
-
-/* ===============================team view ============ */
-
-.personal-info {
-  background: #fff;
-  box-shadow: 0px 1px 20px 1px #f2f2f2;
-  margin-top: 50px;
-  padding: 30px 30px;
-}
-
-table.info-table {
-  width: 100%;
-  color: #292929;
-  font-weight: 500;
-}
-
-table.info-table tbody tr {
-  padding: 5px 0;
-  display: block;
-}
-
-.team-card-title {
-  display: inline-block;
-  position: relative;
-}
-
-.team-sec-title:before {
-  content: "";
-  border-bottom: 3px solid #cc3333;
-  width: 40%;
-  height: 3px;
-  display: block;
-  position: absolute;
-  bottom: 0;
-}
-
-.team-sec-title {
-  position: relative;
-  padding-bottom: 2px;
-  margin-bottom: 10px;
-  display: inline-block;
-}
-
-.team-about {
-  margin-bottom: 35px;
-}
-
-tbody.table-body-text {
-  color: #666666;
-}
-
-.card-title {
-  font-size: 20px;
-}
-
-@media screen and (max-width: 500px) {
-  .personal-info {
-    padding: 20px;
-  }
 }
 
 /* ==============shop============= */
@@ -3730,37 +2831,6 @@ ul.social-ul {
   border-color: #FBB217;
 }
 
-.delivery-area-3 .video-btn {
-  background: #FBB217;
-}
-.delivery-area-3 .video-btn:before {
-  background: #FBB217;
-}
-.delivery-area-3 .custom-btn-light {
-  background: #FBB217;
-  margin-top: 10px;
-}
-.delivery-area-3 .custom-btn-light:hover {
-  color: #FBB217;
-  background: #fff;
-}
-.customer-2.theme-3 .sm-title {
-  color: #FBB217;
-}
-.customer-2.theme-3 span.swiper-pagination-bullet.swiper-pagination-bullet-active {
-  transform: scale(1);
-  background: #FBB217;
-}
-.latest-blog-3 .sm-title {
-  color: #FBB217;
-}
-.latest-blog-3 .post-title:hover {
-  color: #FBB217;
-}
-.latest-blog-3 .view-more:hover {
-  color: #FBB217;
-  border-color: #FBB217;
-}
 .header .container {
   position: relative;
   z-index: 1;
@@ -4198,54 +3268,11 @@ ul.social-ul {
 .pl-30 {
   padding-left: 30px;
 }
-.team-about .table.table-borderless th {
-  padding-left: 0;
-}
-.team-about .table.table-borderless td {
-  padding-left: 0;
-}
-.team-info a {
-  color: #292929;
-}
-.team-info a:hover {
-  color: #cc3333;
-}
-.personal-info .table {
-	margin-bottom: 0;
-}
-.personal-info .table.table-borderless td {
-	padding-bottom: 0;
-}
 .mb-35 {
   margin-bottom: 35px;
 }
 .pb-60 {
   padding-bottom: 60px;
-}
-.team-about .table {
-	margin-bottom: 0;
-}
-.blog-meta-single {
-  font-size: 15px;
-  color: #666;
-  margin-right: 15px;
-  margin-bottom: 5px;
-  display: inline-block;
-}
-.blog-meta-single a {
-  color: #666;
-  transition: 0.3s;
-}
-.blog-meta-single:last-child {
-  margin-right: 0;
-}
-.blog-meta-single i {
-  color: #292929;
-  display: inline-block;
-  margin-right: 5px;
-}
-.blog-meta-single a:hover {
-  color: #292929;
 }
 .mb-10 {
   margin-bottom: 10px;
@@ -4253,21 +3280,11 @@ ul.social-ul {
 .mb-20 {
   margin-bottom: 20px;
 }
-.blog-details-title {
-	font-size: 32px;
-}
 .mt-30 {
   margin-top: 30px;
 }
 .mb-45 {
   margin-bottom: 45px;
-}
-.blog-inner-title {
-	font-size: 28px;
-}
-.blog-details-content {
-	border: 1px solid #f2f2f2;
-	padding: 40px 40px;
 }
 .mt-20 {
   margin-top: 20px;
@@ -4278,26 +3295,6 @@ ul.social-ul {
 .info-list li p {
 	margin-bottom: 0;
 }
-.blog-inner-tags a {
-  padding: 5px 10px;
-  border: 1px solid #ddd;
-  color: #666666;
-  transition: 0.3s;
-  margin-right: 3px;
-  margin-bottom: 5px;
-  display: inline-block;
-}
-.blog-inner-tags a:hover {
-  border-color: #cc3333;
-  background-color: #cc3333;
-  color: #fff;
-}
-.blog-tag-label {
-  color: #292929;
-  font-weight: 500;
-  display: inline-block;
-  margin-right: 5px;
-}
 .mb-70 {
   margin-bottom: 70px;
 }
@@ -4307,7 +3304,7 @@ ul.social-ul {
 .pt-15 {
   padding-top: 15px;
 }
-.signle-comment-title {
+.single-comment-title {
 	font-size: 24px;
 }
 .mb-50 {
@@ -4409,21 +3406,6 @@ ul.service-list.mt-0 {
 .pt-100 {
   padding-top: 100px;
 }
-.postbox__content {
-  padding: 40px 40px;
-  border: 1px solid #f2f2f2;
-  padding-top: 35px;
-}
-.postbox__title {
-  font-size: 32px;
-}
-.postbox__title a {
-  color: #292929;
-  transition: 0.3s;
-}
-.postbox__title:hover a {
-  color: #cc3333;
-}
 .tp-btn {
   font-size: 15px;
   background-color: #cc3333;
@@ -4435,13 +3417,6 @@ ul.service-list.mt-0 {
 .tp-btn:hover {
   color: #fff;
   background-color: #292929;
-}
-.popup-video {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  z-index: 1;
 }
 .p-relative {
   position: relative;
@@ -4491,37 +3466,6 @@ ul.service-list.mt-0 {
     -moz-box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
     box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
   }
-}
-.blog-slider-navigation span {
-  position: absolute;
-  left: 30px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  background-color: #cc3333;
-  color: #fff;
-  z-index: 1;
-  line-height: 48px;
-  border-radius: 50%;
-  text-align: center;
-  font-size: 24px;
-  transition: 0.3s;
-  opacity: 0;
-  visibility: hidden;
-}
-.postbox__item:hover .blog-slider-navigation span {
-  opacity: 1;
-  visibility: visible;
-}
-.blog-slider-navigation span.blog-slider-next {
-  left: auto;
-  right: 30px;
-}
-.blog-slider-navigation span:hover {
-  color: #fff;
-  background-color: #292929;
 }
 .basic-pagination ul li:not(:last-child) {
 	margin-right: 10px;
@@ -4907,16 +3851,6 @@ Update Css For Home 4 & Home 5
   font-size: 22px;
 }
 
-
-
-
-
-
-
-
-
-
-
 .service-section {
 	background-color: #D9E9E9;
 	height: 100%;
@@ -4965,20 +3899,7 @@ Update Css For Home 4 & Home 5
 	z-index: 5;
 	overflow: hidden;
 }
-.service-img {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	height: 100%;
-	width: 100%;
-	z-index: -1;
-	opacity: 0;
-	-webkit-transition: all 0.4s linear 0s;
-	transition: all 0.4s linear 0s;
-	-webkit-transform: translateX(-100px);
-	transform: translateX(-100px);
-  background-image: url(../public/img/category/1.jpg);
-}
+
 .service-img::after {
 	position: absolute;
 	left: 0;
@@ -5141,35 +4062,6 @@ Update Css For Home 4 & Home 5
 .border-topp {
   border-top: 1px solid #f2f2f2;
 }
-.cb-offer-cta {
-  background-position: center right;
-  position: relative;
-  z-index: 1;
-  background-size: cover;
-  background-image: url(../public/img/image/offer-bg.jpg);
-}
-.cb-offer-cta:before {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  content: "";
-  z-index: -1;
-  background-color: rgba(0,0,0,0.3);
-}
-.cb-offer-cta-content-subtitle {
-  font-size: 22px;
-  font-family: 'lobster two';
-  color: #FBB217;
-  display: inline-block;
-  margin-bottom: 10px;
-}
-.cb-offer-cta-content-title {
-  font-size: 60px;
-  font-family: 'oswald';
-  color: #fff;
-}
 .offer-btn {
   height: 45px;
   line-height: 45px;
@@ -5188,89 +4080,6 @@ Update Css For Home 4 & Home 5
 }
 .pb-65 {
   padding-bottom: 65px;
-}
-.cb-team-single-name {
-  font-size: 22px;
-  font-family: 'oswald';
-  margin-bottom: 10px;
-}
-.cb-team-single-name a {
-  color: #292929;
-}
-.cb-team-single-name a:hover {
-  color: #FBB217;
-}
-.cb-team-single-content {
-  padding: 20px 25px;
-  position: relative;
-  z-index: 1;
-}
-.cb-team-single-content:before {
-  position: absolute;
-  bottom: 0;
-  width: 60%;
-  height: 3px;
-  background-color: #FBB217;
-  content: "";
-  margin-left: -30%;
-  display: inline-block;
-  z-index: 1;
-  transition: 0.3s;
-}
-.cb-team-single-content:after {
-  position: absolute;
-  top: 0;
-  height: 3px;
-  background-color: #cc3333;
-  content: "";
-  display: inline-block;
-  width: 0%;
-  margin-left: 0%;
-  left: 50%;
-  z-index: 1;
-  opacity: 0;
-  visibility: hidden;
-  transition: 0.3s;
-}
-.cb-team-single:hover {
-  box-shadow: 0px 18.88px 29px rgba(4, 4, 4, 0.15);
-}
-.cb-team-single {
-  transition: 0.4s;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-.cb-team-single:hover .cb-team-single-content::before {
-  opacity: 0;
-  visibility: hidden;
-  width: 0%;
-  margin-left: 0%;
-}
-.cb-team-single:hover .cb-team-single-content::after {
-  opacity: 1;
-  visibility: visible;
-  width: 60%;
-  margin-left: -30%;
-}
-.hero4-search input:focus {
-	outline: 0;
-}
-.cb-team-single-img img {
-  transition: 0.5s;
-}
-.cb-team-single-img:hover img {
-  transform: scale(1.05);
-}
-.cb-team-single-img {
-  overflow: hidden;
-}
-.hero-area4 {
-  background-size: 100% 100%;
-  background-image: url(../public/img/slider/slider4_bg.jpg);
-}
-.home4-blog .post-title {
-	font-size: 22px;
-	font-family: 'oswald';
 }
 .date-view .date.mb-0 {
   font-size: 14px;
@@ -5518,9 +4327,7 @@ span.sm-title.sm-title2 {
   color: #666;
 }
 /* Extra CSS */
-.banner.banner-1{
-  background-image: url(../public/img/slider/banner-bg.jpg);
-}
+
 .feature-card .feature-details{
   background-image: url(../public/img/icon/f-bg.png);
 }
@@ -5529,14 +4336,11 @@ span.sm-title.sm-title2 {
 .all-product.product-3 .cat-menu.justify-content-center.nav a.cat-menu-li.nav-link.active {
   color: #FBB217;
 }
-.all-product.all-product-1 .product-inner.cpy-8{
-  background-image: url(../public/img/product/bg.jpg);
-}
 .mb-200 {
   margin-bottom: 200px;
 }
 .availability.mb-200{
-  background-image: url(../public/img/subscribe-bg.png);
+  background-image: url(../public/img/cooking-confessions-book-catering-sk.png);
 }
 .modal-content {
   background-color: transparent;
@@ -5651,23 +4455,12 @@ a.qt-btn.product-table-delete-btn {
 .cart-section .input-group{
   justify-content: center;
 }
-.contact-area.contact-area-2 .video-area{
-  background-image: url(../public/img/video-2.png);
-}
+
 .newsletter-text-container{
   z-index: 1;
 }
 .social-sec-4 a{
   color: #fff;
-}
-.banner-4.banner-one{
-  background-image: url(../public/img/slider/slider5_bg.jpg);
-}
-.banner-4.banner-two{
-  background-image: url(../public/img/slider/slider5_1bg.jpg);
-}
-.banner-4.banner-three{
-  background-image: url(../public/img/slider/slider5_2bg.jpg);
 }
 .col-md-6.menu-book-column .menu-list {
   margin-bottom: 30px;
