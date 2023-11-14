@@ -1,5 +1,5 @@
 import { BannerItem, Booking, CompanyInfo, Faq, Message, Schedule } from "@/types/home";
-import { MenuItem, MenuItemCategory } from "@/types/menu";
+import { CouponCode, CreateCustomer, CreateOrder, Customer, MenuItem, MenuItemCategory, Order } from "@/types/menu";
 import axios from "axios";
 import humps from 'humps';
 
@@ -12,7 +12,10 @@ interface ApiClient {
     getFaqs: () => Promise<Faq[]>;
     sendMessage: (message: Message) => Promise<Message[]>;
     bookCatering: (booking: Booking) => Promise<Booking[]>;
-    getSimilarProducts: (itemId: string) => Promise<MenuItem[]>
+    getSimilarProducts: (itemId: string) => Promise<MenuItem[]>;
+    validateCouponCode: (couponCode: string) => Promise<CouponCode>;
+    createCustomer: (customer: CreateCustomer) => Promise<Customer>;
+    createOrder: (customer: CreateOrder) => Promise<Order>
 }
 
 const api = axios.create({
@@ -29,6 +32,7 @@ api.interceptors.request.use((config) => {
     if (config.data) {
         const modifiedData = JSON.stringify(humps.decamelizeKeys(config.data));
         config.data = modifiedData;
+        console.log('modifiedData', modifiedData)
     }
 
     return config;
@@ -99,6 +103,21 @@ const getSimilarProducts = async (itemId: string) => {
     return res.data;
 }
 
+const validateCouponCode = async (couponCode: string) => {
+    const res = await api.get<CouponCode>(`/shop/discountcodes/${couponCode}/`);
+    return res.data;
+}
+
+const createCustomer = async (customer: CreateCustomer) => {
+    const res = await api.post<Customer>("/shop/customers/", customer);
+    return res.data;
+}
+
+const createOrder = async (order: CreateOrder) => {
+    const res = await api.post<Order>("/shop/orders/", order);
+    return res.data;
+}
+
 export const useApiClient = (): ApiClient => {
     return {
         getBannerItems,
@@ -109,6 +128,9 @@ export const useApiClient = (): ApiClient => {
         getFaqs,
         sendMessage,
         bookCatering,
-        getSimilarProducts
+        getSimilarProducts,
+        validateCouponCode,
+        createCustomer,
+        createOrder
     }
 }

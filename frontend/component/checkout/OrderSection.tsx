@@ -1,9 +1,21 @@
 'use client';
 import { useAppContext } from '@/context/AppContext';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const OrderSection: React.FC = () => {
-	const { cart, cartTotal } = useAppContext();
+	const { cart, cartTotal, deliveryFee, couponCode } = useAppContext();
+	const [mainTotal, setMainTotal] = useState<number>(0);
+
+	useEffect(() => {
+		let total = cartTotal + deliveryFee;
+
+		if (couponCode) {
+			total = total * (1 - couponCode.discountPercentage / 100);
+		}
+
+		setMainTotal(total);
+	}, [cartTotal, couponCode]);
+
 	return (
 		<div className='col-xxl-6 col-xl-6 col-lg-6'>
 			<h4 className='cafeu-billing-details-title' id='order_review_heading'>
@@ -31,9 +43,11 @@ const OrderSection: React.FC = () => {
 								<tr className='cart_item' key={item.id}>
 									<td className='product-name'>
 										<div className='product-checkout-image-list'>
-											<img src={item.imgSrc} alt='' />
+											<img src={item.image} alt='' />
 											{item.name}&nbsp;
-											<strong className='product-quantity'>×&nbsp;{item.quantity}</strong>
+											<strong className='product-quantity'>
+												×&nbsp;{item.quantity}
+											</strong>
 										</div>
 									</td>
 									<td className='product-total'>
@@ -60,6 +74,28 @@ const OrderSection: React.FC = () => {
 								</span>
 							</td>
 						</tr>
+						<tr className='cart-subtotal'>
+							<th>Delivery Fee</th>
+							<td>
+								<span className='checkout-Price-amount amount'>
+									<bdi>
+										<span className='checkout-Price-currencySymbol'>$</span>
+										{deliveryFee.toFixed(2)}
+									</bdi>
+								</span>
+							</td>
+						</tr>
+						<tr className='cart-subtotal'>
+							<th>Discount</th>
+							<td>
+								<span className='checkout-Price-amount amount'>
+									<bdi>
+										<span className='checkout-Price-currencySymbol'>$</span>
+										{(cartTotal + deliveryFee - mainTotal).toFixed(2)}
+									</bdi>
+								</span>
+							</td>
+						</tr>
 						<tr className='order-total'>
 							<th>Total</th>
 							<td>
@@ -67,7 +103,7 @@ const OrderSection: React.FC = () => {
 									<span className='checkout-Price-amount amount'>
 										<bdi>
 											<span className='checkout-Price-currencySymbol'>$</span>
-											{cartTotal.toFixed(2)}
+											{mainTotal.toFixed(2)}
 										</bdi>
 									</span>
 								</strong>{' '}
@@ -79,14 +115,16 @@ const OrderSection: React.FC = () => {
 				<div id='payment' className='checkout-checkout-payment'>
 					<ul className='wc_payment_methods payment_methods methods'>
 						<li className='checkout-notice checkout-notice--info checkout-info'>
-							Sorry, it seems that there are no available payment methods for your state. Please contact us if you
-							require assistance or wish to make alternate arrangements.
+							Sorry, it seems that there are no available payment methods for
+							your state. Please contact us if you require assistance or wish to
+							make alternate arrangements.
 						</li>
 					</ul>
 					<div className='form-row place-order'>
 						<noscript>
-							Since your browser does not support JavaScript, or it is disabled, please ensure you click the{' '}
-							<em>Update Totals</em> button before placing your order. You may be charged more than the amount stated
+							Since your browser does not support JavaScript, or it is disabled,
+							please ensure you click the <em>Update Totals</em> button before
+							placing your order. You may be charged more than the amount stated
 							above if you fail to do so. <br />
 							<button
 								type='submit'
@@ -100,9 +138,13 @@ const OrderSection: React.FC = () => {
 						<div className='checkout-terms-and-conditions-wrapper'>
 							<div className='checkout-privacy-policy-text'>
 								<p>
-									Your personal data will be used to process your order, support your experience throughout this
-									website, and for other purposes described in our{' '}
-									<a href='#' className='checkout-privacy-policy-link' target='_blank'>
+									Your personal data will be used to process your order, support
+									your experience throughout this website, and for other
+									purposes described in our{' '}
+									<a
+										href='#'
+										className='checkout-privacy-policy-link'
+										target='_blank'>
 										privacy policy
 									</a>
 									.
@@ -113,9 +155,7 @@ const OrderSection: React.FC = () => {
 						<button
 							type='submit'
 							className='button alt wp-element-button'
-							name='checkout_checkout_place_order'
 							id='place_order'
-							value='Place order'
 							data-value='Place order'>
 							Place order
 						</button>

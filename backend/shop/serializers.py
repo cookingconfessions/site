@@ -6,7 +6,7 @@ from .models import *
 class DiscountCodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiscountCode
-        fields = ("code", "is_active")
+        fields = ("code", "is_active", "discount_percentage")
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
@@ -30,7 +30,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 class CreateCustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ("user", "phone_number", "country", "street_address", "address_line_2")
+        fields = ("user", "phone_number", "country", "address_line1", "address_line2")
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -48,7 +48,7 @@ class GetOrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
     status = serializers.SerializerMethodField()
 
-    def get_day(self, instance: Order):
+    def get_status(self, instance: Order):
         for key, value in instance.ORDER_STATUS:
             if key == instance.status:
                 return value

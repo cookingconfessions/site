@@ -44,11 +44,12 @@ export interface Message {
 
 export interface Booking {
     name: string;
-    phoneNumber: string;
     email: string;
+    phoneNumber: string;
     location: string;
-    message: string;
     date: string;
+    time: string;
+    message: string;
 }
 
 export interface Schedule {

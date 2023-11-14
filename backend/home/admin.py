@@ -5,7 +5,7 @@ from .models import BannerItem, Booking, CompanyInfo, Faq, Message, Schedule
 
 @admin.register(BannerItem)
 class BannerItemAdmin(admin.ModelAdmin):
-    list_display = ("name", "description", "slug", "image", "last_modified")
+    list_display = ("name", "description", "image", "last_modified")
     list_display_links = ("name",)
 
 

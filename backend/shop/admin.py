@@ -10,7 +10,7 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "phone_number", "country", "street_address", "address_line_2")
+    list_display = ("name", "email", "phone_number", "country", "address_line1", "address_line2")
     list_display_links = ("name",)
     search_fields = ("name",)
     list_per_page = 20

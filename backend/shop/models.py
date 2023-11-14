@@ -26,8 +26,8 @@ class Customer(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=50)
     country = models.CharField(max_length=100)
-    street_address = models.CharField(max_length=100)
-    address_line_2 = models.CharField(max_length=100, default="")
+    address_line1 = models.CharField(max_length=100)
+    address_line2 = models.CharField(max_length=100, default="")
 
     def __str__(self) -> str:
         return self.name()
@@ -43,9 +43,9 @@ class Customer(BaseModel):
         return self.user.email
 
     def address(self):
-        if self.address_line_2:
-            return f"{self.street_address}, {self.address_line_2}, {self.country}"
-        return self.street_address
+        if self.address_line2:
+            return f"{self.address_line1}, {self.address_line2}, {self.country}"
+        return self.address_line1
 
 
 class DiscountCode(BaseModel):

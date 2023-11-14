@@ -1,21 +1,19 @@
 'use client';
 import { useAppContext } from '@/context/AppContext';
+import { CartItem } from '@/types/menu';
 import Link from 'next/link';
 import React from 'react';
 interface ProductProps {
-	array: ProductArray[];
-	removeItem: (productId: number) => void;
+	array: CartItem[];
+	removeItem: (productId: string) => void;
 	cartTable: boolean;
 }
-type ProductArray = {
-	id: number;
-	imgSrc: string;
-	name: string;
-	price: number;
-	quantity: number;
-	slug: string;
-};
-const ProductTable: React.FC<ProductProps> = ({ array, removeItem, cartTable }) => {
+
+const ProductTable: React.FC<ProductProps> = ({
+	array,
+	removeItem,
+	cartTable,
+}) => {
 	const { handleQuantityChange } = useAppContext();
 
 	return (
@@ -41,7 +39,9 @@ const ProductTable: React.FC<ProductProps> = ({ array, removeItem, cartTable }) 
 												<div className='empty-cart-img-container'>
 													<img src='img/empty-cart.jpg' alt='empty cart' />
 												</div>
-												<p className='empty-cart-text'>No Product In {cartTable ? 'Cart' : 'Wishlist'}</p>
+												<p className='empty-cart-text'>
+													No Product In {cartTable ? 'Cart' : 'Wishlist'}
+												</p>
 											</div>
 										</td>
 									</tr>
@@ -50,7 +50,7 @@ const ProductTable: React.FC<ProductProps> = ({ array, removeItem, cartTable }) 
 										<tr key={item.id}>
 											<td>
 												<div className='cart-pd-img'>
-													<img src={item.imgSrc} alt={item.name} />
+													<img src={item.image} alt={item.name} />
 												</div>
 											</td>
 											<td>
@@ -63,13 +63,28 @@ const ProductTable: React.FC<ProductProps> = ({ array, removeItem, cartTable }) 
 														<div className='input-group quantity'>
 															<span
 																className='qtyminus minus qt-btn'
-																onClick={() => handleQuantityChange(item.id, item.quantity - 1)}>
+																onClick={() =>
+																	handleQuantityChange(
+																		item.id,
+																		item.quantity - 1
+																	)
+																}>
 																–
 															</span>
-															<input className='qty form-control' type='text' value={item.quantity} readOnly />
+															<input
+																className='qty form-control'
+																type='text'
+																value={item.quantity}
+																readOnly
+															/>
 															<span
 																className='qtyplus plus qt-btn'
-																onClick={() => handleQuantityChange(item.id, item.quantity + 1)}>
+																onClick={() =>
+																	handleQuantityChange(
+																		item.id,
+																		item.quantity + 1
+																	)
+																}>
 																+
 															</span>
 														</div>

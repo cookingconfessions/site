@@ -2,6 +2,7 @@
 import { useAppContext } from '@/context/AppContext';
 import Link from 'next/link';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
+
 const DropdownCartSection = () => {
 	const { cart, removeFromCart } = useAppContext();
 	return (
@@ -19,16 +20,21 @@ const DropdownCartSection = () => {
 						<li className='cart-list' key={item.id}>
 							<div className='d-flex align-items-center'>
 								<div className='cart-img'>
-									<img src={item.imgSrc} alt={item.name} />
+									<img src={item.image} alt={item.name} />
 								</div>
 								<div className='cart-product-details'>
-									<Link href={`/menu/${item.slug}`} className='product-name cart-px-name'>
+									<Link
+										href={`/menu/${item.slug}`}
+										className='product-name cart-px-name'>
 										{item.name}
 									</Link>
 									<p className='price'>${item.price}</p>
 								</div>
 							</div>
-							<a className='remove-icon' role='button' onClick={() => removeFromCart(item.id)}>
+							<a
+								className='remove-icon'
+								role='button'
+								onClick={() => removeFromCart(item.id)}>
 								<span className='icofont-ui-delete'></span>
 							</a>
 						</li>

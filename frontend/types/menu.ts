@@ -53,3 +53,48 @@ export interface MenuItemCategory {
 export interface ShopDetailsProp {
     shopData: MenuItem;
 }
+
+export interface CouponCode {
+    code: string;
+    isActive: boolean;
+    discountPercentage: number;
+}
+
+export interface CreateCustomer {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    email: string;
+    country: string;
+    addressLine1: string;
+    addressLine2: string;
+}
+
+export interface Customer extends CreateCustomer {
+    id: string;
+}
+
+export interface OrderItem {
+    item: string;
+    quantity: number;
+    total: number;
+}
+
+export interface CreateOrder {
+    customer: string;
+    items: OrderItem[];
+    orderNotes: string;
+    discountCode: string;
+}
+
+export interface Order {
+    customerName: string;
+    customerEmail: string;
+    customerAddress: string;
+    phoneNumber: string;
+    total: string;
+    status: string;
+    orderNotes: string;
+    discountCode: string;
+    items: OrderItem[];
+}

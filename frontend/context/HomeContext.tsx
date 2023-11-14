@@ -9,6 +9,7 @@ import {
 import { MenuItem, MenuItemCategory } from '@/types/menu';
 import { useApiClient } from '@/utils/api-client';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 export interface HomeContextData {
 	activeMenuTab: string;
@@ -53,6 +54,8 @@ const {
 	getSchedule,
 	getCompanyInfo,
 	getFaqs,
+	bookCatering,
+	sendMessage,
 } = useApiClient();
 const menuItems: MenuItem[] = [];
 const bannerItems: BannerItem[] = [];
@@ -79,8 +82,8 @@ getSchedule().then((data) => schedules.push(...data));
 getFaqs().then((data) => faqs.push(...data));
 getCompanyInfo().then((data) => {
 	companyInfo.name = data.name;
-	(companyInfo.description = data.description),
-		(companyInfo.addressLine1 = data.addressLine1);
+	companyInfo.description = data.description;
+	companyInfo.addressLine1 = data.addressLine1;
 	companyInfo.addressLine2 = data.addressLine2;
 	companyInfo.email = data.email;
 	companyInfo.phoneNumbers = data.phoneNumbers;
@@ -146,7 +149,7 @@ export const useHomeContext = (): HomeContextData => {
 			: menuItems
 					.slice(0, 19)
 					.filter(
-						(item) => item.category && item.category === activeMenuProductTab
+						(item) => item.category.toLowerCase() === activeMenuProductTab
 					);
 	const initialMenuItemsToShow = 8; // Number of items to initially show
 	const [menuItemsToShow, setMenuItemsToShow] = useState<number>(
@@ -154,7 +157,6 @@ export const useHomeContext = (): HomeContextData => {
 	);
 
 	const handleMenuShowMore = () => {
-		// When the "Show More" button is clicked, set itemsToShow to the total number of items in the list
 		setMenuItemsToShow(filteredMenuProductList.length);
 	};
 	const handleMenuShowLess = () => {
@@ -170,7 +172,6 @@ export const useHomeContext = (): HomeContextData => {
 
 	// Contact us
 	const [isContactModalOpen, setIsContactModalOpen] = useState<boolean>(false);
-	const [message, setMessage] = useState<Message | null>(null);
 
 	const openContactModal = () => {
 		setIsContactModalOpen(true);
@@ -179,12 +180,16 @@ export const useHomeContext = (): HomeContextData => {
 		setIsContactModalOpen(false);
 	};
 	const handleContactFormSubmit = (message: Message) => {
-		setMessage(message);
+		sendMessage(message).then((_) => {
+			closeContactModal();
+			toast.success(
+				'Thank you for your message, we will get back to you shortly!'
+			);
+		});
 	};
 
 	// Booking
 	const [isBookingModalOpen, setIsBookingModalOpen] = useState<boolean>(false);
-	const [booking, setBooking] = useState<Booking | null>(null);
 
 	const openBookingModal = () => {
 		setIsBookingModalOpen(true);
@@ -193,7 +198,12 @@ export const useHomeContext = (): HomeContextData => {
 		setIsBookingModalOpen(false);
 	};
 	const handleBookingFormSubmit = (booking: Booking) => {
-		setBooking(booking);
+		bookCatering(booking).then((_) => {
+			closeBookingModal();
+			toast.success(
+				'We received your booking, we will get back to you shortly!'
+			);
+		});
 	};
 
 	return {

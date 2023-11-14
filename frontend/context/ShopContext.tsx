@@ -1,7 +1,15 @@
-import { CartItem, MenuItem } from '@/types/menu';
+import {
+	CartItem,
+	CouponCode,
+	CreateCustomer,
+	CreateOrder,
+	Customer,
+	MenuItem,
+} from '@/types/menu';
 import { useApiClient } from '@/utils/api-client';
 import { ShopHelper } from '@/utils/shop-helper';
 import Aos from 'aos';
+import { useRouter } from 'next/navigation';
 import { SetStateAction, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -30,14 +38,20 @@ export interface ShopContextData {
 	handlePriceChange: (event: Event, newValue: number | number[]) => void;
 	selectedTags: string[];
 	handleTagChange: (tag: string) => void;
-	cart: MenuItem[];
+	cart: CartItem[];
 	removeFromCart: (productId: string) => void;
 	handleQuantityChange: (productId: string, newQuantity: number) => void;
 	cartTotal: number;
 	addToCartWithQuantity: (productId: string, quantity: number) => void;
 	cartItemAmount: number;
-	haveCoupon: boolean;
-	handleCouponBtn: () => void;
+	couponCode: CouponCode | undefined;
+	applyCoupon: (code: string) => void;
+	persistUserDetails: boolean;
+	handlePersistUserDetails: () => void;
+	customer: Customer;
+	handleCustomerRegistration: (customer: CreateCustomer) => string;
+	deliveryFee: number;
+	createOrder: (order: CreateOrder) => void;
 }
 
 const menuItems: MenuItem[] = [];
@@ -57,7 +71,9 @@ export const useShopContext = (): ShopContextData => {
 	const cartItemAmount = cart.reduce((total, item) => total + item.quantity, 0);
 	const maximumPrice = ShopHelper.getMaximumPrice(menuItems);
 	const [priceRange, setPriceRange] = useState<number[]>([0, maximumPrice]); // State for price range
-	const [filteredProducts, setFilteredProducts] = useState<MenuItem[]>(menuItems);
+	const [filteredProducts, setFilteredProducts] = useState<MenuItem[]>(
+		menuItems
+	);
 
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = Math.min(startIndex + itemsPerPage, filteredProducts.length);
@@ -82,7 +98,9 @@ export const useShopContext = (): ShopContextData => {
 	};
 	const handleTagChange = (tag: string) => {
 		if (selectedTags.includes(tag)) {
-			setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
+			setSelectedTags(
+				selectedTags.filter((selectedTag) => selectedTag !== tag)
+			);
 		} else {
 			setSelectedTags([...selectedTags, tag]);
 		}
@@ -106,14 +124,15 @@ export const useShopContext = (): ShopContextData => {
 				setCart((prevCart) => [...prevCart, cartItem]);
 
 				// Update local storage with the updated cart
-				const updatedCart = [...cart, itemToAdd];
+				const updatedCart = [...cart, cartItem];
 				localStorage.setItem('cart', JSON.stringify(updatedCart));
 
 				toast.success('Item added in cart!');
 			} else {
 				const updatedCart = [...cart];
 				updatedCart[existingItemIndex].quantity += 1;
-				updatedCart[existingItemIndex].total = updatedCart[existingItemIndex].quantity * itemToAdd.price;
+				updatedCart[existingItemIndex].total =
+					updatedCart[existingItemIndex].quantity * itemToAdd.price;
 
 				setCart(updatedCart);
 
@@ -150,7 +169,9 @@ export const useShopContext = (): ShopContextData => {
 			// Prevent quantity from going below 1
 			return;
 		} else {
-			const updatedCart = cart.map((item) => (item.id === productId ? { ...item, quantity: newQuantity } : item));
+			const updatedCart = cart.map((item) =>
+				item.id === productId ? { ...item, quantity: newQuantity } : item
+			);
 
 			setCart(updatedCart);
 
@@ -169,23 +190,44 @@ export const useShopContext = (): ShopContextData => {
 				const newItem: CartItem = {
 					...itemToAdd,
 					isInCart: true,
-					quantity: quantity, // Set the provided quantity
+					quantity: quantity,
 					total: itemToAdd.price * quantity,
 				};
 
 				setCart((prevCart) => [...prevCart, newItem]);
-				toast.success('Product added to cart!'); // Replace with your toast implementation
+				toast.success('Product added to cart!');
 			} else if (existingItemIndex !== -1) {
 				const updatedCart = [...cart];
-				updatedCart[existingItemIndex].quantity += quantity; // Increment the quantity
-				updatedCart[existingItemIndex].total = updatedCart[existingItemIndex].quantity * itemToAdd.price;
+				updatedCart[existingItemIndex].quantity += quantity;
+				updatedCart[existingItemIndex].total =
+					updatedCart[existingItemIndex].quantity * itemToAdd.price;
 
 				setCart(updatedCart);
-				toast.success('Product quantity updated in cart!'); // Replace with your toast implementation
+				toast.success('Product quantity updated in cart!');
 			}
 		} else {
-			toast.warning('Product not found.'); // Replace with your toast implementation
+			toast.warning('Product not found.');
 		}
+	};
+
+	// Coupon Section
+	const [couponCode, setCouponCode] = useState<CouponCode | undefined>();
+
+	const applyCoupon = (code: string) => {
+		useApiClient()
+			.validateCouponCode(code)
+			.then((coupon) => {
+				if (!coupon.isActive) {
+					toast.error('Coupon code is not active!');
+				}
+
+				setCouponCode(coupon);
+				localStorage.setItem('coupon', JSON.stringify(coupon));
+				toast.success('Coupon code applied!');
+			})
+			.catch((_error) => {
+				toast.error('This coupon code is not valid!');
+			});
 	};
 
 	// Calculate the total price of items in the cart
@@ -202,15 +244,62 @@ export const useShopContext = (): ShopContextData => {
 	// Use the calculateCartTotal function to get the total price
 	const cartTotal = calculateCartTotal(cart);
 
-	// Coupon Section
-	const [haveCoupon, setHaveCoupon] = useState<boolean>(false);
-
-	const handleCouponBtn = () => {
-		setHaveCoupon(!haveCoupon);
-	};
-
 	// Sticky Header Section on Scroll
 	const [isHeaderFixed, setIsHeaderFixed] = useState<boolean>(false);
+
+	// Order Section
+	const [persistUserDetails, setPersistUserDetails] = useState<boolean>(true);
+	const [customer, setCustomer] = useState<Customer>({
+		id: '',
+		firstName: '',
+		lastName: '',
+		email: '',
+		phoneNumber: '',
+		country: '',
+		addressLine1: '',
+		addressLine2: '',
+	});
+
+	const handlePersistUserDetails = () => {
+		setPersistUserDetails(!persistUserDetails);
+	};
+
+	const handleCustomerRegistration = (
+		customerDetails: CreateCustomer
+	): string => {
+		useApiClient()
+			.createCustomer(customerDetails)
+			.then((customer) => {
+				localStorage.setItem('customer', JSON.stringify(customer));
+				setCustomer(customer);
+			})
+			.catch((_error) => {
+				toast.error('An errror occured while saving your billing details :(');
+			});
+
+		return customer.id;
+	};
+
+	const router = useRouter();
+
+	const createOrder = (order: CreateOrder) => {
+		useApiClient()
+			.createOrder(order)
+			.then((_order) => {
+				toast.success('Order placed successfully!');
+				setCart([]);
+				localStorage.removeItem('cart');
+				localStorage.removeItem('coupon');
+				localStorage.removeItem('customer');
+				router.replace('/');
+			})
+			.catch((_error) => {
+				toast.error('An error occured while placing your order :(');
+			});
+	};
+
+	// Delivery
+	const [deliveryFee, setDeliveryFee] = useState<number>(3.5);
 
 	useEffect(() => {
 		// header sticky
@@ -257,20 +346,44 @@ export const useShopContext = (): ShopContextData => {
 
 		// Apply category filtering
 		if (selectedCategory !== 'All') {
-			sortedProducts = sortedProducts.filter((item) => item.category === selectedCategory);
+			sortedProducts = sortedProducts.filter(
+				(item) => item.category === selectedCategory
+			);
 		}
 		// Search filter
 		if (searchQuery.trim() !== '') {
-			sortedProducts = sortedProducts.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
+			sortedProducts = sortedProducts.filter((item) =>
+				item.name.toLowerCase().includes(searchQuery.toLowerCase())
+			);
 		}
 		// Apply tag filtering
 		if (selectedTags.length > 0) {
-			sortedProducts = sortedProducts.filter((item) => selectedTags.includes(item.category));
+			sortedProducts = sortedProducts.filter((item) =>
+				selectedTags.includes(item.category)
+			);
 		}
 		// Load cart from local storage
 		const savedCart = localStorage.getItem('cart');
 		if (savedCart) {
 			setCart(JSON.parse(savedCart));
+		}
+
+		// Load coupon from local storage
+		const savedCoupon = localStorage.getItem('coupon');
+
+		if (savedCoupon) {
+			let coupon = JSON.parse(savedCoupon) as CouponCode;
+
+			if (coupon.isActive) {
+				setCouponCode(coupon);
+			}
+		}
+
+		// Load customer from local storage
+		const savedCustomer = localStorage.getItem('customer');
+
+		if (savedCustomer) {
+			setCustomer(JSON.parse(savedCustomer));
 		}
 
 		setFilteredProducts(sortedProducts);
@@ -312,7 +425,13 @@ export const useShopContext = (): ShopContextData => {
 		cartTotal,
 		addToCartWithQuantity,
 		cartItemAmount,
-		haveCoupon,
-		handleCouponBtn,
+		couponCode,
+		applyCoupon,
+		persistUserDetails,
+		handlePersistUserDetails,
+		customer,
+		handleCustomerRegistration,
+		deliveryFee,
+		createOrder,
 	};
 };

@@ -22,10 +22,10 @@ class BannerItem(BaseModel):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
 
-        super(MenuItem, self).save(*args, **kwargs)
+        super(BannerItem, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Banner {self.id} {self.menu_item.name}"
+        return f"Banner {self.id} {self.name}"
 
     class Meta:
         verbose_name = "Banner Item"

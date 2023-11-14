@@ -37,14 +37,18 @@ class CustomerView(viewsets.ViewSet):
     queryset = Customer.objects.all()
 
     def create(self, request, *args, **kwargs):
+        # print(request.data)
+
         if not self.are_user_details_valid(request.data):
             Response({"error": "Missing details"}, status=status.HTTP_400_BAD_REQUEST)
-        user_data = request.data.pop("user", {})
-        username = self.generate_unique_username(user_data["email"])
+        email = request.data.pop("email")
+        username = self.generate_unique_username(email)
         password = self.generate_otp()
         user_serializer = CreateUserSerializer(
             data={
-                **user_data,
+                "first_name": request.data.pop("first_name"),
+                "last_name": request.data.pop("last_name"),
+                "email": email,
                 "username": username,
                 "password": password,
             }
@@ -64,13 +68,15 @@ class CustomerView(viewsets.ViewSet):
         return Response(customer_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def are_user_details_valid(self, data: dict):
+        print(data)
+
         if (
-            data["user"]["email"]
-            and data["user"]["first_name"]
-            and data["user"]["last_name"]
+            data["email"]
+            and data["first_name"]
+            and data["last_name"]
             and data["phone_number"]
             and data["country"]
-            and data["street_address"]
+            and data["address_line1"]
         ):
             return True
         else:
@@ -100,6 +106,8 @@ class OrderView(viewsets.ViewSet):
     queryset = Order.objects.all()
 
     def create(self, request, *args, **kwargs):
+        print(request.data)
+
         if not self.are_order_details_valid(request.data):
             return Response({"error": "Invalid order details"}, status=status.HTTP_400_BAD_REQUEST)
         try:
