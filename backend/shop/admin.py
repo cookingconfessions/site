@@ -10,7 +10,8 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "phone_number", "country", "address_line1", "address_line2")
+    list_display = ("name", "email", "phone_number", "country",
+                    "address_line1", "address_line2")
     list_display_links = ("name",)
     search_fields = ("name",)
     list_per_page = 20
@@ -35,12 +36,14 @@ class OrderAdmin(admin.ModelAdmin):
         "status",
         "items",
         "order_notes",
+        'delivery_mode',
+        'payment_method',
         "created_at",
     )
     search_fields = ("customer_name", "pnone_number", "items", "address")
     list_display_links = ("customer_name", "items")
-    list_filter = ("created_at",)
-    sortable_by = ("created_at",)
+    list_filter = ("created_at", 'payment_method', 'delivery_mode', 'status')
+    sortable_by = ("created_at", 'payment_method', 'delivery_mode', 'status')
     exclude = ("total",)
     list_per_page = 20
     inlines = [OrderItemInline]

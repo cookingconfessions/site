@@ -13,9 +13,9 @@ const OrderFeatureSection = () => {
 							<span className='sm-title theme-3'>How we do it</span>
 							<h2 className='section-title'>Treat yourself</h2>
 							<p>
-								Dorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-								eiusmod tempor <br />
-								incididunt ut labore et dolore magna aliqua. Quis ipsum susp
+								We are here for you! <br />
+								We got you well crafted African cuisines. <br /> Treat yourself
+								and loved ones any time and enjoy authentic flavours.
 							</p>
 						</div>
 					</div>

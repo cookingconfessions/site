@@ -8,11 +8,20 @@ export interface ProductCardProps {
     item: MenuItem;
 }
 
+export interface CreateMenuItemReview {
+    menuItem: string;
+    name: string;
+    email: string;
+    message: string;
+    parent?: string;
+}
+
 export interface MenuItemReview {
     id: string;
     name: string;
     email: string;
     message: string;
+    parent: string;
     isVisible: boolean;
     createdAt: string;
     replies: MenuItemReview[];
@@ -80,11 +89,23 @@ export interface OrderItem {
     total: number;
 }
 
+export enum OrdeDeliveryMode {
+    DELIVERY = 1,
+    PICKUP = 2
+}
+
+export enum OrderPaymentMethod {
+    CreditCard = 1,
+    CashOnDelivery = 2
+}
+
 export interface CreateOrder {
     customer: string;
     items: OrderItem[];
     orderNotes: string;
     discountCode: string;
+    deliveryMode: OrdeDeliveryMode;
+    paymentMethod: OrderPaymentMethod;
 }
 
 export interface Order {
@@ -96,5 +117,7 @@ export interface Order {
     status: string;
     orderNotes: string;
     discountCode: string;
+    deliveryMode: string;
+    paymentMethod: string;
     items: OrderItem[];
 }

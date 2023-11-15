@@ -58,3 +58,9 @@ envVarGroups:
         value: "Cooking Confessions"
       - key: ADMIN_SITE_TITLE
         value: "Cooking Confessions"
+  - name: ui-configurations
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: "https://cookingconfessions.onrender.com/api"
+      - key: NEXT_PUBLIC_API_TIMEOUT
+        value: "10000"

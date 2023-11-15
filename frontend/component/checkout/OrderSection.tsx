@@ -3,18 +3,31 @@ import { useAppContext } from '@/context/AppContext';
 import React, { useEffect, useState } from 'react';
 
 const OrderSection: React.FC = () => {
-	const { cart, cartTotal, deliveryFee, couponCode } = useAppContext();
+	const {
+		cart,
+		cartTotal,
+		deliveryFee,
+		couponCode,
+		shouldDeliverOrder,
+		payCashOnDelivery,
+	} = useAppContext();
 	const [mainTotal, setMainTotal] = useState<number>(0);
+	const [discount, setDiscount] = useState<number>(0);
 
 	useEffect(() => {
-		let total = cartTotal + deliveryFee;
+		let total = cartTotal;
+
+		if (shouldDeliverOrder) {
+			total += deliveryFee;
+		}
 
 		if (couponCode) {
-			total = total * (1 - couponCode.discountPercentage / 100);
+			setDiscount(total * (couponCode.discountPercentage / 100));
+			total = total - discount;
 		}
 
 		setMainTotal(total);
-	}, [cartTotal, couponCode]);
+	}, [cartTotal, couponCode, deliveryFee, shouldDeliverOrder]);
 
 	return (
 		<div className='col-xxl-6 col-xl-6 col-lg-6'>
@@ -80,7 +93,7 @@ const OrderSection: React.FC = () => {
 								<span className='checkout-Price-amount amount'>
 									<bdi>
 										<span className='checkout-Price-currencySymbol'>$</span>
-										{deliveryFee.toFixed(2)}
+										{shouldDeliverOrder ? deliveryFee.toFixed(2) : 0.0}
 									</bdi>
 								</span>
 							</td>
@@ -91,7 +104,7 @@ const OrderSection: React.FC = () => {
 								<span className='checkout-Price-amount amount'>
 									<bdi>
 										<span className='checkout-Price-currencySymbol'>$</span>
-										{(cartTotal + deliveryFee - mainTotal).toFixed(2)}
+										{discount.toFixed(2)}
 									</bdi>
 								</span>
 							</td>
@@ -114,11 +127,15 @@ const OrderSection: React.FC = () => {
 
 				<div id='payment' className='checkout-checkout-payment'>
 					<ul className='wc_payment_methods payment_methods methods'>
-						<li className='checkout-notice checkout-notice--info checkout-info'>
-							Sorry, it seems that there are no available payment methods for
-							your state. Please contact us if you require assistance or wish to
-							make alternate arrangements.
-						</li>
+						{payCashOnDelivery ? (
+							<li className='checkout-notice checkout-notice--info checkout-info'>
+								Order will be payed by cash on delivery
+							</li>
+						) : (
+							<li className='checkout-notice checkout-notice--info checkout-info'>
+								Card payment details will be collected here.
+							</li>
+						)}
 					</ul>
 					<div className='form-row place-order'>
 						<noscript>

@@ -72,6 +72,7 @@ const companyInfo: CompanyInfo = {
 	facebookLink: '',
 	instagramLink: '',
 	tiktokLink: '',
+	deliveryFee: 0.0,
 	countries: [],
 };
 

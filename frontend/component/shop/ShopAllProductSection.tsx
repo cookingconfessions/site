@@ -1,18 +1,18 @@
-import { useAppContext } from '@/context/AppContext';
+import { useShopContext } from '@/context/ShopContext';
 import Link from 'next/link';
 import ProductCard from '../menu/ProductCard';
 
 const ShopAllProductSection = () => {
 	const {
-		currentItems,
+		filteredProducts,
 		currentPage,
 		handlePageChange,
 		totalPages,
-	} = useAppContext();
+	} = useShopContext();
 
 	return (
 		<div className='shop-products-wrapper'>
-			{currentItems.length === 0 ? (
+			{filteredProducts.length === 0 ? (
 				<div className='no-product-container'>
 					<div className='no-product-img-container'>
 						<img src='/img/no-product.png' alt='no-product-img' />
@@ -28,7 +28,7 @@ const ShopAllProductSection = () => {
 						className='row row-cols-xxl-3 row-cols-lg-2 row-cols-md-2 row-cols-2'
 						data-aos='fade-up'
 						data-aos-duration='500'>
-						{currentItems.map((item) => (
+						{filteredProducts.map((item) => (
 							<ProductCard item={item} key={item.id} />
 						))}
 					</div>

@@ -8,6 +8,10 @@ const BillingSection = () => {
 		persistUserDetails,
 		handlePersistUserDetails,
 		customer,
+		shouldDeliverOrder,
+		handleShouldDeliverOrder,
+		payCashOnDelivery,
+		handlePayCashOnDelivery,
 	} = useAppContext();
 
 	return (
@@ -28,7 +32,7 @@ const BillingSection = () => {
 								type='text'
 								className='input-text '
 								name='firstName'
-								value={customer.firstName}
+								defaultValue={customer.firstName}
 							/>
 						</span>
 					</p>
@@ -44,7 +48,7 @@ const BillingSection = () => {
 								type='text'
 								className='input-text '
 								name='lastName'
-								value={customer.lastName}
+								defaultValue={customer.lastName}
 							/>
 						</span>
 					</p>
@@ -60,7 +64,7 @@ const BillingSection = () => {
 								type='tel'
 								className='input-text '
 								name='phoneNumber'
-								value={customer.phoneNumber}
+								defaultValue={customer.phoneNumber}
 							/>
 						</span>
 					</p>
@@ -76,7 +80,7 @@ const BillingSection = () => {
 								type='email'
 								className='input-text '
 								name='email'
-								value={customer.email}
+								defaultValue={customer.email}
 							/>
 						</span>
 					</p>
@@ -90,13 +94,11 @@ const BillingSection = () => {
 						<span className='checkout-input-wrapper'>
 							<Form.Select
 								name='country'
-								value={customer.country}
+								defaultValue={customer.country}
 								className='country_to_state country_select select2-hidden-accessible'>
 								<option value=''>Select a country / region…</option>
 								{companyInfo.countries.map((country) => (
-									<option
-										selected={country.toLowerCase() === 'slovakia'}
-										value={country}>
+									<option key={country} value={country}>
 										{country}
 									</option>
 								))}
@@ -115,7 +117,7 @@ const BillingSection = () => {
 								type='text'
 								className='input-text  '
 								name='addressLine1'
-								value={customer.addressLine1}
+								defaultValue={customer.addressLine1}
 								placeholder='House number and street name'
 							/>
 						</span>
@@ -130,13 +132,13 @@ const BillingSection = () => {
 								type='text'
 								className='input-text  '
 								name='addressLine2'
-								value={customer.addressLine2}
+								defaultValue={customer.addressLine2}
 								placeholder='Apartment, suite, unit, etc. (optional)'
 							/>
 						</span>
 					</p>
 				</div>
-				<label className='rememberme mt-10'>
+				<label className='mt-10'>
 					<input
 						className='login-form__input-checkbox'
 						name='rememberme'
@@ -148,10 +150,36 @@ const BillingSection = () => {
 					<span>Save my details for easier checkout later</span>
 				</label>
 			</div>
-			<div className='checkout-shipping-fields  cafeu-woo-form-shipping-form-style-custom'></div>
+			<div className='checkout-shipping-fields  cafeu-woo-form-shipping-form-style-custom'>
+				<h4 className='cafeu-billing-details-title mt-10'>Delivery</h4>
+				<label className='mt-10'>
+					<input
+						className='login-form__input-checkbox'
+						name='shouldDeliverOrder'
+						type='checkbox'
+						defaultValue={shouldDeliverOrder ? 'false' : 'true'}
+						onChange={handleShouldDeliverOrder}
+						checked={!shouldDeliverOrder}
+					/>{' '}
+					<span>Do not deliver, I will pick the order myself</span>
+				</label>
+			</div>
+			<div className='checkout-shipping-fields  cafeu-woo-form-shipping-form-style-custom'>
+				<h4 className='cafeu-billing-details-title mt-10'>Payment</h4>
+				<label className='mt-10'>
+					<input
+						className='login-form__input-checkbox'
+						name='cashOnDelivery'
+						type='checkbox'
+						defaultValue={payCashOnDelivery ? 'true' : 'false'}
+						onChange={handlePayCashOnDelivery}
+						checked={payCashOnDelivery}
+					/>{' '}
+					<span>I will pay cash on delivery</span>
+				</label>
+			</div>
 			<div className='checkout-additional-fields mt-10'>
 				<h4 className='cafeu-billing-details-title'>Additional information</h4>
-
 				<div className='checkout-additional-fields__field-wrapper'>
 					<p
 						className='form-row notes'

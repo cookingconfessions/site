@@ -25,14 +25,14 @@ const CouponSection = () => {
 	};
 
 	useEffect(() => {
-		let total = cartTotal + deliveryFee;
+		let total = cartTotal;
 
-		if (couponCode) {
+		if (couponCode?.discountPercentage) {
 			total = total * (1 - couponCode.discountPercentage / 100);
 		}
 
 		setMainTotal(total);
-	}, [cartTotal, couponCode]);
+	}, [cartTotal, couponCode, deliveryFee]);
 
 	return (
 		<section>
@@ -77,16 +77,9 @@ const CouponSection = () => {
 											<td className='cart-price'>${cartTotal.toFixed(2)}</td>
 										</tr>
 										<tr>
-											<td>Delivery Fee:</td>
-											<td className='cart-price'>$3.50</td>
-										</tr>
-										<tr>
 											<td>Discount:</td>
 											<td className='cart-price'>
-												{couponCode
-													? (cartTotal + deliveryFee - mainTotal).toFixed(2)
-													: 0.0}
-												%
+												{couponCode ? (cartTotal - mainTotal).toFixed(2) : 0.0}%
 											</td>
 										</tr>
 									</tbody>

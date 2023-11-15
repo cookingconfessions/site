@@ -72,3 +72,16 @@ export interface CouponFormElements extends HTMLFormControlsCollection {
         value: string
     }
 }
+
+export interface ReviewFormElements extends HTMLFormControlsCollection {
+    name: {
+        value: string
+    },
+    email: {
+        value: string
+    },
+    message: {
+        value: string
+    },
+
+}

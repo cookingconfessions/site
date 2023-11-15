@@ -2,6 +2,7 @@ import {
 	CartItem,
 	CouponCode,
 	CreateCustomer,
+	CreateMenuItemReview,
 	CreateOrder,
 	Customer,
 	MenuItem,
@@ -49,16 +50,28 @@ export interface ShopContextData {
 	persistUserDetails: boolean;
 	handlePersistUserDetails: () => void;
 	customer: Customer;
-	handleCustomerRegistration: (customer: CreateCustomer) => string;
+	handleCustomerRegistration: (customer: CreateCustomer) => Promise<string>;
 	deliveryFee: number;
 	createOrder: (order: CreateOrder) => void;
+	submitReview: (review: CreateMenuItemReview) => void;
+	isReviewModalOpen: boolean;
+	handleOpenReviewModal: () => void;
+	shouldDeliverOrder: boolean;
+	handleShouldDeliverOrder: () => void;
+	payCashOnDelivery: boolean;
+	handlePayCashOnDelivery: () => void;
 }
 
 const menuItems: MenuItem[] = [];
+let deliveryFee = 0.0;
 
 useApiClient()
 	.getMenuItems()
 	.then((items) => menuItems.push(...items));
+
+useApiClient()
+	.getCompanyInfo()
+	.then((info) => (deliveryFee = info.deliveryFee));
 
 export const useShopContext = (): ShopContextData => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -266,21 +279,37 @@ export const useShopContext = (): ShopContextData => {
 
 	const handleCustomerRegistration = (
 		customerDetails: CreateCustomer
-	): string => {
-		useApiClient()
+	): Promise<string> => {
+		return useApiClient()
 			.createCustomer(customerDetails)
-			.then((customer) => {
+			.then((customerDetails) => {
 				localStorage.setItem('customer', JSON.stringify(customer));
-				setCustomer(customer);
+				setCustomer(customerDetails);
+
+				return customerDetails.id;
 			})
 			.catch((_error) => {
 				toast.error('An errror occured while saving your billing details :(');
-			});
 
-		return customer.id;
+				return '';
+			});
 	};
 
 	const router = useRouter();
+
+	const clearCustomer = () => {
+		localStorage.removeItem('customer');
+		setCustomer({
+			id: '',
+			firstName: '',
+			lastName: '',
+			email: '',
+			phoneNumber: '',
+			country: '',
+			addressLine1: '',
+			addressLine2: '',
+		});
+	};
 
 	const createOrder = (order: CreateOrder) => {
 		useApiClient()
@@ -290,7 +319,7 @@ export const useShopContext = (): ShopContextData => {
 				setCart([]);
 				localStorage.removeItem('cart');
 				localStorage.removeItem('coupon');
-				localStorage.removeItem('customer');
+				clearCustomer();
 				router.replace('/');
 			})
 			.catch((_error) => {
@@ -298,8 +327,35 @@ export const useShopContext = (): ShopContextData => {
 			});
 	};
 
+	// Reviews
+	const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
+
+	const handleOpenReviewModal = () => {
+		setIsReviewModalOpen(!isReviewModalOpen);
+	};
+
+	const submitReview = (review: CreateMenuItemReview) => {
+		useApiClient()
+			.submitReview(review)
+			.then((review) =>
+				toast.success(`Thank you for your feedback ${review.name}!`)
+			)
+			.catch((_error) =>
+				toast.error('There was a problem receiving your feedback :(')
+			);
+	};
+
 	// Delivery
-	const [deliveryFee, setDeliveryFee] = useState<number>(3.5);
+	const [shouldDeliverOrder, setShouldDeliverOrder] = useState<boolean>(true);
+	const handleShouldDeliverOrder = () => {
+		setShouldDeliverOrder(!shouldDeliverOrder);
+	};
+
+	// Payment
+	const [payCashOnDelivery, setPayCashOnDelivery] = useState<boolean>(false);
+	const handlePayCashOnDelivery = () => {
+		setPayCashOnDelivery(!payCashOnDelivery);
+	};
 
 	useEffect(() => {
 		// header sticky
@@ -384,10 +440,13 @@ export const useShopContext = (): ShopContextData => {
 
 		if (savedCustomer) {
 			setCustomer(JSON.parse(savedCustomer));
+		} else {
+			clearCustomer();
 		}
 
 		setFilteredProducts(sortedProducts);
 		setCurrentPage(1);
+
 		return () => {
 			// Clean up the event listener when the component is unmounted
 			window.removeEventListener('scroll', handleScroll);
@@ -433,5 +492,12 @@ export const useShopContext = (): ShopContextData => {
 		handleCustomerRegistration,
 		deliveryFee,
 		createOrder,
+		submitReview,
+		isReviewModalOpen,
+		handleOpenReviewModal,
+		shouldDeliverOrder,
+		handleShouldDeliverOrder,
+		payCashOnDelivery,
+		handlePayCashOnDelivery,
 	};
 };

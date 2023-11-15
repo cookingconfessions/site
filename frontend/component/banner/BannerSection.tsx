@@ -8,7 +8,11 @@ interface BannerProps {
 	endIndex: number;
 	theme: string;
 }
-const BannerSection: React.FC<BannerProps> = ({ startIndex, endIndex, theme }) => {
+const BannerSection: React.FC<BannerProps> = ({
+	startIndex,
+	endIndex,
+	theme,
+}) => {
 	const { bannerItems } = useHomeContext();
 
 	return (
@@ -32,9 +36,12 @@ const BannerSection: React.FC<BannerProps> = ({ startIndex, endIndex, theme }) =
 												<div className='col-md-6 my-2'>
 													<div className='slider-details'>
 														<div className='text-inner'>
-															<span className='sm-title mb-0'>Top Dishes</span>
+															<span className='sm-title mb-0'>
+																We got you..
+															</span>
 															<h1 className='banner-title'>
-																{item.name.split(' ')[0]} <a href=''>{item.name.split(' ')[1]}</a>{' '}
+																{item.name.split(' ')[0]}{' '}
+																<a href=''>{item.name.split(' ')[1]}</a>{' '}
 																{item.name.split(' ')[2]}
 															</h1>
 															<p className='banner-des'>{item.description}</p>
@@ -60,14 +67,19 @@ const BannerSection: React.FC<BannerProps> = ({ startIndex, endIndex, theme }) =
 												<div className='col-md-6 my-2'>
 													<div className='slider-details'>
 														<div className='text-inner'>
-															<span className='sm-title mb-0'>Top Dishes</span>
+															<span className='sm-title mb-0'>
+																We got you..
+															</span>
 															<h1 className='banner-title'>
-																{item.name.split(' ')[0]} <a href=''>{item.name.split(' ')[1]}</a>{' '}
+																{item.name.split(' ')[0]}{' '}
+																<a href=''>{item.name.split(' ')[1]}</a>{' '}
 																{item.name.split(' ')[2]}
 															</h1>
 															<p className='banner-des'>{item.description}</p>
 															<div className='banner-btn-sec mt-3'>
-																<a href={`/menu/${item.slug}`} className='custom-btn'>
+																<a
+																	href={`/menu/${item.slug}`}
+																	className='custom-btn'>
 																	Order Now
 																</a>
 															</div>

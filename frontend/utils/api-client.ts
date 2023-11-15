@@ -1,5 +1,5 @@
 import { BannerItem, Booking, CompanyInfo, Faq, Message, Schedule } from "@/types/home";
-import { CouponCode, CreateCustomer, CreateOrder, Customer, MenuItem, MenuItemCategory, Order } from "@/types/menu";
+import { CouponCode, CreateCustomer, CreateMenuItemReview, CreateOrder, Customer, MenuItem, MenuItemCategory, MenuItemReview, Order } from "@/types/menu";
 import axios from "axios";
 import humps from 'humps';
 
@@ -15,7 +15,8 @@ interface ApiClient {
     getSimilarProducts: (itemId: string) => Promise<MenuItem[]>;
     validateCouponCode: (couponCode: string) => Promise<CouponCode>;
     createCustomer: (customer: CreateCustomer) => Promise<Customer>;
-    createOrder: (customer: CreateOrder) => Promise<Order>
+    createOrder: (customer: CreateOrder) => Promise<Order>;
+    submitReview: (review: CreateMenuItemReview) => Promise<MenuItemReview>
 }
 
 const api = axios.create({
@@ -32,7 +33,6 @@ api.interceptors.request.use((config) => {
     if (config.data) {
         const modifiedData = JSON.stringify(humps.decamelizeKeys(config.data));
         config.data = modifiedData;
-        console.log('modifiedData', modifiedData)
     }
 
     return config;
@@ -58,8 +58,6 @@ api.interceptors.response.use(
 
 const getMenuItems = async () => {
     const res = await api.get<MenuItem[]>("/menus/items/");
-    // console.log('items resp', res.data)
-
     return res.data;
 }
 
@@ -90,6 +88,11 @@ const getFaqs = async () => {
 
 const sendMessage = async (message: Message) => {
     const res = await api.post<Message[]>("/home/contact/", message);
+    return res.data;
+}
+
+const submitReview = async (review: CreateMenuItemReview) => {
+    const res = await api.post<MenuItemReview>(`/menus/items/${review.menuItem}/add_review/`, review);
     return res.data;
 }
 
@@ -131,6 +134,7 @@ export const useApiClient = (): ApiClient => {
         getSimilarProducts,
         validateCouponCode,
         createCustomer,
-        createOrder
+        createOrder,
+        submitReview
     }
 }

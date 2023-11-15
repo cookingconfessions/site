@@ -1,7 +1,13 @@
 'use client';
 import { useAppContext } from '@/context/AppContext';
 import { OrderFormElements } from '@/types/form';
-import { CreateCustomer, CreateOrder, OrderItem } from '@/types/menu';
+import {
+	CreateCustomer,
+	CreateOrder,
+	OrdeDeliveryMode,
+	OrderItem,
+	OrderPaymentMethod,
+} from '@/types/menu';
 import { FormEvent } from 'react';
 import BillingSection from './BillingSection';
 import OrderSection from './OrderSection';
@@ -13,6 +19,8 @@ const CheckoutSection = () => {
 		cart,
 		handleCustomerRegistration,
 		createOrder,
+		shouldDeliverOrder,
+		payCashOnDelivery,
 	} = useAppContext();
 
 	const getCustomerDetails = (elements: OrderFormElements): CreateCustomer => {
@@ -37,25 +45,37 @@ const CheckoutSection = () => {
 		});
 	};
 
+	const makeOrder = (customerId: string, elements: OrderFormElements) => {
+		const order: CreateOrder = {
+			customer: customerId,
+			orderNotes:
+				elements.orderNotes.value === '' ? '-' : elements.orderNotes.value,
+			discountCode: couponCode?.code ?? '',
+			deliveryMode: shouldDeliverOrder
+				? OrdeDeliveryMode.DELIVERY
+				: OrdeDeliveryMode.PICKUP,
+			paymentMethod: payCashOnDelivery
+				? OrderPaymentMethod.CashOnDelivery
+				: OrderPaymentMethod.CreditCard,
+			items: getOrderItems(),
+		};
+
+		createOrder(order);
+	};
+
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		const elements = (event.target as HTMLFormElement)
 			.elements as OrderFormElements;
-		let customerId = customer.id;
 
-		if (!customerId) {
-			customerId = handleCustomerRegistration(getCustomerDetails(elements));
+		if (!customer.id) {
+			handleCustomerRegistration(getCustomerDetails(elements)).then((id) => {
+				makeOrder(id, elements);
+			});
+		} else {
+			makeOrder(customer.id, elements);
 		}
-
-		const order: CreateOrder = {
-			customer: customerId,
-			orderNotes: elements.orderNotes.value,
-			discountCode: couponCode?.code ?? '',
-			items: getOrderItems(),
-		};
-
-		createOrder(order);
 	};
 
 	return (

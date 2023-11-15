@@ -8,11 +8,15 @@ import 'overlayscrollbars/overlayscrollbars.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'swiper/css/bundle';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
 	return (
 		<html lang='en'>
 			<AppProvider>
-				<body>{children}</body>
+				<body suppressHydrationWarning={true}>{children}</body>
 			</AppProvider>
 		</html>
 	);

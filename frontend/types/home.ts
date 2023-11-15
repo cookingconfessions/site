@@ -32,6 +32,7 @@ export interface CompanyInfo {
     instagramLink: string;
     tiktokLink: string;
     countries: string[];
+    deliveryFee: number;
 }
 
 export interface Message {
