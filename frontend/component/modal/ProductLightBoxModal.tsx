@@ -50,6 +50,7 @@ const ProductLightBoxModal: React.FC = () => {
 									<div className='quick-view-product-details-quantity'>
 										<button
 											className='minus-btn cart-product-minus'
+											disabled={!product.isAvailable || quickViewQuantity === 1}
 											onClick={() =>
 												handleQuickViewQuantityChange(quickViewQuantity - 1)
 											}>
@@ -69,6 +70,7 @@ const ProductLightBoxModal: React.FC = () => {
 											}
 										/>
 										<button
+											disabled={!product.isAvailable}
 											className='plus-btn cart-product-plus'
 											onClick={() =>
 												handleQuickViewQuantityChange(quickViewQuantity + 1)
@@ -78,9 +80,13 @@ const ProductLightBoxModal: React.FC = () => {
 									</div>
 									<a
 										role='button'
-										className='quick-view-btn'
+										className={`quick-view-btn ${
+											product && !product.isAvailable && 'opacity-25'
+										}`}
 										onClick={() =>
-											addToCartWithQuantity(product.id, quickViewQuantity)
+											product.isAvailable
+												? addToCartWithQuantity(product.id, quickViewQuantity)
+												: ''
 										}>
 										Add to Cart
 									</a>

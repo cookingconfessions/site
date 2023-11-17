@@ -28,7 +28,7 @@ const DropdownCartSection = () => {
 										className='product-name cart-px-name'>
 										{item.name}
 									</Link>
-									<p className='price'>${item.price}</p>
+									<p className='price'>{item.price}&nbsp;&euro;</p>
 								</div>
 							</div>
 							<a

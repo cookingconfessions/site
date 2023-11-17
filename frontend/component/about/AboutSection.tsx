@@ -27,9 +27,8 @@ const AboutSection = () => {
 									<p className='about-des mb-4'>
 										We are a Kenyan restaurant located at the heart of Slovakia.{' '}
 										We offer mouth watering and authentic Kenyan/African
-										Cuisine. <br /> Offering you the convenience of{' '}
-										<b>tasty meals</b> at an affordable price is what we thrive
-										on.
+										Cuisine. <br /> We thrive on offering you the convenience of{' '}
+										<b>tasty meals</b> at an affordable price.
 									</p>
 									<div className='service-list'>
 										<ul className='service-ul'>

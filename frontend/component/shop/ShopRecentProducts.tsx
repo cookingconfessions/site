@@ -8,7 +8,7 @@ const ShopRecentProducts: React.FC<ShopDetailsProp> = ({ shopData }) => {
 
 	useEffect(() => {
 		useApiClient()
-			.getSimilarProducts(shopData.id)
+			.getSimilarProducts(shopData.slug)
 			.then((items) => setSimilarProducts(items));
 	}, [shopData.id]);
 

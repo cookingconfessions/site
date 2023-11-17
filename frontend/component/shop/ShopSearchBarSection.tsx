@@ -2,6 +2,7 @@ import { useAppContext } from '@/context/AppContext';
 
 const ShopSearchBarSection = () => {
 	const { searchQuery, setSearchQuery } = useAppContext();
+
 	return (
 		<form
 			className='hero-form mb-50'

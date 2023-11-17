@@ -1,14 +1,6 @@
 import { LoginDetails } from '@/types/auth';
+import { AuthContextData } from '@/types/context';
 import { useState } from 'react';
-
-export interface AuthContextData {
-	passwordVisible: boolean;
-	togglePasswordVisibility: () => void;
-	isLoginModalOpen: boolean;
-	openLoginModal: () => void;
-	closeLoginModal: () => void;
-	handleUserLogin: (loginDetails: LoginDetails) => void;
-}
 
 export const useAuthContext = (): AuthContextData => {
 	const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);

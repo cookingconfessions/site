@@ -103,15 +103,11 @@ class Faq(BaseModel):
 
 
 class CompanyInfo(BaseModel):
-    name = models.CharField(
-        max_length=100, default="Cooking Confessions", unique=True)
+    name = models.CharField(max_length=100, default="Cooking Confessions", unique=True)
     description = models.TextField()
-    address_line_1 = models.CharField(
-        max_length=100, help_text="Somewhere 1", unique=True)
-    address_line_2 = models.CharField(
-        max_length=100, help_text="Dinner City", unique=True)
-    email = models.EmailField(
-        max_length=100, help_text="someone@company.com", unique=True)
+    address_line_1 = models.CharField(max_length=100, help_text="Somewhere 1", unique=True)
+    address_line_2 = models.CharField(max_length=100, help_text="Dinner City", unique=True)
+    email = models.EmailField(max_length=100, help_text="someone@company.com", unique=True)
     phone_numbers = models.CharField(
         max_length=150, help_text="+123 456 789 123, +124 456 789 124", unique=True
     )

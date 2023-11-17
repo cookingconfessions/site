@@ -1,4 +1,4 @@
-import { useHomeContext } from '@/context/HomeContext';
+import { useAppContext } from '@/context/AppContext';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Autoplay } from 'swiper/modules';
@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 const FoodCategorySection = () => {
 	const [slides, setSlides] = useState<number>(0);
-	const { categories } = useHomeContext();
+	const { categories } = useAppContext();
 
 	const setSlidesPerview = () => {
 		setSlides(
@@ -33,6 +33,7 @@ const FoodCategorySection = () => {
 			window.removeEventListener('resize', setSlidesPerview);
 		};
 	}, []);
+
 	return (
 		<div className='cb-category-area bg-light-blue pt-80 pb-80'>
 			<div className='cb-category-wrapper'>

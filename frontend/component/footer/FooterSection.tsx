@@ -1,13 +1,21 @@
 'use client';
 import { useAppContext } from '@/context/AppContext';
+import { FooterProp } from '@/types/home';
 import Link from 'next/link';
-import React from 'react';
-interface FooterProp {
-	style: string;
-}
+import React, { useEffect } from 'react';
+
 const FooterSection: React.FC<FooterProp> = ({ style }) => {
-	const { currentYear, companyInfo, menuItems } = useAppContext();
+	const {
+		currentYear,
+		companyInfo,
+		menuItems,
+		loadCompanyInfo,
+	} = useAppContext();
 	const phone_numbers: string[] = companyInfo.phoneNumbers.split(',');
+
+	useEffect(() => {
+		loadCompanyInfo();
+	}, []);
 
 	return (
 		<footer>
@@ -90,7 +98,7 @@ const FooterSection: React.FC<FooterProp> = ({ style }) => {
 										</Link>
 									</li>
 									<li className='foot-list'>
-										<Link href='/faq' className='footer-link'>
+										<Link href='/help' className='footer-link'>
 											Help
 										</Link>
 									</li>

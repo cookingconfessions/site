@@ -6,7 +6,7 @@ import ProductCard from '../menu/ProductCard';
 
 const CartReccomendationt = () => {
 	const [slides, setSlides] = useState<number>(0);
-	const { menuItems } = useAppContext();
+	const { menuItems, loadMenuItems } = useAppContext();
 
 	const setSlidesPerview = () => {
 		setSlides(
@@ -25,13 +25,11 @@ const CartReccomendationt = () => {
 	};
 
 	useEffect(() => {
-		// Initially set the amount of slides on page load
 		setSlidesPerview();
+		loadMenuItems();
 
-		// Add the event listener on component mount
 		window.addEventListener('resize', setSlidesPerview);
 
-		// Remove the listener when component unmounts
 		return () => {
 			window.removeEventListener('resize', setSlidesPerview);
 		};

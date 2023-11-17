@@ -1,11 +1,7 @@
 import { useAppContext } from '@/context/AppContext';
-import { ReviewFormElements } from '@/types/form';
-import {
-	CreateMenuItemReview,
-	MenuItemReview,
-	ShopDetailsProp,
-} from '@/types/menu';
-import React, { FormEvent } from 'react';
+import { MenuItemReview, ShopDetailsProp } from '@/types/menu';
+import { useApiClient } from '@/utils/api-client';
+import React, { useEffect, useState } from 'react';
 import ShopReviewForm from './ShopReviewForm';
 
 interface ReviewTreeProps {
@@ -59,22 +55,14 @@ const renderReviewTree = (
 };
 
 const ShopReviewPane: React.FC<ShopDetailsProp> = ({ shopData }) => {
-	const { customer, submitReview, handleOpenReviewModal } = useAppContext();
+	const { handleOpenReviewModal, reviewAdded } = useAppContext();
+	const [reviews, setReviews] = useState<MenuItemReview[]>(shopData.reviews);
 
-	const handleReviewSubmit = (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		const elements = (event.target as HTMLFormElement)
-			.elements as ReviewFormElements;
-
-		const review: CreateMenuItemReview = {
-			name: elements.name.value,
-			email: elements.email.value,
-			message: elements.message.value,
-			menuItem: shopData.id,
-		};
-
-		submitReview(review);
-	};
+	useEffect(() => {
+		useApiClient()
+			.getMenuItem(shopData.slug)
+			.then((item) => setReviews(item.reviews));
+	}, [reviewAdded]);
 
 	return (
 		<div className='product-review p-0'>
@@ -85,7 +73,7 @@ const ShopReviewPane: React.FC<ShopDetailsProp> = ({ shopData }) => {
 					<div className='review-list'>
 						<div className='col-md-8'>
 							<div className='comment-section'>
-								{renderReviewTree(shopData.reviews, handleOpenReviewModal)}
+								{renderReviewTree(reviews, handleOpenReviewModal)}
 							</div>
 							<div className='comment-form'>
 								<h3 className='comment-form-title'>Leave A Comment</h3>

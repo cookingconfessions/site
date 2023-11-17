@@ -5,6 +5,7 @@ import humps from 'humps';
 
 interface ApiClient {
     getMenuItems: () => Promise<MenuItem[]>;
+    getMenuItem: (slug: string) => Promise<MenuItem>;
     getMenuItemCategories: () => Promise<MenuItemCategory[]>;
     getBannerItems: () => Promise<BannerItem[]>;
     getCompanyInfo: () => Promise<CompanyInfo>;
@@ -16,7 +17,7 @@ interface ApiClient {
     validateCouponCode: (couponCode: string) => Promise<CouponCode>;
     createCustomer: (customer: CreateCustomer) => Promise<Customer>;
     createOrder: (customer: CreateOrder) => Promise<Order>;
-    submitReview: (review: CreateMenuItemReview) => Promise<MenuItemReview>
+    submitReview: (menuItemSlug: string, review: CreateMenuItemReview) => Promise<MenuItemReview>
 }
 
 const api = axios.create({
@@ -61,6 +62,11 @@ const getMenuItems = async () => {
     return res.data;
 }
 
+const getMenuItem = async (slug: string) => {
+    const res = await api.get<MenuItem>(`/menus/items/${slug}/`);
+    return res.data;
+}
+
 const getMenuItemCategories = async () => {
     const res = await api.get<MenuItemCategory[]>("/menus/categories/");
     return res.data;
@@ -91,8 +97,8 @@ const sendMessage = async (message: Message) => {
     return res.data;
 }
 
-const submitReview = async (review: CreateMenuItemReview) => {
-    const res = await api.post<MenuItemReview>(`/menus/items/${review.menuItem}/add_review/`, review);
+const submitReview = async (menuItemSlug: string, review: CreateMenuItemReview) => {
+    const res = await api.post<MenuItemReview>(`/menus/items/${menuItemSlug}/add_review/`, review);
     return res.data;
 }
 
@@ -101,8 +107,8 @@ const bookCatering = async (booking: Booking) => {
     return res.data;
 }
 
-const getSimilarProducts = async (itemId: string) => {
-    const res = await api.get<MenuItem[]>(`/menus/items/${itemId}/similar-menu-items/`);
+const getSimilarProducts = async (slug: string) => {
+    const res = await api.get<MenuItem[]>(`/menus/items/${slug}/similar-menu-items/`);
     return res.data;
 }
 
@@ -135,6 +141,7 @@ export const useApiClient = (): ApiClient => {
         validateCouponCode,
         createCustomer,
         createOrder,
-        submitReview
+        submitReview,
+        getMenuItem
     }
 }

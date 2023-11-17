@@ -1,4 +1,4 @@
-import { useShopContext } from '@/context/ShopContext';
+import { useAppContext } from '@/context/AppContext';
 import Link from 'next/link';
 import ProductCard from '../menu/ProductCard';
 
@@ -8,7 +8,7 @@ const ShopAllProductSection = () => {
 		currentPage,
 		handlePageChange,
 		totalPages,
-	} = useShopContext();
+	} = useAppContext();
 
 	return (
 		<div className='shop-products-wrapper'>

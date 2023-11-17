@@ -18,7 +18,8 @@ const ShopReviewForm: React.FC<ShopDetailsProp> = ({ shopData }) => {
 			menuItem: shopData.id,
 		};
 
-		submitReview(review);
+		submitReview(shopData.slug, review);
+		(event.target as HTMLFormElement).reset();
 	};
 
 	return (

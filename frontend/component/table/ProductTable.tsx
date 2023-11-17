@@ -1,13 +1,8 @@
 'use client';
 import { useAppContext } from '@/context/AppContext';
-import { CartItem } from '@/types/menu';
+import { ProductProps } from '@/types/menu';
 import Link from 'next/link';
 import React from 'react';
-interface ProductProps {
-	array: CartItem[];
-	removeItem: (productId: string) => void;
-	cartTable: boolean;
-}
 
 const ProductTable: React.FC<ProductProps> = ({
 	array,
@@ -56,7 +51,7 @@ const ProductTable: React.FC<ProductProps> = ({
 											<td>
 												<Link href={`/menu/${item.slug}`}>{item.name}</Link>
 											</td>
-											<td>${item.price}</td>
+											<td>{item.price}&nbsp;&euro;</td>
 											{cartTable && (
 												<td className='qty-td'>
 													<form action='#'>

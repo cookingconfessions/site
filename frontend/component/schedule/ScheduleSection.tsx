@@ -1,9 +1,21 @@
 'use client';
 
 import { useAppContext } from '@/context/AppContext';
+import { useEffect } from 'react';
 
 const ScheduleSection = () => {
-	const { openBookingModal, schedules } = useAppContext();
+	const {
+		openBookingModal,
+		schedules,
+		companyInfo,
+		loadSchedules,
+		loadCompanyInfo,
+	} = useAppContext();
+
+	useEffect(() => {
+		loadSchedules();
+		loadCompanyInfo();
+	}, []);
 
 	return (
 		<section>
@@ -26,10 +38,10 @@ const ScheduleSection = () => {
 											experience great delicacies from our team.
 										</p>
 									</div>
-									<div
-										className='banner-btn-sec mt-3'
-										onClick={openBookingModal}>
-										<a className='custom-btn'>Book catering</a>
+									<div className='banner-btn-sec mt-3'>
+										<button className='custom-btn' onClick={openBookingModal}>
+											Book catering
+										</button>
 									</div>
 								</div>
 								<div
@@ -55,7 +67,7 @@ const ScheduleSection = () => {
 												<a
 													className='note-footer-text'
 													href='tel:+993240-765230'>
-													+993240-765230
+													{companyInfo.phoneNumbers.split(',')[0]}
 												</a>
 											</div>
 										</div>

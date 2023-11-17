@@ -33,15 +33,22 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ("id", "first_name", "last_name",  "email",
-                  "address_line1", "address_line2", "phone_number", "country")
+        fields = (
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "address_line1",
+            "address_line2",
+            "phone_number",
+            "country",
+        )
 
 
 class CreateCustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ("user", "phone_number", "country",
-                  "address_line1", "address_line2")
+        fields = ("user", "phone_number", "country", "address_line1", "address_line2")
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -104,9 +111,16 @@ class CreateOrderItemSerializer(serializers.ModelSerializer):
 
 class CreateOrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True, read_only=True)
-    order_notes = serializers.CharField(required=False, default='')
+    order_notes = serializers.CharField(required=False, default="")
 
     class Meta:
         model = Order
-        fields = ("id", "customer", "order_notes", "discount_code",
-                  "delivery_mode", "payment_method", "items")
+        fields = (
+            "id",
+            "customer",
+            "order_notes",
+            "discount_code",
+            "delivery_mode",
+            "payment_method",
+            "items",
+        )

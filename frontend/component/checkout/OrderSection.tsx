@@ -10,9 +10,15 @@ const OrderSection: React.FC = () => {
 		couponCode,
 		shouldDeliverOrder,
 		payCashOnDelivery,
+		canSubmitOrder,
+		loadDeliveryFee,
 	} = useAppContext();
 	const [mainTotal, setMainTotal] = useState<number>(0);
 	const [discount, setDiscount] = useState<number>(0);
+
+	useEffect(() => {
+		loadDeliveryFee();
+	}, []);
 
 	useEffect(() => {
 		let total = cartTotal;
@@ -21,9 +27,9 @@ const OrderSection: React.FC = () => {
 			total += deliveryFee;
 		}
 
-		if (couponCode) {
+		if (couponCode?.isActive) {
 			setDiscount(total * (couponCode.discountPercentage / 100));
-			total = total - discount;
+			total = total * (1 - couponCode.discountPercentage / 100);
 		}
 
 		setMainTotal(total);
@@ -65,10 +71,7 @@ const OrderSection: React.FC = () => {
 									</td>
 									<td className='product-total'>
 										<span className='checkout-Price-amount amount'>
-											<bdi>
-												<span className='checkout-Price-currencySymbol'>$</span>
-												{item.price * item.quantity}
-											</bdi>
+											<bdi>{item.price * item.quantity}&nbsp;&euro;</bdi>
 										</span>
 									</td>
 								</tr>
@@ -80,10 +83,7 @@ const OrderSection: React.FC = () => {
 							<th>Subtotal</th>
 							<td>
 								<span className='checkout-Price-amount amount'>
-									<bdi>
-										<span className='checkout-Price-currencySymbol'>$</span>
-										{cartTotal.toFixed(2)}
-									</bdi>
+									<bdi>{cartTotal.toFixed(2)}&nbsp;&euro;</bdi>
 								</span>
 							</td>
 						</tr>
@@ -92,8 +92,10 @@ const OrderSection: React.FC = () => {
 							<td>
 								<span className='checkout-Price-amount amount'>
 									<bdi>
-										<span className='checkout-Price-currencySymbol'>$</span>
-										{shouldDeliverOrder ? deliveryFee.toFixed(2) : 0.0}
+										{shouldDeliverOrder
+											? deliveryFee.toFixed(2)
+											: (0.0).toFixed(2)}
+										&nbsp;&euro;
 									</bdi>
 								</span>
 							</td>
@@ -102,10 +104,7 @@ const OrderSection: React.FC = () => {
 							<th>Discount</th>
 							<td>
 								<span className='checkout-Price-amount amount'>
-									<bdi>
-										<span className='checkout-Price-currencySymbol'>$</span>
-										{discount.toFixed(2)}
-									</bdi>
+									<bdi>{discount.toFixed(2)}&nbsp;&euro;</bdi>
 								</span>
 							</td>
 						</tr>
@@ -114,10 +113,7 @@ const OrderSection: React.FC = () => {
 							<td>
 								<strong>
 									<span className='checkout-Price-amount amount'>
-										<bdi>
-											<span className='checkout-Price-currencySymbol'>$</span>
-											{mainTotal.toFixed(2)}
-										</bdi>
+										<bdi>{mainTotal.toFixed(2)}&nbsp;&euro;</bdi>
 									</span>
 								</strong>{' '}
 							</td>
@@ -171,8 +167,11 @@ const OrderSection: React.FC = () => {
 
 						<button
 							type='submit'
-							className='button alt wp-element-button'
+							className={`button alt wp-element-button ${
+								canSubmitOrder ? '' : 'opacity-25'
+							}`}
 							id='place_order'
+							disabled={!canSubmitOrder}
 							data-value='Place order'>
 							Place order
 						</button>

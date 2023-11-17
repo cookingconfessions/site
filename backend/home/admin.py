@@ -24,8 +24,7 @@ class MessageAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "phone_number",
-                    "location", "date", "time", "message")
+    list_display = ("name", "email", "phone_number", "location", "date", "time", "message")
     search_fields = ("name", "email", "phone_number")
     list_filter = ("date",)
     sortable_by = ("last_modified", "date")

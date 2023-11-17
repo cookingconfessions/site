@@ -1,3 +1,4 @@
+import { HomeContextData } from '@/types/context';
 import {
 	BannerItem,
 	Booking,
@@ -8,108 +9,97 @@ import {
 } from '@/types/home';
 import { MenuItem, MenuItemCategory } from '@/types/menu';
 import { useApiClient } from '@/utils/api-client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-
-export interface HomeContextData {
-	activeMenuTab: string;
-	handleMenuTabChange: (tab: any) => void;
-	filteredItemList: MenuItem[];
-	currentYear: number;
-	activeMenuProductTab: string;
-	handleMenuProductTabChange: (tab: any) => void;
-	filteredMenuProductList: MenuItem[];
-	openAccordion: string | null;
-	handleAccordionBtn: (itemId: string) => void;
-	isLightBoxModalOpen: boolean;
-	openLightBoxModal: (product: MenuItem | null) => void;
-	closeLightBoxModal: () => void;
-	product: MenuItem | null;
-	menuItemsToShow: number;
-	handleMenuShowMore: () => void;
-	handleMenuShowLess: () => void;
-	isSidebarOpen: boolean;
-	openSidebar: () => void;
-	closeSidebar: () => void;
-	isContactModalOpen: boolean;
-	openContactModal: () => void;
-	closeContactModal: () => void;
-	handleContactFormSubmit: (message: Message) => void;
-	isBookingModalOpen: boolean;
-	openBookingModal: () => void;
-	closeBookingModal: () => void;
-	handleBookingFormSubmit: (booking: Booking) => void;
-	bannerItems: BannerItem[];
-	menuItems: MenuItem[];
-	categories: MenuItemCategory[];
-	schedules: Schedule[];
-	companyInfo: CompanyInfo;
-	faqs: Faq[];
-}
-
-const {
-	getMenuItems,
-	getBannerItems,
-	getMenuItemCategories,
-	getSchedule,
-	getCompanyInfo,
-	getFaqs,
-	bookCatering,
-	sendMessage,
-} = useApiClient();
-const menuItems: MenuItem[] = [];
-const bannerItems: BannerItem[] = [];
-const categories: MenuItemCategory[] = [];
-const schedules: Schedule[] = [];
-const faqs: Faq[] = [];
-const companyInfo: CompanyInfo = {
-	name: '',
-	description: '',
-	addressLine1: '',
-	addressLine2: '',
-	email: '',
-	phoneNumbers: '',
-	facebookLink: '',
-	instagramLink: '',
-	tiktokLink: '',
-	deliveryFee: 0.0,
-	countries: [],
-};
-
-getMenuItems().then((data) => menuItems.push(...data));
-getBannerItems().then((data) => bannerItems.push(...data));
-getMenuItemCategories().then((data) => categories.push(...data));
-getSchedule().then((data) => schedules.push(...data));
-getFaqs().then((data) => faqs.push(...data));
-getCompanyInfo().then((data) => {
-	companyInfo.name = data.name;
-	companyInfo.description = data.description;
-	companyInfo.addressLine1 = data.addressLine1;
-	companyInfo.addressLine2 = data.addressLine2;
-	companyInfo.email = data.email;
-	companyInfo.phoneNumbers = data.phoneNumbers;
-	companyInfo.facebookLink = data.facebookLink;
-	companyInfo.tiktokLink = data.tiktokLink;
-	companyInfo.countries = data.countries;
-});
 
 export const useHomeContext = (): HomeContextData => {
 	const currentYear = new Date().getFullYear();
 
-	// Menu Section filter
-	const [activeMenuTab, setActiveMenuTab] = useState<string>('all');
-
-	const handleMenuTabChange = (tab: any) => {
-		setActiveMenuTab(tab);
+	// Banner Section
+	const [bannerItems, setBannerItems] = useState<BannerItem[]>([]);
+	const loadBannerItems = () => {
+		useApiClient()
+			.getBannerItems()
+			.then((data) => setBannerItems(data));
 	};
-	const filteredItemList =
-		activeMenuTab === 'all'
-			? menuItems.slice(0, 7)
-			: menuItems
-					.slice(0, 7)
-					.filter(
-						(item) => item.category && item.category.includes(activeMenuTab)
-					);
+
+	// Menu Products Section
+	const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+	const [activeMenuProductTab, setActiveMenuProductTab] = useState<string>(
+		'all'
+	);
+	const [filteredMenuProductList, setFilteredMenuProductList] = useState<
+		MenuItem[]
+	>([]);
+
+	const loadMenuItems = () => {
+		useApiClient()
+			.getMenuItems()
+			.then((data) => setMenuItems(data));
+	};
+	const handleMenuProductTabChange = (tab: any) => {
+		setActiveMenuProductTab(tab);
+	};
+
+	useEffect(() => {
+		const filteredMenuProductList =
+			activeMenuProductTab === 'all'
+				? menuItems.slice(0, 9)
+				: menuItems
+						.slice(0, 19)
+						.filter(
+							(item) => item.category.toLowerCase() === activeMenuProductTab
+						);
+		setFilteredMenuProductList(filteredMenuProductList);
+	}, [activeMenuProductTab, menuItems]);
+
+	// Categories section
+	const [categories, setCategories] = useState<MenuItemCategory[]>([]);
+
+	const loadCategories = () => {
+		useApiClient()
+			.getMenuItemCategories()
+			.then((data) => setCategories(data));
+	};
+
+	// Schedule section
+	const [schedules, setSchedules] = useState<Schedule[]>([]);
+
+	const loadSchedules = () => {
+		useApiClient()
+			.getSchedule()
+			.then((data) => setSchedules(data));
+	};
+
+	// Company Info
+	const [companyInfo, setCompanyInfo] = useState<CompanyInfo>({
+		name: '',
+		description: '',
+		addressLine1: '',
+		addressLine2: '',
+		email: '',
+		phoneNumbers: '',
+		facebookLink: '',
+		instagramLink: '',
+		tiktokLink: '',
+		deliveryFee: 0.0,
+		countries: [],
+	});
+
+	const loadCompanyInfo = () => {
+		useApiClient()
+			.getCompanyInfo()
+			.then((data) => setCompanyInfo(data));
+	};
+
+	// Faqs
+	const [faqs, setFaqs] = useState<Faq[]>([]);
+
+	const loadFaqs = () => {
+		useApiClient()
+			.getFaqs()
+			.then((data) => setFaqs(data));
+	};
 
 	// Mobile Sidebar
 	const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -119,14 +109,6 @@ export const useHomeContext = (): HomeContextData => {
 	};
 	const closeSidebar = () => {
 		setIsSidebarOpen(false);
-	};
-
-	// Menu Product Filter
-	const [activeMenuProductTab, setActiveMenuProductTab] = useState<string>(
-		'all'
-	);
-	const handleMenuProductTabChange = (tab: any) => {
-		setActiveMenuProductTab(tab);
 	};
 
 	// LightBox Modal function
@@ -141,27 +123,6 @@ export const useHomeContext = (): HomeContextData => {
 	};
 	const closeLightBoxModal = () => {
 		setIsLightBoxModalOpen(false);
-	};
-
-	// Menu Products Section
-	const filteredMenuProductList =
-		activeMenuProductTab === 'all'
-			? menuItems.slice(0, 19)
-			: menuItems
-					.slice(0, 19)
-					.filter(
-						(item) => item.category.toLowerCase() === activeMenuProductTab
-					);
-	const initialMenuItemsToShow = 8; // Number of items to initially show
-	const [menuItemsToShow, setMenuItemsToShow] = useState<number>(
-		initialMenuItemsToShow
-	);
-
-	const handleMenuShowMore = () => {
-		setMenuItemsToShow(filteredMenuProductList.length);
-	};
-	const handleMenuShowLess = () => {
-		setMenuItemsToShow(initialMenuItemsToShow);
 	};
 
 	// FAQ accordion
@@ -181,12 +142,19 @@ export const useHomeContext = (): HomeContextData => {
 		setIsContactModalOpen(false);
 	};
 	const handleContactFormSubmit = (message: Message) => {
-		sendMessage(message).then((_) => {
-			closeContactModal();
-			toast.success(
-				'Thank you for your message, we will get back to you shortly!'
+		useApiClient()
+			.sendMessage(message)
+			.then((_) => {
+				closeContactModal();
+				toast.success(
+					'Thank you for your message, we will get back to you shortly!'
+				);
+			})
+			.catch((_) =>
+				toast.error(
+					'There was a problem sending your message, please try again :('
+				)
 			);
-		});
 	};
 
 	// Booking
@@ -199,31 +167,44 @@ export const useHomeContext = (): HomeContextData => {
 		setIsBookingModalOpen(false);
 	};
 	const handleBookingFormSubmit = (booking: Booking) => {
-		bookCatering(booking).then((_) => {
-			closeBookingModal();
-			toast.success(
-				'We received your booking, we will get back to you shortly!'
+		useApiClient()
+			.bookCatering(booking)
+			.then((_) => {
+				closeBookingModal();
+				toast.success(
+					'We received your booking, we will get back to you shortly!'
+				);
+			})
+			.catch((_) =>
+				toast.error(
+					'There was a problem adding your booking, please try again :('
+				)
 			);
-		});
 	};
 
 	return {
-		activeMenuTab,
-		handleMenuTabChange,
-		filteredItemList,
 		currentYear,
+		bannerItems,
+		loadBannerItems,
+		menuItems,
+		loadMenuItems,
+		filteredMenuProductList,
 		activeMenuProductTab,
 		handleMenuProductTabChange,
-		filteredMenuProductList,
+		categories,
+		loadCategories,
+		schedules,
+		loadSchedules,
+		companyInfo,
+		loadCompanyInfo,
+		faqs,
+		loadFaqs,
 		openAccordion,
 		handleAccordionBtn,
 		isLightBoxModalOpen,
 		openLightBoxModal,
 		closeLightBoxModal,
 		product,
-		menuItemsToShow,
-		handleMenuShowMore,
-		handleMenuShowLess,
 		isSidebarOpen,
 		openSidebar,
 		closeSidebar,
@@ -235,11 +216,5 @@ export const useHomeContext = (): HomeContextData => {
 		openBookingModal,
 		closeBookingModal,
 		handleBookingFormSubmit,
-		bannerItems,
-		menuItems,
-		categories,
-		schedules,
-		companyInfo,
-		faqs,
 	};
 };

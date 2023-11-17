@@ -13,6 +13,7 @@ const CouponSection = () => {
 		applyCoupon,
 	} = useAppContext();
 	const [mainTotal, setMainTotal] = useState<number>(0);
+	const [discount, setDiscount] = useState<number>(0);
 
 	const applyCouponCode = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -27,7 +28,8 @@ const CouponSection = () => {
 	useEffect(() => {
 		let total = cartTotal;
 
-		if (couponCode?.discountPercentage) {
+		if (couponCode?.isActive) {
+			setDiscount(total * (couponCode.discountPercentage / 100));
 			total = total * (1 - couponCode.discountPercentage / 100);
 		}
 
@@ -56,8 +58,16 @@ const CouponSection = () => {
 											name='coupon'
 											className='form-control coupon-input'
 											placeholder='Input Your Coupon Code'
+											defaultValue={
+												couponCode?.isActive ? couponCode?.code : ''
+											}
 										/>
-										<button className='custom-btn' type='submit'>
+										<button
+											disabled={couponCode !== undefined}
+											className={`custom-btn ${
+												couponCode?.code ? 'opacity-25' : ''
+											}`}
+											type='submit'>
 											Apply Coupon
 										</button>
 									</div>
@@ -74,12 +84,14 @@ const CouponSection = () => {
 									<tbody>
 										<tr>
 											<td>Sub Total:</td>
-											<td className='cart-price'>${cartTotal.toFixed(2)}</td>
+											<td className='cart-price'>
+												{cartTotal.toFixed(2)}&nbsp;&euro;
+											</td>
 										</tr>
 										<tr>
 											<td>Discount:</td>
 											<td className='cart-price'>
-												{couponCode ? (cartTotal - mainTotal).toFixed(2) : 0.0}%
+												{discount.toFixed(2)}&nbsp;&euro;
 											</td>
 										</tr>
 									</tbody>
@@ -87,7 +99,8 @@ const CouponSection = () => {
 								<div className='total-sum'>
 									<p>Total:</p>
 									<p className='sum-price'>
-										{cart.length === 0 ? '$0.00' : `$${mainTotal.toFixed(2)}`}
+										{cart.length === 0 ? '0.00' : ` ${mainTotal.toFixed(2)}`}{' '}
+										&nbsp;&euro;
 									</p>
 								</div>
 								{cart.length !== 0 && (

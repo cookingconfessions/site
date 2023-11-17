@@ -7,7 +7,7 @@ import ShopRecentProducts from './ShopRecentProducts';
 
 const ShopDetailSection: React.FC<ShopDetailsProp> = ({ shopData }) => {
 	return (
-		<div className='shop-area pt-105 pb-55'>
+		<div className='shop-area pt-15 pb-55'>
 			<div className='container'>
 				<div className='row'>
 					<div className='col-md-6' data-aos='fade-up' data-aos-duration='1000'>

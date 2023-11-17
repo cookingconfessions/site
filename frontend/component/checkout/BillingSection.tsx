@@ -33,6 +33,7 @@ const BillingSection = () => {
 								className='input-text '
 								name='firstName'
 								defaultValue={customer.firstName}
+								required
 							/>
 						</span>
 					</p>
@@ -49,6 +50,7 @@ const BillingSection = () => {
 								className='input-text '
 								name='lastName'
 								defaultValue={customer.lastName}
+								required
 							/>
 						</span>
 					</p>
@@ -65,6 +67,7 @@ const BillingSection = () => {
 								className='input-text '
 								name='phoneNumber'
 								defaultValue={customer.phoneNumber}
+								required
 							/>
 						</span>
 					</p>
@@ -81,6 +84,7 @@ const BillingSection = () => {
 								className='input-text '
 								name='email'
 								defaultValue={customer.email}
+								required
 							/>
 						</span>
 					</p>
@@ -95,6 +99,7 @@ const BillingSection = () => {
 							<Form.Select
 								name='country'
 								defaultValue={customer.country}
+								required
 								className='country_to_state country_select select2-hidden-accessible'>
 								<option value=''>Select a country / region…</option>
 								{companyInfo.countries.map((country) => (
@@ -118,6 +123,7 @@ const BillingSection = () => {
 								className='input-text  '
 								name='addressLine1'
 								defaultValue={customer.addressLine1}
+								required
 								placeholder='House number and street name'
 							/>
 						</span>

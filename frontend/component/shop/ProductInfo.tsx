@@ -1,17 +1,23 @@
 import { useAppContext } from '@/context/AppContext';
 import { MenuItem } from '@/types/menu';
-import React from 'react';
+import React, { useEffect } from 'react';
 interface InfoProp {
 	shopData: MenuItem;
 }
 const ProductInfo: React.FC<InfoProp> = ({ shopData }) => {
-	const { addToCartWithQuantity } = useAppContext();
+	const { addToCartWithQuantity, loadShopItems, shopItems } = useAppContext();
+
+	useEffect(() => {
+		if (!shopItems.length) {
+			loadShopItems();
+		}
+	}, []);
 
 	return (
 		<div className='product-main-info mb-50'>
 			<h4 className='name'>{shopData.name}</h4>
 			<div className='price-section'>
-				<p>Price: ${shopData.price}</p>
+				<p>Price: {shopData.price}&nbsp;&euro;</p>
 			</div>
 			<ul className='info-list'>
 				<li>
@@ -29,13 +35,13 @@ const ProductInfo: React.FC<InfoProp> = ({ shopData }) => {
 			</ul>
 
 			<div className='cart-sec'>
-				<div className='btn-sec'>
-					<a
+				<div className={`btn-sec ${shopData.isAvailable ? '' : 'opacity-25'}`}>
+					<button
 						className='custom-btn'
-						role='button'
+						disabled={!shopData.isAvailable}
 						onClick={() => addToCartWithQuantity(shopData.id, 1)}>
 						Add To Cart
-					</a>
+					</button>
 				</div>
 			</div>
 		</div>

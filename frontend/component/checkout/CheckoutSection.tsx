@@ -21,6 +21,7 @@ const CheckoutSection = () => {
 		createOrder,
 		shouldDeliverOrder,
 		payCashOnDelivery,
+		updateOrderValidity,
 	} = useAppContext();
 
 	const getCustomerDetails = (elements: OrderFormElements): CreateCustomer => {
@@ -78,6 +79,13 @@ const CheckoutSection = () => {
 		}
 	};
 
+	const handleOrderFormChange = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		const form = document.getElementById('order_form') as HTMLFormElement;
+
+		updateOrderValidity(form.checkValidity());
+	};
+
 	return (
 		<div className='page-area pb-85'>
 			<div className='container'>
@@ -87,8 +95,10 @@ const CheckoutSection = () => {
 							<div className='post-entry post-entry--top-margin'>
 								<div className='checkout'>
 									<form
+										id='order_form'
 										onSubmit={handleSubmit}
-										className='checkout checkout-checkout'>
+										className='checkout checkout-checkout'
+										onChange={handleOrderFormChange}>
 										<div className='row' id='customer_details'>
 											<BillingSection />
 											<OrderSection />

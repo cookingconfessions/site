@@ -1,11 +1,16 @@
 export interface MenuProps {
     style: string;
     showMoreBtn: boolean;
-    endIndex: number;
 }
 
 export interface ProductCardProps {
     item: MenuItem;
+}
+
+export interface ProductProps {
+    array: CartItem[];
+    removeItem: (productId: string) => void;
+    cartTable: boolean;
 }
 
 export interface CreateMenuItemReview {

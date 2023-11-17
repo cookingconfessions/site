@@ -1,12 +1,9 @@
 'use client';
+import { AppContextData } from '@/types/context';
 import React, { ReactNode, createContext, useContext } from 'react';
-import { AuthContextData, useAuthContext } from './AuthContext';
-import { HomeContextData, useHomeContext } from './HomeContext';
-import { ShopContextData, useShopContext } from './ShopContext';
-
-interface AppContextData extends HomeContextData, AuthContextData, ShopContextData {
-	isHeaderFixed: boolean;
-}
+import { useAuthContext } from './AuthContext';
+import { useHomeContext } from './HomeContext';
+import { useShopContext } from './ShopContext';
 
 interface AppProviderProps {
 	children: ReactNode;
@@ -26,7 +23,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 		...authContext,
 	};
 
-	return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;
+	return (
+		<AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
+	);
 };
 
 export const useAppContext = () => {

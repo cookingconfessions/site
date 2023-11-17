@@ -24,8 +24,7 @@ class MenuItemReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MenuItemReview
-        fields = ("id", "name", "email", "message",
-                  "is_visible", "created_at", "replies")
+        fields = ("id", "name", "email", "message", "is_visible", "created_at", "replies")
 
     def get_replies(self, obj):
         # Get the child reviews (replies) for the current review

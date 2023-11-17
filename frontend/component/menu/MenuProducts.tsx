@@ -1,13 +1,24 @@
 'use client';
 import { useAppContext } from '@/context/AppContext';
 import { MenuProps } from '@/types/menu';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Nav } from 'react-bootstrap';
 import ProductCard from './ProductCard';
 
-const MenuProducts: React.FC<MenuProps> = ({ style, showMoreBtn, endIndex }) => {
-	const { activeMenuProductTab, handleMenuProductTabChange, filteredMenuProductList, categories } = useAppContext();
-	const menuProductItems = filteredMenuProductList.slice(0, endIndex);
+const MenuProducts: React.FC<MenuProps> = ({ style, showMoreBtn }) => {
+	const {
+		activeMenuProductTab,
+		handleMenuProductTabChange,
+		categories,
+		filteredMenuProductList,
+		loadCategories,
+		loadMenuItems,
+	} = useAppContext();
+
+	useEffect(() => {
+		loadCategories();
+		loadMenuItems();
+	}, []);
 
 	return (
 		<section>
@@ -15,10 +26,16 @@ const MenuProducts: React.FC<MenuProps> = ({ style, showMoreBtn, endIndex }) => 
 				<div className='container'>
 					<div className='product-inner'>
 						<div className='row'>
-							<div className='section-head text-center' data-aos='fade-up' data-aos-duration='500'>
+							<div
+								className='section-head text-center'
+								data-aos='fade-up'
+								data-aos-duration='500'>
 								<span className='sm-title '>Special Menu</span>
 								<h2 className='sec-title'>Our Specials Menu</h2>
-								<div className='product-cat' data-aos='fade-up' data-aos-duration='1500'>
+								<div
+									className='product-cat'
+									data-aos='fade-up'
+									data-aos-duration='1500'>
 									<div className='controls'>
 										<Nav
 											className='cat-menu justify-content-center'
@@ -31,7 +48,9 @@ const MenuProducts: React.FC<MenuProps> = ({ style, showMoreBtn, endIndex }) => 
 											</Nav.Item>
 											{categories.map((category) => (
 												<Nav.Item key={category.id}>
-													<Nav.Link className='cat-menu-li' eventKey={category.name.toLowerCase()}>
+													<Nav.Link
+														className='cat-menu-li'
+														eventKey={category.name.toLowerCase()}>
 														<span className='cat-name'>{category.name}</span>
 													</Nav.Link>
 												</Nav.Item>
@@ -41,12 +60,15 @@ const MenuProducts: React.FC<MenuProps> = ({ style, showMoreBtn, endIndex }) => 
 								</div>
 							</div>
 						</div>
-						<div className='describe-content mt-50' data-aos='fade-up' data-aos-duration='1000'>
+						<div
+							className='describe-content mt-50'
+							data-aos='fade-up'
+							data-aos-duration='1000'>
 							<div
 								className='row row-cols-xxl-5 row-cols-lg-4 row-cols-md-3 row-cols-2'
 								data-aos='fade-up'
 								data-aos-duration='500'>
-								{menuProductItems.map((item) => (
+								{filteredMenuProductList.map((item) => (
 									<ProductCard item={item} key={item.id} />
 								))}
 							</div>

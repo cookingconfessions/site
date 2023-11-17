@@ -38,8 +38,7 @@ class CustomerView(viewsets.ViewSet):
 
     def create(self, request, *args, **kwargs):
         if not self.are_user_details_valid(request.data):
-            Response({"error": "Missing details"},
-                     status=status.HTTP_400_BAD_REQUEST)
+            Response({"error": "Missing details"}, status=status.HTTP_400_BAD_REQUEST)
         email = request.data.pop("email")
         username = self.generate_unique_username(email)
         password = self.generate_otp()
@@ -57,8 +56,7 @@ class CustomerView(viewsets.ViewSet):
             return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         user = user_serializer.save()
-        customer_serializer = CreateCustomerSerializer(
-            data={**request.data, "user": user.id})
+        customer_serializer = CreateCustomerSerializer(data={**request.data, "user": user.id})
 
         if customer_serializer.is_valid():
             customer = customer_serializer.save()
@@ -116,8 +114,7 @@ class OrderView(viewsets.ViewSet):
         discount_code = None  # Initialize discount_code
         if request.data["discount_code"]:
             try:
-                discount_code = DiscountCode.objects.get(
-                    code=request.data["discount_code"])
+                discount_code = DiscountCode.objects.get(code=request.data["discount_code"])
             except DiscountCode.DoesNotExist:
                 return Response(
                     {"error": "Discount code not found"}, status=status.HTTP_404_NOT_FOUND
@@ -156,8 +153,7 @@ class OrderView(viewsets.ViewSet):
 
     def create_order_items(self, order_items: List[dict], order: dict):
         for order_item in order_items:
-            serializer = CreateOrderItemSerializer(
-                data={**order_item, "order": order.id})
+            serializer = CreateOrderItemSerializer(data={**order_item, "order": order.id})
 
             if not serializer.is_valid():
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

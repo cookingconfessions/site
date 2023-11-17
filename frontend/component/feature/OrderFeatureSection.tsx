@@ -14,7 +14,7 @@ const OrderFeatureSection = () => {
 							<h2 className='section-title'>Treat yourself</h2>
 							<p>
 								We are here for you! <br />
-								We got you well crafted African cuisines. <br /> Treat yourself
+								We got you well crafted African cuisines <br /> Treat yourself
 								and loved ones any time and enjoy authentic flavours.
 							</p>
 						</div>

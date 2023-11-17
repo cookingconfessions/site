@@ -13,6 +13,14 @@ export interface LayoutProps {
     children: any;
 }
 
+export interface BannerProps {
+    theme: string;
+}
+
+export interface FooterProp {
+    style: string;
+}
+
 export interface BannerItem {
     id: string;
     name: string;
