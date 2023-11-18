@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from pathlib import Path
 
 import cloudinary
@@ -38,9 +39,12 @@ INSTALLED_APPS = [
     "corsheaders",
     "cloudinary",
     "rest_framework",
+    "rest_framework_simplejwt.token_blacklist",
     "rest_framework_swagger",
     "drf_yasg",
     "django_countries",
+    "django_rest_passwordreset",
+    "authentication",
     "menu",
     "home",
     "shop",
@@ -58,12 +62,27 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=int(Config.get("ACCESS_TOKEN_LIFETIME_IN_MINUTES"))),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=int(Config.get("REFRESH_TOKEN_LIFETIME_IN_DAYS"))),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+}
+
 ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, "templates"),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -135,3 +154,12 @@ if not DEBUG:
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Email
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = Config.get("EMAIL_HOST")
+EMAIL_PORT = Config.get("EMAIL_PORT")
+EMAIL_HOST_USER = Config.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = Config.get("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

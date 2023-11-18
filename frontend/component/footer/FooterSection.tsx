@@ -10,10 +10,15 @@ const FooterSection: React.FC<FooterProp> = ({ style }) => {
 		companyInfo,
 		menuItems,
 		loadCompanyInfo,
+		loadMenuItems,
 	} = useAppContext();
 	const phone_numbers: string[] = companyInfo.phoneNumbers.split(',');
 
 	useEffect(() => {
+		if (!menuItems.length) {
+			loadMenuItems();
+		}
+
 		loadCompanyInfo();
 	}, []);
 

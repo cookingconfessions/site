@@ -41,7 +41,7 @@ export interface HomeContextData {
 
 export interface ShopContextData {
     shopItems: MenuItem[];
-    loadShopItems: () => void
+    loadShopItems: () => void;
     isHeaderFixed: boolean;
     startIndex: number;
     endIndex: number;
@@ -94,12 +94,15 @@ export interface ShopContextData {
 }
 
 export interface AuthContextData {
+    user: Customer | undefined;
+    isAuthenticated: boolean;
     passwordVisible: boolean;
     togglePasswordVisibility: () => void;
     isLoginModalOpen: boolean;
     openLoginModal: () => void;
     closeLoginModal: () => void;
     handleUserLogin: (loginDetails: LoginDetails) => void;
+    logout: () => void;
 }
 
 export interface AppContextData extends HomeContextData, AuthContextData, ShopContextData {

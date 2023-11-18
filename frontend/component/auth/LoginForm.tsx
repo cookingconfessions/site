@@ -9,23 +9,22 @@ const LoginForm = () => {
 		togglePasswordVisibility,
 		handleUserLogin,
 	} = useAppContext();
-	const [userName, setUserName] = useState('');
+	const [username, setUserName] = useState('');
 	const [password, setPassword] = useState('');
 	const handleFormSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 
-		if (!userName && !password) {
+		if (!username && !password) {
 			toast.error('Please fill out all fields.', { position: 'top-right' });
 		} else if (!password) {
 			toast.warning('Please provide password.', { position: 'top-right' });
-		} else if (!userName) {
+		} else if (!username) {
 			toast.warning('Please provide user name.', { position: 'top-right' });
 		} else {
 			// If the form is successfully submitted, show a success toast
-			toast.success('Signed In successfully!', { position: 'top-right' });
 			setUserName('');
 			setPassword('');
-			handleUserLogin({ userName, password });
+			handleUserLogin({ username, password });
 		}
 	};
 
@@ -43,7 +42,7 @@ const LoginForm = () => {
 					className='login-Input login-Input--text input-text'
 					name='username'
 					id='username'
-					value={userName}
+					value={username}
 					onChange={(e) => setUserName(e.target.value)}
 				/>
 			</p>

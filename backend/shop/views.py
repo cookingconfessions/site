@@ -66,8 +66,6 @@ class CustomerView(viewsets.ViewSet):
         return Response(customer_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def are_user_details_valid(self, data: dict):
-        print(data)
-
         if (
             data["email"]
             and data["first_name"]

@@ -1,5 +1,5 @@
 'use client';
-import LoginForm from '../form/LoginForm';
+import LoginForm from '../auth/LoginForm';
 
 const LoginSection = () => {
 	return (

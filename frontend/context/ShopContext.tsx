@@ -252,7 +252,6 @@ export const useShopContext = (): ShopContextData => {
 	const router = useRouter();
 
 	const clearCustomer = () => {
-		localStorage.removeItem('customer');
 		setCustomer({
 			id: '',
 			firstName: '',
@@ -416,9 +415,7 @@ export const useShopContext = (): ShopContextData => {
 		const savedCustomer = localStorage.getItem('customer');
 
 		if (savedCustomer) {
-			setCustomer(JSON.parse(savedCustomer));
-		} else {
-			clearCustomer();
+			setCustomer(JSON.parse(savedCustomer) as Customer);
 		}
 
 		return () => {

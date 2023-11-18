@@ -13,11 +13,13 @@ const MenuProducts: React.FC<MenuProps> = ({ style, showMoreBtn }) => {
 		filteredMenuProductList,
 		loadCategories,
 		loadMenuItems,
+		loadShopItems,
 	} = useAppContext();
 
 	useEffect(() => {
 		loadCategories();
 		loadMenuItems();
+		loadShopItems();
 	}, []);
 
 	return (

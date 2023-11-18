@@ -40,6 +40,10 @@ envVarGroups:
         value: "*"
       - key: CORS_ALLOWED_ORIGINS
         value: "*"
+      - key: ACCESS_TOKEN_LIFETIME_IN_MINUTES
+        value: "60"
+      - key: REFRESH_TOKEN_LIFETIME_IN_DAYS
+        value: "1"
   - name: integrations-credentials
     envVars:
       - key: CLOUDINARY_CLOUD_NAME
@@ -48,6 +52,14 @@ envVarGroups:
         value: apikey
       - key: CLOUDINARY_API_SECRET
         value: apikey
+      - key: EMAIL_HOST
+        value: smtp.gmail.com
+      - key: EMAIL_PORT
+        value: "587"
+      - key: EMAIL_HOST_USER
+        value: placeholder-value
+      - key: EMAIL_HOST_PASSWORD
+        value: placeholder-value
   - name: app-configurations
     envVars:
       - key: SITE_URL
