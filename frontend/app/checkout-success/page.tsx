@@ -1,22 +1,20 @@
 import BreadcrumbSection from '@/component/breadcrumb/BreadcrumbSection';
-import CheckoutSection from '@/component/checkout/CheckoutSection';
 import Layout from '@/component/layout/Layout';
-import { CheckoutProvider } from '@/context/CheckoutContext';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Cooking confessions Checkout',
+	title: 'Payment successful | Cooking confessions',
 	description:
 		'Cooking confessions delivers the best African/Kenyan meals in Slovakia',
 };
 
-export default function Checkout() {
+export default function CheckoutSuccess() {
 	return (
 		<Layout>
-			<BreadcrumbSection title='Checkout' />
-			<CheckoutProvider>
-				<CheckoutSection />
-			</CheckoutProvider>
+			<BreadcrumbSection title='Checkout Successful' />
+			<div className='container'>
+				<p className='c'>Checkout completed successfully</p>
+			</div>
 		</Layout>
 	);
 }

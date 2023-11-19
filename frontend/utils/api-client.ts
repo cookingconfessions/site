@@ -1,9 +1,8 @@
 import { LoginDetails, Token } from "@/types/auth";
 import { BannerItem, Booking, CompanyInfo, Faq, Message, Schedule } from "@/types/home";
-import { CouponCode, CreateCustomer, CreateMenuItemReview, CreateOrder, Customer, MenuItem, MenuItemCategory, MenuItemReview, Order } from "@/types/menu";
+import { CouponCode, CreateCustomer, CreateMenuItemReview, CreateOrder, Customer, MenuItem, MenuItemCategory, MenuItemReview, Order, StripePaymentIntentResponse } from "@/types/menu";
 import axios from "axios";
 import humps from 'humps';
-import { toast } from "react-toastify";
 
 interface ApiClient {
     login: (user: LoginDetails) => Promise<Token>
@@ -22,8 +21,11 @@ interface ApiClient {
     createCustomer: (customer: CreateCustomer) => Promise<Customer>;
     getCustomer: () => Promise<Customer>;
     createOrder: (customer: CreateOrder) => Promise<Order>;
+    createPaymentIntent: (orderTotal: number) => Promise<StripePaymentIntentResponse>;
     submitReview: (menuItemSlug: string, review: CreateMenuItemReview) => Promise<MenuItemReview>
 }
+
+const PROTECTED_ENDPOINTS = ['/auth/profile/', '/auth/logout/'];
 
 const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -34,35 +36,10 @@ const api = axios.create({
     }
 });
 
-const refreshSession = async () => {
-    try {
-        const token = localStorage.getItem('token');
-
-        if (!token) {
-            throw new Error('No token found');
-        }
-
-        let refreshToken = (JSON.parse(token) as Token).refresh;
-        const response = await api.post<Token>('/auth/token/refresh/', {
-            refresh: refreshToken,
-        });
-
-        // Assuming the new token is in the response
-        const newToken = response.data;
-        localStorage.setItem('token', JSON.stringify(newToken));
-
-        // Retry the original request with the new token
-        return axios(response.config);
-    } catch (error) {
-        throw error;
-    }
-};
-
-
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
 
-    if (token) {
+    if (token && (PROTECTED_ENDPOINTS.includes(config.url!))) {
         let accessToken = (JSON.parse(token) as Token).access;
         config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
@@ -80,19 +57,9 @@ api.interceptors.response.use(
         response.data = humps.camelizeKeys(response.data)
         return response;
     },
-    async (error) => {
-        if (error.response && error.response.status === 401) {
-            try {
-                const refreshedResponse = await refreshSession();
-                return refreshedResponse;
-            } catch (refreshError) {
-                window.location.href = '/';
-                toast.error("Your session has expired. Please login again.");
-                return Promise.reject(error);
-            }
-        }
 
-        else if (error.response) {
+    async (error) => {
+        if (error.response) {
             console.error('Response error:', error.response.status, error.response.data);
         } else if (error.request) {
             console.error('Request error:', error.request);
@@ -112,6 +79,13 @@ const getMenuItems = async () => {
 
 const getMenuItem = async (slug: string) => {
     const res = await api.get<MenuItem>(`/menus/items/${slug}/`);
+    return res.data;
+}
+
+const createPaymentIntent = async (orderTotal: number) => {
+    const res = await api.post<StripePaymentIntentResponse>(`/shop/checkout/`, {
+        total: orderTotal
+    });
     return res.data;
 }
 
@@ -219,6 +193,7 @@ export const useApiClient = (): ApiClient => {
         createCustomer,
         getCustomer,
         createOrder,
+        createPaymentIntent,
         submitReview,
         getMenuItem
     }

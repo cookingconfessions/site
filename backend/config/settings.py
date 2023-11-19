@@ -6,6 +6,7 @@ import cloudinary
 import cloudinary.api
 import cloudinary.uploader
 import dj_database_url
+import stripe
 from common.utils.config import Config
 
 
@@ -163,3 +164,7 @@ EMAIL_HOST_USER = Config.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = Config.get("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+# Stripe
+stripe.api_key = Config.get("STRIPE_SECRET_KEY")
+STRIPE_WEBHOOK_SECRET = Config.get("STRIPE_WEBHOOK_SECRET")

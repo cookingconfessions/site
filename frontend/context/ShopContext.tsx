@@ -180,7 +180,9 @@ export const useShopContext = (): ShopContextData => {
 			.validateCouponCode(code)
 			.then((coupon) => {
 				if (!coupon.isActive) {
-					toast.error('Coupon code is not active!');
+					toast.error('Coupon code is already expired :(');
+
+					return;
 				}
 
 				setCouponCode(coupon);
@@ -264,17 +266,23 @@ export const useShopContext = (): ShopContextData => {
 		});
 	};
 
+	const clearStateAfterOrder = () => {
+		setCart([]);
+		localStorage.removeItem('cart');
+		localStorage.removeItem('coupon');
+		clearCustomer();
+		setCouponCode(undefined);
+
+		if (payCashOnDelivery) {
+			router.replace('/');
+		}
+	};
+
 	const createOrder = (order: CreateOrder) => {
 		useApiClient()
 			.createOrder(order)
 			.then((_order) => {
 				toast.success('Order placed successfully!');
-				setCart([]);
-				localStorage.removeItem('cart');
-				localStorage.removeItem('coupon');
-				clearCustomer();
-				setCouponCode(undefined);
-				router.replace('/');
 			})
 			.catch((_error) => {
 				toast.error('An error occured while placing your order :(');
@@ -476,5 +484,6 @@ export const useShopContext = (): ShopContextData => {
 		loadDeliveryFee,
 		payCashOnDelivery,
 		handlePayCashOnDelivery,
+		clearStateAfterOrder,
 	};
 };

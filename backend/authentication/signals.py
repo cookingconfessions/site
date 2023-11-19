@@ -34,8 +34,6 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     email_html_message = render_to_string("email/password_reset_email.html", context)
     email_plaintext_message = render_to_string("email/password_reset_email.txt", context)
 
-    print(email_html_message, context)
-
     msg = EmailMultiAlternatives(
         # title:
         "Password Reset for {title}".format(title="Your Website Title"),

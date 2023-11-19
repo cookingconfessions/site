@@ -44,6 +44,7 @@ envVarGroups:
         value: "60"
       - key: REFRESH_TOKEN_LIFETIME_IN_DAYS
         value: "1"
+
   - name: integrations-credentials
     envVars:
       - key: CLOUDINARY_CLOUD_NAME
@@ -60,6 +61,13 @@ envVarGroups:
         value: placeholder-value
       - key: EMAIL_HOST_PASSWORD
         value: placeholder-value
+      - key: STRIPE_PUBLISHABLE_KEY
+        value: placeholder-value
+      - key: STRIPE_SECRET_KEY
+        value: placeholder-value
+      - key: STRIPE_WEBHOOK_SECRET
+        value: placeholder-value
+
   - name: app-configurations
     envVars:
       - key: SITE_URL
@@ -70,9 +78,12 @@ envVarGroups:
         value: "Cooking Confessions"
       - key: ADMIN_SITE_TITLE
         value: "Cooking Confessions"
+
   - name: ui-configurations
     envVars:
       - key: NEXT_PUBLIC_API_URL
         value: "https://cookingconfessions.onrender.com/api"
       - key: NEXT_PUBLIC_API_TIMEOUT
         value: "10000"
+      - key: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+        value: placeholder-value

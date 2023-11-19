@@ -45,42 +45,49 @@ export const useAuthContext = (): AuthContextData => {
 	const [user, setUser] = useState<Customer>();
 
 	useEffect(() => {
-		if (isAuthenticated && !user) {
-			useApiClient()
-				.getCustomer()
-				.then((response) => {
-					setUser(response);
-					localStorage.setItem('customer', JSON.stringify(response));
-				});
-
+		if (!isAuthenticated || user) {
 			return;
 		}
 
-		if (!isAuthenticated) {
-			setUser(undefined);
-			localStorage.removeItem('customer');
+		if (localStorage.getItem('customer')) {
+			setUser(JSON.parse(localStorage.getItem('customer')!) as Customer);
+			return;
 		}
+
+		useApiClient()
+			.getCustomer()
+			.then((response) => {
+				localStorage.setItem('customer', JSON.stringify(response));
+				setUser(response);
+			});
 	}, [isAuthenticated]);
 
 	useEffect(() => {
 		const token = localStorage.getItem('token');
+
 		if (token) {
 			setIsAuthenticated(true);
-		} else {
-			setIsAuthenticated(false);
 		}
 	}, []);
+
+	const clearAuthState = () => {
+		setIsAuthenticated(false);
+		localStorage.removeItem('token');
+		localStorage.removeItem('customer');
+		setUser(undefined);
+		router.push('/');
+		toast.success('Successfully logged out.');
+	};
 
 	const logout = () => {
 		useApiClient()
 			.logout()
-			.then(() => {
-				setIsAuthenticated(false);
-				localStorage.removeItem('token');
-				router.push('/');
-				toast.success('Successfully logged out.');
-			})
-			.catch((_error) => {
+			.then(() => clearAuthState())
+			.catch((error) => {
+				if (error.response.status === 401) {
+					return clearAuthState();
+				}
+
 				toast.error('There was a problem signing you out.');
 			});
 	};

@@ -3,8 +3,11 @@ import secrets
 import string
 from typing import List
 
+import stripe
+from common.utils.config import Config
 from rest_framework import status, viewsets
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import *
 from .serializers import *
@@ -157,3 +160,63 @@ class OrderView(viewsets.ViewSet):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
             serializer.save()
+
+
+class CreateCheckoutSession(viewsets.ViewSet):
+    def create(self, request):
+        if request.data["total"] is None:
+            return Response(
+                {"error": "Payment amount was not provided"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if request.data["total"] < 1:
+            return Response(
+                {"error": "Payment amount must be greater than 0"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            intent = stripe.PaymentIntent.create(
+                amount=self.convert_to_cents(request.data["total"]),
+                currency="EUR",
+                automatic_payment_methods={
+                    "enabled": True,
+                },
+            )
+            return Response({"client_secret": intent.client_secret})
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def convert_to_cents(self, price):
+        float_price = round(float(price), 2)
+        return round(float_price * 100)
+
+
+class StripeWebhookView(viewsets.ViewSet):
+    def create(self, request):
+        event = None
+        payload = request.body
+        sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
+        webhook_secret = Config.get("STRIPE_WEBHOOK_SECRET")
+
+        try:
+            event = stripe.Webhook.construct_event(payload, sig_header, webhook_secret)
+        except ValueError as err:
+            # Invalid payload
+            raise err
+        except stripe.error.SignatureVerificationError as err:
+            # Invalid signature
+            raise err
+
+        # Handle the event
+        if event.type == "payment_intent.succeeded":
+            payment_intent = event.data.object
+            print("--------payment_intent ---------->", payment_intent)
+        elif event.type == "payment_method.attached":
+            payment_method = event.data.object
+            print("--------payment_method ---------->", payment_method)
+        # ... handle other event types
+        else:
+            print("Unhandled event type {}".format(event.type))
+
+        return Response(status=status.HTTP_200_OK)

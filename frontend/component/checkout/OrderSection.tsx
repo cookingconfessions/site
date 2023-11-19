@@ -1,39 +1,19 @@
 'use client';
-import { useAppContext } from '@/context/AppContext';
-import React, { useEffect, useState } from 'react';
+import { useCheckoutContext } from '@/context/CheckoutContext';
+import { PaymentElement } from '@stripe/react-stripe-js';
+import React from 'react';
 
 const OrderSection: React.FC = () => {
 	const {
 		cart,
 		cartTotal,
 		deliveryFee,
-		couponCode,
 		shouldDeliverOrder,
 		payCashOnDelivery,
 		canSubmitOrder,
-		loadDeliveryFee,
-	} = useAppContext();
-	const [mainTotal, setMainTotal] = useState<number>(0);
-	const [discount, setDiscount] = useState<number>(0);
-
-	useEffect(() => {
-		loadDeliveryFee();
-	}, []);
-
-	useEffect(() => {
-		let total = cartTotal;
-
-		if (shouldDeliverOrder) {
-			total += deliveryFee;
-		}
-
-		if (couponCode?.isActive) {
-			setDiscount(total * (couponCode.discountPercentage / 100));
-			total = total * (1 - couponCode.discountPercentage / 100);
-		}
-
-		setMainTotal(total);
-	}, [cartTotal, couponCode, deliveryFee, shouldDeliverOrder]);
+		mainTotal,
+		discount,
+	} = useCheckoutContext();
 
 	return (
 		<div className='col-xxl-6 col-xl-6 col-lg-6'>
@@ -125,11 +105,11 @@ const OrderSection: React.FC = () => {
 					<ul className='wc_payment_methods payment_methods methods'>
 						{payCashOnDelivery ? (
 							<li className='checkout-notice checkout-notice--info checkout-info'>
-								Order will be payed by cash on delivery
+								Order will be paid by cash on delivery
 							</li>
 						) : (
 							<li className='checkout-notice checkout-notice--info checkout-info'>
-								Card payment details will be collected here.
+								<PaymentElement id='payment-element' />
 							</li>
 						)}
 					</ul>

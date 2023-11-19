@@ -1,5 +1,7 @@
 'use client';
 import { useAppContext } from '@/context/AppContext';
+import { LinkAuthenticationElement } from '@stripe/react-stripe-js';
+import { useState } from 'react';
 import { Form } from 'react-bootstrap';
 
 const BillingSection = () => {
@@ -13,6 +15,8 @@ const BillingSection = () => {
 		payCashOnDelivery,
 		handlePayCashOnDelivery,
 	} = useAppContext();
+
+	const [email, setEmail] = useState<string>(customer.email);
 
 	return (
 		<div className='col-xxl-6 col-xl-6 col-lg-6 mb-lg-0 mb-50 mb-lg-0'>
@@ -74,16 +78,19 @@ const BillingSection = () => {
 					<p
 						className='form-row form-row-last validate-required'
 						id='billing_last_name_field'>
-						<label htmlFor='billing_email' className=''>
-							Email address&nbsp;
-							<abbr className='required' title='required'></abbr>
-						</label>
-						<span className='checkout-input-wrapper'>
+						<span className='checkout-input-wrapper mt-5'>
+							<LinkAuthenticationElement
+								id='link-authentication-element'
+								onChange={(event) => setEmail(event.value.email)}
+								options={{ defaultValues: { email: customer.email } }}
+							/>
 							<input
 								type='email'
 								className='input-text '
 								name='email'
-								defaultValue={customer.email}
+								value={email}
+								readOnly
+								hidden
 								required
 							/>
 						</span>

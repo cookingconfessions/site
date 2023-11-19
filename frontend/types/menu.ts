@@ -126,3 +126,7 @@ export interface Order {
     paymentMethod: string;
     items: OrderItem[];
 }
+
+export interface StripePaymentIntentResponse {
+    clientSecret: string;
+}

@@ -1,4 +1,5 @@
-import { SetStateAction } from "react";
+import { Stripe } from "@stripe/stripe-js";
+import { FormEvent, SetStateAction } from "react";
 import { LoginDetails } from "./auth";
 import { BannerItem, Booking, CompanyInfo, Faq, Message, Schedule } from "./home";
 import { CartItem, CouponCode, CreateCustomer, CreateMenuItemReview, CreateOrder, Customer, MenuItem, MenuItemCategory } from "./menu";
@@ -91,6 +92,7 @@ export interface ShopContextData {
     payCashOnDelivery: boolean;
     handlePayCashOnDelivery: () => void;
     loadDeliveryFee: () => void;
+    clearStateAfterOrder: () => void;
 }
 
 export interface AuthContextData {
@@ -107,4 +109,15 @@ export interface AuthContextData {
 
 export interface AppContextData extends HomeContextData, AuthContextData, ShopContextData {
     isHeaderFixed: boolean;
+}
+
+export interface CheckoutContextData extends AppContextData {
+    mainTotal: number;
+    discount: number;
+    handleOrderSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+    handleOrderFormChange: (event: FormEvent<HTMLFormElement>) => void;
+    clientSecret: string | undefined;
+    stripePromise: Promise<Stripe | null>
+    isLoadingClientSecret: boolean;
+    updatePaymentSectionValidity: (isValid: boolean) => void
 }
