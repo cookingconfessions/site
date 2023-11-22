@@ -1,7 +1,7 @@
 import BreadcrumbSection from '@/component/breadcrumb/BreadcrumbSection';
 import CheckoutSection from '@/component/checkout/CheckoutSection';
 import Layout from '@/component/layout/Layout';
-import { CheckoutProvider } from '@/context/CheckoutContext';
+import CheckoutWrapper from '@/context/CheckoutWrapper';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -14,9 +14,9 @@ export default function Checkout() {
 	return (
 		<Layout>
 			<BreadcrumbSection title='Checkout' />
-			<CheckoutProvider>
+			<CheckoutWrapper>
 				<CheckoutSection />
-			</CheckoutProvider>
+			</CheckoutWrapper>
 		</Layout>
 	);
 }
