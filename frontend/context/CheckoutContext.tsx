@@ -5,6 +5,7 @@ import {
 	CreateOrder,
 	OrdeDeliveryMode,
 	OrderPaymentMethod,
+	StripePaymentIntentResponse,
 } from '@/types/menu';
 import { useApiClient } from '@/utils/api-client';
 import { CheckoutHelper } from '@/utils/checkout-helper';
@@ -109,6 +110,12 @@ export const CheckoutProvider: React.FC<AppProviderProps> = ({ children }) => {
 		return Promise.resolve();
 	};
 
+	const clearPaymentIntent = () => {
+		setMainTotal(0);
+		setClientSecret('');
+		setIsLoadingClientSecret(true);
+	};
+
 	useEffect(() => {
 		let isOrderValid = areBillingDetailsValid;
 
@@ -118,41 +125,6 @@ export const CheckoutProvider: React.FC<AppProviderProps> = ({ children }) => {
 
 		updateOrderValidity(isOrderValid);
 	}, [areBillingDetailsValid, isPaymentSectionValid]);
-
-	useEffect(() => {
-		loadDeliveryFee();
-
-		const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-
-		if (!publishableKey) {
-			return;
-		}
-
-		const stripePromise = loadStripe(publishableKey);
-		setStripePromise(stripePromise);
-	}, []);
-
-	useEffect(() => {
-		if (payCashOnDelivery) {
-			return;
-		}
-
-		if (mainTotal === 0) {
-			return;
-		}
-
-		useApiClient()
-			.createPaymentIntent(mainTotal)
-			.then((res) => {
-				setClientSecret(res.clientSecret);
-				setIsLoadingClientSecret(false);
-			})
-			.catch((_err) => {
-				setClientSecret('');
-				setIsLoadingClientSecret(false);
-				toast.error('Error while creating payment intent');
-			});
-	}, [mainTotal, payCashOnDelivery]);
 
 	useEffect(() => {
 		let total = cartTotal;
@@ -169,6 +141,55 @@ export const CheckoutProvider: React.FC<AppProviderProps> = ({ children }) => {
 		setMainTotal(total);
 	}, [cartTotal, couponCode, deliveryFee, shouldDeliverOrder]);
 
+	useEffect(() => {
+		loadDeliveryFee();
+
+		if (payCashOnDelivery) {
+			return;
+		}
+
+		const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+
+		if (!publishableKey) {
+			return;
+		}
+
+		const stripePromise = loadStripe(publishableKey);
+		setStripePromise(stripePromise);
+	}, [payCashOnDelivery]);
+
+	useEffect(() => {
+		if (payCashOnDelivery) {
+			return;
+		}
+
+		if (mainTotal === 0) {
+			return;
+		}
+
+		const checkoutSession = JSON.parse(
+			localStorage.getItem('checkoutSession') ?? '{}'
+		) as StripePaymentIntentResponse;
+
+		if (checkoutSession?.amount === mainTotal) {
+			return setClientSecret(checkoutSession.clientSecret);
+		}
+
+		useApiClient()
+			.createPaymentIntent(mainTotal)
+			.then((res) => {
+				setClientSecret(res.clientSecret);
+				setIsLoadingClientSecret(false);
+				localStorage.removeItem('checkoutSession');
+				localStorage.setItem('checkoutSession', JSON.stringify(res));
+			})
+			.catch((_err) => {
+				setClientSecret('');
+				setIsLoadingClientSecret(false);
+				toast.error('Error while creating payment intent');
+			});
+	}, [mainTotal, payCashOnDelivery]);
+
 	const contextValue: CheckoutContextData = {
 		...appContext,
 		mainTotal,
@@ -178,6 +199,7 @@ export const CheckoutProvider: React.FC<AppProviderProps> = ({ children }) => {
 		stripePromise,
 		clientSecret,
 		isLoadingClientSecret,
+		clearPaymentIntent,
 		updatePaymentSectionValidity,
 	};
 

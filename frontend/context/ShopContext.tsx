@@ -11,7 +11,6 @@ import {
 import { useApiClient } from '@/utils/api-client';
 import { ShopHelper } from '@/utils/shop-helper';
 import Aos from 'aos';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -79,6 +78,7 @@ export const useShopContext = (): ShopContextData => {
 	const addToCart = (productId: string) => {
 		// Find the item from filteredProducts using productId
 		const itemToAdd = shopItems.find((item) => item.id === productId);
+		localStorage.removeItem('order'); // Clear any pending order
 
 		if (itemToAdd) {
 			const existingItemIndex = cart.findIndex((item) => item.id === productId);
@@ -116,6 +116,8 @@ export const useShopContext = (): ShopContextData => {
 	};
 
 	const removeFromCart = (productId: string) => {
+		localStorage.removeItem('order'); // Clear any pending order
+
 		const updatedCart = cart.filter((product) => product.id !== productId);
 
 		setCart(updatedCart);
@@ -251,8 +253,6 @@ export const useShopContext = (): ShopContextData => {
 			});
 	};
 
-	const router = useRouter();
-
 	const clearCustomer = () => {
 		setCustomer({
 			id: '',
@@ -270,19 +270,17 @@ export const useShopContext = (): ShopContextData => {
 		setCart([]);
 		localStorage.removeItem('cart');
 		localStorage.removeItem('coupon');
+		localStorage.removeItem('order');
 		clearCustomer();
 		setCouponCode(undefined);
-
-		if (payCashOnDelivery) {
-			router.replace('/');
-		}
 	};
 
 	const createOrder = (order: CreateOrder) => {
 		useApiClient()
 			.createOrder(order)
-			.then((_order) => {
+			.then((order) => {
 				toast.success('Order placed successfully!');
+				localStorage.setItem('order', JSON.stringify(order));
 			})
 			.catch((_error) => {
 				toast.error('An error occured while placing your order :(');

@@ -1,6 +1,6 @@
 import { LoginDetails, Token } from "@/types/auth";
 import { BannerItem, Booking, CompanyInfo, Faq, Message, Schedule } from "@/types/home";
-import { CouponCode, CreateCustomer, CreateMenuItemReview, CreateOrder, Customer, MenuItem, MenuItemCategory, MenuItemReview, Order, StripePaymentIntentResponse } from "@/types/menu";
+import { CouponCode, CreateCustomer, CreateMenuItemReview, CreateOrder, Customer, MenuItem, MenuItemCategory, MenuItemReview, Order, OrderPayment, StripePaymentIntentResponse } from "@/types/menu";
 import axios from "axios";
 import humps from 'humps';
 
@@ -22,6 +22,7 @@ interface ApiClient {
     getCustomer: () => Promise<Customer>;
     createOrder: (customer: CreateOrder) => Promise<Order>;
     createPaymentIntent: (orderTotal: number) => Promise<StripePaymentIntentResponse>;
+    recordPayment: (order: OrderPayment) => Promise<OrderPayment>;
     submitReview: (menuItemSlug: string, review: CreateMenuItemReview) => Promise<MenuItemReview>
 }
 
@@ -154,6 +155,11 @@ const createOrder = async (order: CreateOrder) => {
     return res.data;
 }
 
+const recordPayment = async (order: OrderPayment) => {
+    const res = await api.post<OrderPayment>("/shop/checkout/successful/", order);
+    return res.data;
+}
+
 const login = async (user: LoginDetails) => {
     const res = await api.post<Token>("/auth/token/", user);
     return res.data;
@@ -194,6 +200,7 @@ export const useApiClient = (): ApiClient => {
         getCustomer,
         createOrder,
         createPaymentIntent,
+        recordPayment,
         submitReview,
         getMenuItem
     }

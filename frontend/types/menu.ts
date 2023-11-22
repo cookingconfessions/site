@@ -129,4 +129,11 @@ export interface Order {
 
 export interface StripePaymentIntentResponse {
     clientSecret: string;
+    paymentIntentId: string;
+    amount: number;
+}
+
+export interface OrderPayment {
+    paymentIntentId: string;
+    orderId: string;
 }

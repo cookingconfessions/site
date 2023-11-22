@@ -49,8 +49,10 @@ export const useAuthContext = (): AuthContextData => {
 			return;
 		}
 
-		if (localStorage.getItem('customer')) {
-			setUser(JSON.parse(localStorage.getItem('customer')!) as Customer);
+		const customer = localStorage.getItem('customer');
+
+		if (customer) {
+			setUser(JSON.parse(customer) as Customer);
 			return;
 		}
 

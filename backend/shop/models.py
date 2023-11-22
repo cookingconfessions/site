@@ -137,3 +137,11 @@ class OrderItem(BaseModel):
 
     def __str__(self) -> str:
         return f"{self.quantity} {self.item.name}"
+
+
+class OrderPayment(BaseModel):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name="payment")
+    payment_refference = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        return f"Payment Ref: {self.payment_refference} paid for order {self.order.id}"

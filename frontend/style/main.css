@@ -1361,6 +1361,10 @@ span.swiper-pagination-bullet {
   display: none;
 }
 
+.hidden {
+  visibility: hidden !important;
+}
+
 .second-home-nav {
   background: #fff;
   padding: 0 20px;

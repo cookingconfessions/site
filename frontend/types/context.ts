@@ -119,5 +119,6 @@ export interface CheckoutContextData extends AppContextData {
     clientSecret: string | undefined;
     stripePromise: Promise<Stripe | null>
     isLoadingClientSecret: boolean;
-    updatePaymentSectionValidity: (isValid: boolean) => void
+    updatePaymentSectionValidity: (isValid: boolean) => void;
+    clearPaymentIntent: () => void;
 }

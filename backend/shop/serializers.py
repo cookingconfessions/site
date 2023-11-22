@@ -124,3 +124,9 @@ class CreateOrderSerializer(serializers.ModelSerializer):
             "payment_method",
             "items",
         )
+
+
+class OrderPaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderPayment
+        fields = ("order", "payment_refference")

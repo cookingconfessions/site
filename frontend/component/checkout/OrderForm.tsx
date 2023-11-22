@@ -1,6 +1,7 @@
 'use client';
 import { useCheckoutContext } from '@/context/CheckoutContext';
 import { useElements, useStripe } from '@stripe/react-stripe-js';
+import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import BillingSection from './BillingSection';
@@ -12,7 +13,6 @@ const OrderForm = () => {
 		handleOrderFormChange,
 		payCashOnDelivery,
 		updatePaymentSectionValidity,
-		clearStateAfterOrder,
 	} = useCheckoutContext();
 
 	const stripe = useStripe();
@@ -21,6 +21,8 @@ const OrderForm = () => {
 	const [isPaymentProcessing, setIsPaymentProcessing] = useState<boolean>(
 		false
 	);
+
+	const router = useRouter();
 
 	const confirmOnlinePayment = async (event: FormEvent) => {
 		event.preventDefault();
@@ -49,20 +51,36 @@ const OrderForm = () => {
 		setIsPaymentProcessing(false);
 	};
 
-	const completeOrder = (event: FormEvent<HTMLFormElement>) => {
+	const completeOrder = async (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+
+		const pendingOrder = localStorage.getItem('order');
+
 		if (payCashOnDelivery) {
+			if (pendingOrder) {
+				return router.push('/checkout-success');
+			}
+
 			return handleOrderSubmit(event).then(() => {
-				toast.success('Order placed successfully.');
-				clearStateAfterOrder();
+				router.push('/checkout-success');
 			});
 		}
 
-		handleOrderSubmit(event).then(() =>
-			confirmOnlinePayment(event).then(() => {
-				toast.success('Payment successful.');
-				clearStateAfterOrder();
-			})
-		);
+		if (!stripe || !elements) {
+			return;
+		}
+
+		const paymentValidationResults = await elements.submit();
+
+		if (paymentValidationResults.error) {
+			return;
+		}
+
+		if (!pendingOrder) {
+			await handleOrderSubmit(event);
+		}
+
+		await confirmOnlinePayment(event);
 	};
 
 	useEffect(() => {

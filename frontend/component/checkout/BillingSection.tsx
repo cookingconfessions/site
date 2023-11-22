@@ -79,18 +79,29 @@ const BillingSection = () => {
 						className='form-row form-row-last validate-required'
 						id='billing_last_name_field'>
 						<span className='checkout-input-wrapper mt-5'>
-							<LinkAuthenticationElement
-								id='link-authentication-element'
-								onChange={(event) => setEmail(event.value.email)}
-								options={{ defaultValues: { email: customer.email } }}
-							/>
+							{!payCashOnDelivery ? (
+								<LinkAuthenticationElement
+									id='link-authentication-element'
+									onChange={(event) => setEmail(event.value.email)}
+									options={{ defaultValues: { email: customer.email } }}
+								/>
+							) : (
+								''
+							)}
+							<label
+								htmlFor='billing_phone'
+								className={payCashOnDelivery ? '' : 'hidden'}>
+								Email&nbsp;
+								<abbr className='required' title='required'></abbr>
+							</label>
 							<input
 								type='email'
 								className='input-text '
 								name='email'
 								value={email}
-								readOnly
-								hidden
+								readOnly={!payCashOnDelivery}
+								hidden={!payCashOnDelivery}
+								onChange={(event) => setEmail(event.target.value)}
 								required
 							/>
 						</span>

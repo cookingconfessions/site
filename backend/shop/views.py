@@ -4,8 +4,8 @@ import string
 from typing import List
 
 import stripe
-from common.utils.config import Config
 from rest_framework import status, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -41,7 +41,8 @@ class CustomerView(viewsets.ViewSet):
 
     def create(self, request, *args, **kwargs):
         if not self.are_user_details_valid(request.data):
-            Response({"error": "Missing details"}, status=status.HTTP_400_BAD_REQUEST)
+            Response({"error": "Missing details"},
+                     status=status.HTTP_400_BAD_REQUEST)
         email = request.data.pop("email")
         username = self.generate_unique_username(email)
         password = self.generate_otp()
@@ -59,7 +60,8 @@ class CustomerView(viewsets.ViewSet):
             return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         user = user_serializer.save()
-        customer_serializer = CreateCustomerSerializer(data={**request.data, "user": user.id})
+        customer_serializer = CreateCustomerSerializer(
+            data={**request.data, "user": user.id})
 
         if customer_serializer.is_valid():
             customer = customer_serializer.save()
@@ -115,7 +117,8 @@ class OrderView(viewsets.ViewSet):
         discount_code = None  # Initialize discount_code
         if request.data["discount_code"]:
             try:
-                discount_code = DiscountCode.objects.get(code=request.data["discount_code"])
+                discount_code = DiscountCode.objects.get(
+                    code=request.data["discount_code"])
             except DiscountCode.DoesNotExist:
                 return Response(
                     {"error": "Discount code not found"}, status=status.HTTP_404_NOT_FOUND
@@ -154,7 +157,8 @@ class OrderView(viewsets.ViewSet):
 
     def create_order_items(self, order_items: List[dict], order: dict):
         for order_item in order_items:
-            serializer = CreateOrderItemSerializer(data={**order_item, "order": order.id})
+            serializer = CreateOrderItemSerializer(
+                data={**order_item, "order": order.id})
 
             if not serializer.is_valid():
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -183,40 +187,41 @@ class CreateCheckoutSession(viewsets.ViewSet):
                     "enabled": True,
                 },
             )
-            return Response({"client_secret": intent.client_secret})
+
+            return Response(
+                {
+                    "client_secret": intent.client_secret,
+                    "payment_intent_id": intent.id,
+                    "amount": request.data["total"],
+                },
+                status=status.HTTP_200_OK,
+            )
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @action(detail=False, methods=["post"], url_path="successful")
+    def checkout_successful(self, request):
+        if not request.data["payment_intent_id"]:
+            return Response(
+                {"error": "Payment intent was not provided"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if not request.data["order_id"]:
+            return Response({"error": "Order was not provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = OrderPaymentSerializer(
+            data={
+                "order": request.data["order_id"],
+                "payment_refference": request.data["payment_intent_id"],
+            }
+        )
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def convert_to_cents(self, price):
         float_price = round(float(price), 2)
         return round(float_price * 100)
-
-
-class StripeWebhookView(viewsets.ViewSet):
-    def create(self, request):
-        event = None
-        payload = request.body
-        sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
-        webhook_secret = Config.get("STRIPE_WEBHOOK_SECRET")
-
-        try:
-            event = stripe.Webhook.construct_event(payload, sig_header, webhook_secret)
-        except ValueError as err:
-            # Invalid payload
-            raise err
-        except stripe.error.SignatureVerificationError as err:
-            # Invalid signature
-            raise err
-
-        # Handle the event
-        if event.type == "payment_intent.succeeded":
-            payment_intent = event.data.object
-            print("--------payment_intent ---------->", payment_intent)
-        elif event.type == "payment_method.attached":
-            payment_method = event.data.object
-            print("--------payment_method ---------->", payment_method)
-        # ... handle other event types
-        else:
-            print("Unhandled event type {}".format(event.type))
-
-        return Response(status=status.HTTP_200_OK)
