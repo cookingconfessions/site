@@ -666,9 +666,7 @@ ul.right-social-ul li {
 .about-details {
   padding-left: 10px;
 }
-.padleft40 .footer-content-wrapper {
-	padding-left: 40px;
-}
+
 .padright40 .footer-content-wrapper {
   padding-right: 40px;
 }
@@ -4375,7 +4373,6 @@ span.sm-title.sm-title2 {
   background-image: url(../public/img/cooking-confessions-book-catering-sk.png);
 }
 .modal-content {
-  background-color: transparent;
   border: none;
 }
 .video-overlay-close.modal-header {
