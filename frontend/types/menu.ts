@@ -37,6 +37,11 @@ export interface MenuItemTag {
     name: string;
 }
 
+export interface MenuItemAllergen {
+    id: string;
+    name: string;
+}
+
 export interface MenuItem {
     id: string;
     name: string;
@@ -48,6 +53,7 @@ export interface MenuItem {
     isAvailable: boolean;
     code: string;
     tags: MenuItemTag[];
+    allergens: MenuItemAllergen[];
     reviews: MenuItemReview[];
 };
 

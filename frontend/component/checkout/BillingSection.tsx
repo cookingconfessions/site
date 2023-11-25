@@ -1,6 +1,5 @@
 'use client';
-import { useAppContext } from '@/context/AppContext';
-import { LinkAuthenticationElement } from '@stripe/react-stripe-js';
+import { useCheckoutContext } from '@/context/CheckoutContext';
 import { useState } from 'react';
 import { Form } from 'react-bootstrap';
 
@@ -14,12 +13,12 @@ const BillingSection = () => {
 		handleShouldDeliverOrder,
 		payCashOnDelivery,
 		handlePayCashOnDelivery,
-	} = useAppContext();
+	} = useCheckoutContext();
 
 	const [email, setEmail] = useState<string>(customer.email);
 
 	return (
-		<div className='col-xxl-6 col-xl-6 col-lg-6 mb-lg-0 mb-50 mb-lg-0'>
+		<div className='col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-lg-0 mb-50 mb-lg-0'>
 			<div className='checkout-billing-fields'>
 				<h4 className='cafeu-billing-details-title'>Billing details</h4>
 
@@ -28,7 +27,7 @@ const BillingSection = () => {
 						className='form-row form-row-first validate-required'
 						id='billing_first_name_field'>
 						<label htmlFor='billing_first_name' className=''>
-							First name&nbsp;
+							First name <span className='asterisk'>*</span>&nbsp;
 							<abbr className='required' title='required'></abbr>
 						</label>
 						<span className='checkout-input-wrapper'>
@@ -45,7 +44,7 @@ const BillingSection = () => {
 						className='form-row form-row-last validate-required'
 						id='billing_last_name_field'>
 						<label htmlFor='billing_last_name' className=''>
-							Last name&nbsp;
+							Last name <span className='asterisk'>*</span>&nbsp;
 							<abbr className='required' title='required'></abbr>
 						</label>
 						<span className='checkout-input-wrapper'>
@@ -58,11 +57,9 @@ const BillingSection = () => {
 							/>
 						</span>
 					</p>
-					<p
-						className='form-row form-row-first validate-required'
-						id='billing_first_name_field'>
+					<p className='form-row form-row-wide validate-required'>
 						<label htmlFor='billing_phone' className=''>
-							Phone number&nbsp;
+							Phone number <span className='asterisk'>*</span>&nbsp;
 							<abbr className='required' title='required'></abbr>
 						</label>
 						<span className='checkout-input-wrapper'>
@@ -75,23 +72,10 @@ const BillingSection = () => {
 							/>
 						</span>
 					</p>
-					<p
-						className='form-row form-row-last validate-required'
-						id='billing_last_name_field'>
+					<p className='form-row form-row-wide address-field validate-required'>
 						<span className='checkout-input-wrapper mt-5'>
-							{!payCashOnDelivery ? (
-								<LinkAuthenticationElement
-									id='link-authentication-element'
-									onChange={(event) => setEmail(event.value.email)}
-									options={{ defaultValues: { email: customer.email } }}
-								/>
-							) : (
-								''
-							)}
-							<label
-								htmlFor='billing_phone'
-								className={payCashOnDelivery ? '' : 'hidden'}>
-								Email&nbsp;
+							<label htmlFor='email'>
+								Email <span className='asterisk'>*</span>&nbsp;
 								<abbr className='required' title='required'></abbr>
 							</label>
 							<input
@@ -99,8 +83,6 @@ const BillingSection = () => {
 								className='input-text '
 								name='email'
 								value={email}
-								readOnly={!payCashOnDelivery}
-								hidden={!payCashOnDelivery}
 								onChange={(event) => setEmail(event.target.value)}
 								required
 							/>
@@ -110,7 +92,7 @@ const BillingSection = () => {
 						className='form-row form-row-wide address-field update_totals_on_change validate-required'
 						id='billing_country_field'>
 						<label htmlFor='billing_country' className=''>
-							Country&nbsp;
+							Country <span className='asterisk'>*</span>&nbsp;
 							<abbr className='required' title='required'></abbr>
 						</label>
 						<span className='checkout-input-wrapper'>
@@ -121,7 +103,10 @@ const BillingSection = () => {
 								className='country_to_state country_select select2-hidden-accessible'>
 								<option value=''>Select a country / region…</option>
 								{companyInfo.countries.map((country) => (
-									<option key={country} value={country}>
+									<option
+										selected={country === 'Slovakia'}
+										key={country}
+										value={country}>
 										{country}
 									</option>
 								))}
@@ -132,7 +117,7 @@ const BillingSection = () => {
 						className='form-row address-field validate-required'
 						id='billing_address_1_field'>
 						<label htmlFor='billing_address_1' className=''>
-							Street address&nbsp;
+							Street address <span className='asterisk'>*</span>&nbsp;
 							<abbr className='required' title='required'></abbr>
 						</label>
 						<span className='checkout-input-wrapper'>
@@ -181,7 +166,6 @@ const BillingSection = () => {
 						className='login-form__input-checkbox'
 						name='shouldDeliverOrder'
 						type='checkbox'
-						defaultValue={shouldDeliverOrder ? 'false' : 'true'}
 						onChange={handleShouldDeliverOrder}
 						checked={!shouldDeliverOrder}
 					/>{' '}
@@ -195,7 +179,6 @@ const BillingSection = () => {
 						className='login-form__input-checkbox'
 						name='cashOnDelivery'
 						type='checkbox'
-						defaultValue={payCashOnDelivery ? 'true' : 'false'}
 						onChange={handlePayCashOnDelivery}
 						checked={payCashOnDelivery}
 					/>{' '}

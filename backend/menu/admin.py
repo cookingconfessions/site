@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from common.utils.config import Config
 
-from .models import MenuItem, MenuItemCategory, MenuItemReview, MenuItemTag
+from .models import MenuItem, MenuItemAllergen, MenuItemCategory, MenuItemReview, MenuItemTag
 
 
 @admin.register(MenuItem)
@@ -20,7 +20,7 @@ class MenuItemAdmin(admin.ModelAdmin):
         "last_modified",
     )
     list_display_links = ("name",)
-    exclude = ("slug",)
+    exclude = ("slug", "code")
     search_fields = ("name", "description", "category", "display_tags")
     list_filter = (
         "tags",
@@ -33,6 +33,14 @@ class MenuItemAdmin(admin.ModelAdmin):
         return ", ".join(tag.name for tag in obj.tags.all())
 
     display_tags.short_description = "Tags"
+
+
+@admin.register(MenuItemAllergen)
+class MenuItemAllergenAdmin(admin.ModelAdmin):
+    list_display = ("name", "last_modified")
+    list_display_links = ("name",)
+    search_fields = ("name",)
+    list_per_page = 15
 
 
 @admin.register(MenuItemCategory)

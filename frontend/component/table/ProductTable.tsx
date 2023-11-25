@@ -106,9 +106,11 @@ const ProductTable: React.FC<ProductProps> = ({
 							<Link href='/menu' className='custom-btn'>
 								Continue Shopping
 							</Link>
-							<Link href='/checkout' className='custom-btn'>
-								Checkout
-							</Link>
+							{array.length > 0 ?? (
+								<Link href='/checkout' className='custom-btn'>
+									Checkout
+								</Link>
+							)}
 						</div>
 					) : (
 						<div className='shopping-btn'>

@@ -22,6 +22,7 @@ const CheckoutSuccessSection: React.FC = () => {
 		if (payCashOnDelivery) {
 			clearPaymentIntent();
 			clearStateAfterOrder();
+			toast.success('Order placed successfully!');
 
 			return;
 		}
@@ -40,6 +41,8 @@ const CheckoutSuccessSection: React.FC = () => {
 				clearStateAfterOrder();
 			})
 			.catch(() => {
+				clearPaymentIntent();
+				clearStateAfterOrder();
 				toast.error(
 					'We received your payment but failed to record it. Please contact us.'
 				);

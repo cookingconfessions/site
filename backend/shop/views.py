@@ -3,11 +3,13 @@ import secrets
 import string
 from typing import List
 
+from django.db import transaction
+
 import stripe
+from psycopg2 import IntegrityError
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from .models import *
 from .serializers import *
@@ -209,18 +211,33 @@ class CreateCheckoutSession(viewsets.ViewSet):
         if not request.data["order_id"]:
             return Response({"error": "Order was not provided"}, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = OrderPaymentSerializer(
-            data={
-                "order": request.data["order_id"],
-                "payment_refference": request.data["payment_intent_id"],
-            }
-        )
+        try:
+            payment = OrderPayment.objects.get(order=request.data["order_id"])
 
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            # Payment already exists, return the response
+            serializer = OrderPaymentSerializer(payment)
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        except OrderPayment.DoesNotExist:
+            try:
+                # Payment doesn't exist, create a new payment instance
+                serializer = OrderPaymentSerializer(
+                    data={
+                        "order": request.data["order_id"],
+                        "payment_reference": request.data["payment_intent_id"],
+                    }
+                )
+                with transaction.atomic():
+                    if not serializer.is_valid():
+                        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+                    serializer.save()
+
+                return Response(serializer.data, status=status.HTTP_200_OK)
+
+            except IntegrityError as e:
+                # Handle IntegrityError if needed
+                return Response({"message": "Payment saved"}, status=status.HTTP_200_OK)
 
     def convert_to_cents(self, price):
         float_price = round(float(price), 2)

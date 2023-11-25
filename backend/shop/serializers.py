@@ -89,6 +89,7 @@ class GetOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = (
+            "id",
             "customer_name",
             "customer_email",
             "customer_address",
@@ -129,4 +130,4 @@ class CreateOrderSerializer(serializers.ModelSerializer):
 class OrderPaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderPayment
-        fields = ("order", "payment_refference")
+        fields = ("order", "payment_reference")

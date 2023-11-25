@@ -45,7 +45,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display_links = ("customer_name", "items")
     list_filter = ("created_at", "payment_method", "delivery_mode", "status")
     sortable_by = ("created_at", "payment_method", "delivery_mode", "status")
-    exclude = ("total",)
+    exclude = ("total", "discount_code")
     list_per_page = 20
     inlines = [OrderItemInline]
 
@@ -72,7 +72,7 @@ class DiscountCodeAdmin(admin.ModelAdmin):
 
 @admin.register(OrderPayment)
 class OrderPaymentAdmin(admin.ModelAdmin):
-    list_display = ("order", "payment_refference", "created_at")
+    list_display = ("order", "payment_reference", "created_at")
     list_display_links = ("order",)
     search_fields = ("order__customer_name",
                      "order__customer_email", "order__phone_number")

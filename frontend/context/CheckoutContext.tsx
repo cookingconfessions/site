@@ -159,7 +159,7 @@ export const CheckoutProvider: React.FC<AppProviderProps> = ({ children }) => {
 	}, [payCashOnDelivery]);
 
 	useEffect(() => {
-		if (payCashOnDelivery) {
+		if (!cart.length) {
 			return;
 		}
 
@@ -188,7 +188,7 @@ export const CheckoutProvider: React.FC<AppProviderProps> = ({ children }) => {
 				setIsLoadingClientSecret(false);
 				toast.error('Error while creating payment intent');
 			});
-	}, [mainTotal, payCashOnDelivery]);
+	}, [mainTotal, shouldDeliverOrder]);
 
 	const contextValue: CheckoutContextData = {
 		...appContext,

@@ -28,9 +28,21 @@ const ProductInfo: React.FC<InfoProp> = ({ shopData }) => {
 					<span>Product Code:</span>
 					<p>#{shopData.code}</p>
 				</li>
+				{shopData.tags.length && (
+					<li>
+						<span>Tags:</span>
+						<p>{shopData.tags.map((tag) => tag.name).join(', ')}</p>
+					</li>
+				)}
 				<li>
-					<span>Tags:</span>
-					<p>{shopData.tags.map((tag) => tag.name).join(',')}</p>
+					<span>Allergens:</span>
+					{shopData.allergens.length ? (
+						<p>
+							{shopData.allergens.map((allergen) => allergen.name).join(', ')}
+						</p>
+					) : (
+						<p> None</p>
+					)}
 				</li>
 			</ul>
 

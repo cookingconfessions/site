@@ -18,6 +18,12 @@ class MenuItemTagSerializer(serializers.ModelSerializer):
         exclude = ("created_at", "last_modified")
 
 
+class MenuItemAllergenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MenuItemAllergen
+        exclude = ("created_at", "last_modified")
+
+
 class MenuItemReviewSerializer(serializers.ModelSerializer):
     replies = serializers.SerializerMethodField()
     created_at = serializers.DateTimeField(format="%d %B %Y")
@@ -39,6 +45,7 @@ class MenuItemSerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
     reviews = MenuItemReviewSerializer(many=True)
     tags = MenuItemTagSerializer(many=True)
+    allergens = MenuItemAllergenSerializer(many=True)
 
     def get_category(self, instance):
         return instance.category.name

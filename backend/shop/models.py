@@ -49,8 +49,10 @@ class Customer(BaseModel):
 
 
 class DiscountCode(BaseModel):
-    code = models.CharField(max_length=5, default=ShopHelper.generate_unique_discount_code)
-    discount_percentage = models.FloatField(validators=[MinValueValidator(limit_value=0.0)])
+    code = models.CharField(
+        max_length=5, default=ShopHelper.generate_unique_discount_code)
+    discount_percentage = models.FloatField(
+        validators=[MinValueValidator(limit_value=0.0)])
     expiry_date = models.DateField()
     expiry_time = models.TimeField(default=time(0, 0, 0))
 
@@ -62,7 +64,8 @@ class DiscountCode(BaseModel):
         return f"{self.code} valid until {self.expiry_date} {self.expiry_time}"
 
     def clean(self, *args, **kwargs):
-        validate_discount_code_not_already_expired(self.expiry_date, self.expiry_time)
+        validate_discount_code_not_already_expired(
+            self.expiry_date, self.expiry_time)
         super().save(*args, **kwargs)
 
     def is_active(self):
@@ -97,7 +100,8 @@ class Order(BaseModel):
     customer = models.ForeignKey(
         Customer, on_delete=models.SET_NULL, null=True, related_name="orders"
     )
-    total = models.FloatField(validators=[MinValueValidator(limit_value=0.0)], default=0)
+    total = models.FloatField(
+        validators=[MinValueValidator(limit_value=0.0)], default=0)
     order_notes = models.TextField(default="", null=True)
     discount_code = models.ForeignKey(
         DiscountCode, on_delete=models.SET_NULL, null=True, related_name="orders"
@@ -131,17 +135,20 @@ class Order(BaseModel):
 
 class OrderItem(BaseModel):
     item = models.ForeignKey(MenuItem, on_delete=models.SET_NULL, null=True)
-    quantity = models.IntegerField(validators=[MinValueValidator(limit_value=0)])
+    quantity = models.IntegerField(
+        validators=[MinValueValidator(limit_value=0)])
     total = models.FloatField(validators=[MinValueValidator(limit_value=0.0)])
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
+    order = models.ForeignKey(
+        Order, on_delete=models.CASCADE, related_name="items")
 
     def __str__(self) -> str:
         return f"{self.quantity} {self.item.name}"
 
 
 class OrderPayment(BaseModel):
-    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name="payment")
-    payment_refference = models.CharField(max_length=100)
+    order = models.OneToOneField(
+        Order, on_delete=models.CASCADE, related_name="payment")
+    payment_reference = models.CharField(max_length=100)
 
     def __str__(self) -> str:
-        return f"Payment Ref: {self.payment_refference} paid for order {self.order.id}"
+        return f"Payment Ref: {self.payment_reference} paid for order {self.order.id}"

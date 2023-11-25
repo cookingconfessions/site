@@ -37,6 +37,13 @@ class MenuItemTag(BaseModel):
         return self.name
 
 
+class MenuItemAllergen(BaseModel):
+    name = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class MenuItem(BaseModel):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
@@ -50,6 +57,7 @@ class MenuItem(BaseModel):
     image = CloudinaryField("image")
     tags = models.ManyToManyField(MenuItemTag)
     sales_count = models.IntegerField(default=0)
+    allergens = models.ManyToManyField(MenuItemAllergen)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

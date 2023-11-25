@@ -279,7 +279,6 @@ export const useShopContext = (): ShopContextData => {
 		useApiClient()
 			.createOrder(order)
 			.then((order) => {
-				toast.success('Order placed successfully!');
 				localStorage.setItem('order', JSON.stringify(order));
 			})
 			.catch((_error) => {

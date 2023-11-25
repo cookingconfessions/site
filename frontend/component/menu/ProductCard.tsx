@@ -1,45 +1,48 @@
 'use client';
 import { useAppContext } from '@/context/AppContext';
 import { ProductCardProps } from '@/types/menu';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
+import { Card } from 'react-bootstrap';
 
 const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
-	const { addToCart, openLightBoxModal } = useAppContext();
+	const { addToCart } = useAppContext();
+
+	const router = useRouter();
+
+	const openProductDetails = () => {
+		router.push(`/menu/${item.slug}`);
+	};
 
 	return (
-		<div
-			className={`col ${item.isAvailable ? '' : 'opacity-25'}`}
-			key={item.id}>
-			<div className='shop-product-item mb-30'>
-				<div className='shop-product-item-inner'>
-					<div className='shop-product-img w-100'>
-						<Link href={`/menu/${item.slug}`}>
-							<img src={item.image} alt={item.name} />
-						</Link>
-						{/* {item.sale && <span className='shop-onsale'>Sale!</span>} */}
-						<div className='shop-product-action'>
-							<a
-								role='button'
-								onClick={() => (item.isAvailable ? addToCart(item.id) : '')}>
-								<i className='icofont-shopping-cart'></i>
-							</a>
-							<a role='button' onClick={() => openLightBoxModal(item)}>
-								<i className='icofont-eye'></i>
-							</a>
-						</div>
-					</div>
-					<div className='shop-product-content'>
-						<h4 className='shop-product-title'>
-							<a href={`/menu/${item.slug}`}>{item.name}</a>
-						</h4>
-						<div className='shop-product-price'>
-							<span className='shop-price'>{item.price}&nbsp;&euro;</span>
-						</div>
-					</div>
+		<Card className={`col custom-card ${item.isAvailable ? '' : 'opacity-25'}`}>
+			<Card.Img
+				variant='top'
+				src={item.image}
+				alt={item.name}
+				onClick={() => openProductDetails()}
+				// style={{ height: '200px' }}
+			/>
+			<Card.Body onClick={() => openProductDetails()}>
+				{/* <Card.Title>{item.name}</Card.Title> */}
+				<h4 className='shop-product-title'>
+					<a href={`/menu/${item.slug}`}>{item.name}</a>
+				</h4>
+				<div className='shop-product-price'>
+					<span className='shop-price'>{item.price}&nbsp;&euro;</span>
 				</div>
-			</div>
-		</div>
+			</Card.Body>
+			<Card.Footer className='d-flex justify-content-around'>
+				<a role='button' href={`/menu/${item.slug}`}>
+					<i className='icofont-eye'></i>
+				</a>
+				<a
+					role='button'
+					onClick={() => (item.isAvailable ? addToCart(item.id) : '')}>
+					<i className='icofont-shopping-cart'></i>
+				</a>
+			</Card.Footer>
+		</Card>
 	);
 };
 
