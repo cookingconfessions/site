@@ -86,13 +86,16 @@ export interface ReviewFormElements extends HTMLFormControlsCollection {
 }
 
 export interface PasswordResetFormElements extends HTMLFormControlsCollection {
-    email: {
-        value: string
-    },
     password: {
         value: string
     },
     confirmPassword: {
+        value: string
+    }
+}
+
+export interface ForgotPassswordFormElements extends HTMLFormControlsCollection {
+    email: {
         value: string
     }
 }

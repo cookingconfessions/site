@@ -2,7 +2,7 @@
 import { useCheckoutContext } from '@/context/CheckoutContext';
 import { StripePaymentIntentResponse } from '@/types/menu';
 import { useApiClient } from '@/utils/api-client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const CheckoutSuccessSection: React.FC = () => {
@@ -11,6 +11,10 @@ const CheckoutSuccessSection: React.FC = () => {
 		clearPaymentIntent,
 		payCashOnDelivery,
 	} = useCheckoutContext();
+
+	const [activationEmailSent, setActivationEmailSent] = useState<boolean>(
+		false
+	);
 
 	useEffect(() => {
 		const order = localStorage.getItem('order');
@@ -49,6 +53,29 @@ const CheckoutSuccessSection: React.FC = () => {
 			});
 	}, []);
 
+	useEffect(() => {
+		const customerEmailToActivate = localStorage.getItem(
+			'customerEmailToActivate'
+		);
+
+		if (!customerEmailToActivate) {
+			return;
+		}
+
+		useApiClient()
+			.resetPassword(customerEmailToActivate)
+			.then(() => {
+				setActivationEmailSent(true);
+				localStorage.removeItem('customerEmailToActivate');
+			})
+			.catch(() => {
+				toast.error(
+					'There was a problem setting up your customer account. Please contact us.'
+				);
+				localStorage.removeItem('customerEmailToActivate');
+			});
+	}, []);
+
 	return (
 		<div className='container text-center'>
 			<h4 className='sec-title'>Order received!</h4>
@@ -69,6 +96,12 @@ const CheckoutSuccessSection: React.FC = () => {
 				Thank you for your order. We will let you know once it is ready for
 				delivery!
 			</p>
+			{activationEmailSent && (
+				<p className='about-des pt-15'>
+					We have sent you an email with a link to activate your account for
+					faster checkout next time.
+				</p>
+			)}
 			<div className='row'>
 				<div className='text-center  my-4'>
 					<a className='custom-btn' role='button' href='/menu'>

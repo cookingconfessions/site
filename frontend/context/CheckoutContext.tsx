@@ -63,8 +63,7 @@ export const CheckoutProvider: React.FC<AppProviderProps> = ({ children }) => {
 	const makeOrder = (customerId: string, elements: OrderFormElements) => {
 		const order: CreateOrder = {
 			customer: customerId,
-			orderNotes:
-				elements.orderNotes.value === '' ? '-' : elements.orderNotes.value,
+			orderNotes: elements.orderNotes.value,
 			discountCode: couponCode?.code ?? '',
 			deliveryMode: shouldDeliverOrder
 				? OrdeDeliveryMode.DELIVERY

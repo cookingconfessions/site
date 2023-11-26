@@ -92,6 +92,7 @@ export interface CreateCustomer {
 
 export interface Customer extends CreateCustomer {
     id: string;
+    isNewCustomer?: boolean;
 }
 
 export interface OrderItem {

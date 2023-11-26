@@ -235,6 +235,10 @@ export const useShopContext = (): ShopContextData => {
 		setPersistUserDetails(!persistUserDetails);
 	};
 
+	const disableUserDetailsPersist = () => {
+		setPersistUserDetails(false);
+	};
+
 	const handleCustomerRegistration = (
 		customerDetails: CreateCustomer
 	): Promise<string> => {
@@ -243,6 +247,13 @@ export const useShopContext = (): ShopContextData => {
 			.then((customerDetails) => {
 				localStorage.setItem('customer', JSON.stringify(customer));
 				setCustomer(customerDetails);
+
+				if (persistUserDetails && customerDetails.isNewCustomer) {
+					localStorage.setItem(
+						'customerEmailToActivate',
+						customerDetails.email
+					);
+				}
 
 				return customerDetails.id;
 			})
@@ -465,6 +476,7 @@ export const useShopContext = (): ShopContextData => {
 		couponCode,
 		applyCoupon,
 		persistUserDetails,
+		disableUserDetailsPersist,
 		handlePersistUserDetails,
 		customer,
 		handleCustomerRegistration,

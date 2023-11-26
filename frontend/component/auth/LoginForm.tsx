@@ -8,14 +8,17 @@ const LoginForm = () => {
 		passwordVisible,
 		togglePasswordVisibility,
 		handleUserLogin,
+		closeLoginModal,
 	} = useAppContext();
+
 	const [username, setUserName] = useState('');
 	const [password, setPassword] = useState('');
+
 	const handleFormSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 
 		if (!username && !password) {
-			toast.error('Please fill out all fields.', { position: 'top-right' });
+			return;
 		} else if (!password) {
 			toast.warning('Please provide password.', { position: 'top-right' });
 		} else if (!username) {
@@ -80,17 +83,20 @@ const LoginForm = () => {
 					/>{' '}
 					<span>Remember me</span>
 				</label>
-				<button
-					type='submit'
-					className='login-button button login-form-login__submit wp-element-button col-md-2'
-					name='login'
-					value='Log in'>
+			</p>
+			<p
+				className='login-LostPassword lost_password row justify-content-center col-md-3'
+				onClick={() => closeLoginModal()}>
+				<a href='/forgot-password'>Forgot password?</a>
+			</p>
+			<div className='submit-button-sec d-flex justify-content-between mt-30'>
+				<button className='custom-btn' onClick={() => closeLoginModal()}>
+					Cancel
+				</button>
+				<button type='submit' className='custom-btn'>
 					Log in
 				</button>
-			</p>
-			<p className='login-LostPassword lost_password row justify-content-center col-md-3'>
-				<a href='#'>Forgot password?</a>
-			</p>
+			</div>
 		</form>
 	);
 };

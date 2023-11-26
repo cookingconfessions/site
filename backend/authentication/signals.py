@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.urls import reverse
 
+from common.utils.config import Config
 from django_rest_passwordreset.signals import reset_password_token_created
 
 
@@ -25,22 +26,24 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
         "username": reset_password_token.user.username,
         "email": reset_password_token.user.email,
         "reset_password_url": "{}?token={}".format(
-            instance.request.build_absolute_uri(reverse("password_reset:reset-password-confirm")),
+            Config.get("FRONTEND_URL") + '/set-password',
             reset_password_token.key,
         ),
     }
 
     # render email text
-    email_html_message = render_to_string("email/password_reset_email.html", context)
-    email_plaintext_message = render_to_string("email/password_reset_email.txt", context)
+    email_html_message = render_to_string(
+        "email/password_reset_email.html", context)
+    email_plaintext_message = render_to_string(
+        "email/password_reset_email.txt", context)
 
     msg = EmailMultiAlternatives(
         # title:
-        "Password Reset for {title}".format(title="Your Website Title"),
+        "Password Reset for Cooking Confessions",
         # message:
         email_plaintext_message,
         # from:
-        "noreply@yourdomain.com",
+        "admin@cookingconfessions.sk",
         # to:
         [reset_password_token.user.email],
     )

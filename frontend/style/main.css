@@ -77,6 +77,20 @@ a {
   color: #cc3333;
 }
 
+.login-form h4{
+  text-align: center !important;
+  color: #cc3333;
+}
+
+.login-form .password-errors{
+  color: #cc3333;
+  font-size: 12px;
+  margin-bottom: 0;
+}
+.mb-4 {
+  margin-bottom: 4px;
+}
+
 /*========== BASE ==========*/
 
 *,
@@ -1377,6 +1391,10 @@ span.swiper-pagination-bullet {
 
 .hidden {
   visibility: hidden !important;
+}
+
+.display-none {
+  display: none !important;
 }
 
 .second-home-nav {

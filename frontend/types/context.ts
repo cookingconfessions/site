@@ -76,6 +76,7 @@ export interface ShopContextData {
     couponCode: CouponCode | undefined;
     applyCoupon: (code: string) => void;
     persistUserDetails: boolean;
+    disableUserDetailsPersist: () => void;
     handlePersistUserDetails: () => void;
     customer: Customer;
     handleCustomerRegistration: (customer: CreateCustomer) => Promise<string>;
@@ -105,6 +106,12 @@ export interface AuthContextData {
     closeLoginModal: () => void;
     handleUserLogin: (loginDetails: LoginDetails) => void;
     logout: () => void;
+    sendPasswordResetEmail: (email: string) => void;
+    resetPassword: (password: string, token: string) => void;
+    passwordResetErrors: string[];
+    clearPasswordResetErrors: () => void,
+    passwordResetRequestSent: boolean;
+    retryPasswordReset: () => void;
 }
 
 export interface AppContextData extends HomeContextData, AuthContextData, ShopContextData {

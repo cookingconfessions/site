@@ -7,3 +7,8 @@ export interface Token {
     refresh: string;
     access: string;
 }
+
+export interface ResetPasswordConfirmation {
+    token: string;
+    password: string;
+}

@@ -116,7 +116,12 @@ const ContactModal: React.FC = () => {
 											rows={5}></textarea>
 									</div>
 								</div>
-								<div className='submit-button-sec mt-30'>
+								<div className='submit-button-sec d-flex justify-content-between mt-30'>
+									<button
+										className='custom-btn'
+										onClick={() => closeContactModal()}>
+										Cancel
+									</button>
 									<button type='submit' className='custom-btn'>
 										Send Message
 									</button>

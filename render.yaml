@@ -67,6 +67,8 @@ envVarGroups:
         value: placeholder-value
       - key: STRIPE_WEBHOOK_SECRET
         value: placeholder-value
+      - key: FRONTEND_URL
+        value: "https://www.cookingconfessions.sk"
 
   - name: app-configurations
     envVars:

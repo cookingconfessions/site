@@ -1,4 +1,4 @@
-import { LoginDetails, Token } from "@/types/auth";
+import { LoginDetails, ResetPasswordConfirmation, Token } from "@/types/auth";
 import { BannerItem, Booking, CompanyInfo, Faq, Message, Schedule } from "@/types/home";
 import { CouponCode, CreateCustomer, CreateMenuItemReview, CreateOrder, Customer, MenuItem, MenuItemCategory, MenuItemReview, Order, OrderPayment, StripePaymentIntentResponse } from "@/types/menu";
 import axios from "axios";
@@ -7,6 +7,8 @@ import humps from 'humps';
 interface ApiClient {
     login: (user: LoginDetails) => Promise<Token>
     logout: () => Promise<void>;
+    resetPassword: (email: string) => Promise<void>;
+    resetPasswordConfirm: (details: ResetPasswordConfirmation) => Promise<void>;
     getMenuItems: () => Promise<MenuItem[]>;
     getMenuItem: (slug: string) => Promise<MenuItem>;
     getMenuItemCategories: () => Promise<MenuItemCategory[]>;
@@ -23,7 +25,7 @@ interface ApiClient {
     createOrder: (customer: CreateOrder) => Promise<Order>;
     createPaymentIntent: (orderTotal: number) => Promise<StripePaymentIntentResponse>;
     recordPayment: (order: OrderPayment) => Promise<OrderPayment>;
-    submitReview: (menuItemSlug: string, review: CreateMenuItemReview) => Promise<MenuItemReview>
+    submitReview: (menuItemSlug: string, review: CreateMenuItemReview) => Promise<MenuItemReview>;
 }
 
 const PROTECTED_ENDPOINTS = ['/auth/profile/', '/auth/logout/'];
@@ -181,11 +183,26 @@ const logout = async () => {
     return res.data;
 }
 
+const resetPassword = async (email: string) => {
+    const res = await api.post<void>("/auth/reset-password/", {
+        email: email,
+    });
+
+    return res.data;
+}
+
+const resetPasswordConfirm = async (details: ResetPasswordConfirmation) => {
+    const res = await api.post<void>("/auth/reset-password/confirm/", details);
+
+    return res.data;
+}
 
 export const useApiClient = (): ApiClient => {
     return {
         login,
         logout,
+        resetPassword,
+        resetPasswordConfirm,
         getBannerItems,
         getMenuItems,
         getMenuItemCategories,

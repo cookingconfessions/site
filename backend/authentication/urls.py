@@ -10,5 +10,5 @@ urlpatterns = [
     path("token/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("profile/", ProfileView.as_view(), name="profile"),
-    path("password_reset/", include("django_rest_passwordreset.urls", namespace="password_reset")),
+    path("reset-password/", include("django_rest_passwordreset.urls", namespace="password_reset")),
 ]

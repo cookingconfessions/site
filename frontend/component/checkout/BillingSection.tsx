@@ -1,6 +1,6 @@
 'use client';
 import { useCheckoutContext } from '@/context/CheckoutContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 
 const BillingSection = () => {
@@ -13,9 +13,17 @@ const BillingSection = () => {
 		handleShouldDeliverOrder,
 		payCashOnDelivery,
 		handlePayCashOnDelivery,
+		isAuthenticated,
+		disableUserDetailsPersist,
 	} = useCheckoutContext();
 
 	const [email, setEmail] = useState<string>(customer.email);
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			return disableUserDetailsPersist();
+		}
+	}, [isAuthenticated]);
 
 	return (
 		<div className='col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-lg-0 mb-50 mb-lg-0'>
@@ -147,16 +155,15 @@ const BillingSection = () => {
 						</span>
 					</p>
 				</div>
-				<label className='mt-10'>
+				<label className={`mt-10 ${isAuthenticated ? 'display-none' : ''}`}>
 					<input
 						className='login-form__input-checkbox'
-						name='rememberme'
 						type='checkbox'
-						defaultValue={persistUserDetails ? 'true' : 'false'}
+						value={persistUserDetails ? 'true' : 'false'}
 						onChange={handlePersistUserDetails}
 						checked={persistUserDetails}
 					/>{' '}
-					<span>Save my details for easier checkout later</span>
+					<span>Save my address details for easier checkout next time</span>
 				</label>
 			</div>
 			<div className='checkout-shipping-fields  cafeu-woo-form-shipping-form-style-custom'>

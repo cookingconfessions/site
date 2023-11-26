@@ -94,6 +94,58 @@ export const useAuthContext = (): AuthContextData => {
 			});
 	};
 
+	const [passwordResetErrors, setPasswordResetErrors] = useState<string[]>([]);
+	const [passwordResetRequestSent, setPasswordResetRequestSent] = useState(
+		false
+	);
+
+	const sendPasswordResetEmail = (email: string) => {
+		useApiClient()
+			.resetPassword(email)
+			.then(() => {
+				setPasswordResetRequestSent(true);
+			})
+			.catch((error) => {
+				if (error.response.data.email.length) {
+					return setPasswordResetErrors(error.response.data.email);
+				}
+
+				toast.error(
+					'There was a problem sending you a password set up email. Please try again'
+				);
+			});
+	};
+
+	const resetPassword = (password: string, token: string) => {
+		useApiClient()
+			.resetPasswordConfirm({ password, token })
+			.then(() => {
+				toast.success('Successfully set up your password.');
+				router.push('/login');
+			})
+			.catch((error) => {
+				if (error.response.data.password.length) {
+					return setPasswordResetErrors(error.response.data.password);
+				}
+
+				if (error.response.data.detail.toLowerCase().includes('not found')) {
+					return toast.error('Invalid password reset token.');
+				}
+
+				toast.error(
+					'There was a problem setting up your password. Please try again.'
+				);
+			});
+	};
+
+	const clearPasswordResetErrors = () => {
+		setPasswordResetErrors([]);
+	};
+
+	const retryPasswordReset = () => {
+		setPasswordResetRequestSent(false);
+	};
+
 	return {
 		user,
 		isAuthenticated,
@@ -104,5 +156,11 @@ export const useAuthContext = (): AuthContextData => {
 		closeLoginModal,
 		handleUserLogin,
 		logout,
+		sendPasswordResetEmail,
+		resetPassword,
+		passwordResetErrors,
+		clearPasswordResetErrors,
+		passwordResetRequestSent,
+		retryPasswordReset,
 	};
 };
