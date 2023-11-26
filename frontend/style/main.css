@@ -82,6 +82,20 @@ a {
   color: #cc3333;
 }
 
+.login-form .password-errors{
+  color: #cc3333;
+  font-size: 12px;
+  margin-bottom: 0;
+}
+.mb-4 {
+  margin-bottom: 4px;
+}
+
+.login-form h4{
+  text-align: center !important;
+  color: #cc3333;
+}
+
 .password-errors, .validation-errors{
   color: #cc3333;
   font-size: 12px;
