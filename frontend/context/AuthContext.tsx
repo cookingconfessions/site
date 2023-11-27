@@ -120,8 +120,11 @@ export const useAuthContext = (): AuthContextData => {
 		useApiClient()
 			.resetPasswordConfirm({ password, token })
 			.then(() => {
-				toast.success('Successfully set up your password.');
-				router.push('/login');
+				toast.success('Successfully set up your password!');
+				toast.info(
+					'You can now login to load your details when making orders.'
+				);
+				router.push('/');
 			})
 			.catch((error) => {
 				if (error.response.data.password.length) {

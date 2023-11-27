@@ -159,6 +159,7 @@ export const useHomeContext = (): HomeContextData => {
 
 	// Booking
 	const [isBookingModalOpen, setIsBookingModalOpen] = useState<boolean>(false);
+	const [bookingErrors, setBookingErrors] = useState<string[]>([]);
 
 	const openBookingModal = () => {
 		setIsBookingModalOpen(true);
@@ -175,11 +176,19 @@ export const useHomeContext = (): HomeContextData => {
 					'We received your booking, we will get back to you shortly!'
 				);
 			})
-			.catch((_) =>
+			.catch((error) => {
+				if (error.response.data.date.length) {
+					return setBookingErrors(error.response.data.date);
+				}
+
 				toast.error(
 					'There was a problem adding your booking, please try again :('
-				)
-			);
+				);
+			});
+	};
+
+	const clearBookingErrors = () => {
+		setBookingErrors([]);
 	};
 
 	return {
@@ -216,5 +225,7 @@ export const useHomeContext = (): HomeContextData => {
 		openBookingModal,
 		closeBookingModal,
 		handleBookingFormSubmit,
+		bookingErrors,
+		clearBookingErrors,
 	};
 };

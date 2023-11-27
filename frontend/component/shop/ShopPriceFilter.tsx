@@ -4,27 +4,34 @@ import { Slider } from '@mui/material';
 const ShopPriceFilter = () => {
 	const { priceRange, setPriceRange, handlePriceChange } = useAppContext();
 	return (
-		<div className='sidebar-single mb-50' data-aos='fade-up' data-aos-duration='2500'>
+		<div
+			className='sidebar-single mb-50'
+			data-aos='fade-up'
+			data-aos-duration='2500'>
 			<h4 className='sidebar-title mb-25'>Price Filter</h4>
 			<div className='price-filter-wrap'>
 				<div className='input-wrap'>
 					<div className='input-group'>
-						<span className='input-txt'>$</span>
 						<input
 							type='number'
 							id='minNumber'
 							value={priceRange[0]}
-							onChange={(e) => setPriceRange([parseFloat(e.target.value), priceRange[1]])}
+							onChange={(e) =>
+								setPriceRange([parseFloat(e.target.value), priceRange[1]])
+							}
 						/>
+						<span className='input-txt'>&nbsp;&euro;</span>
 					</div>
 					<div className='input-group'>
-						<span className='input-txt'>$</span>
 						<input
 							type='number'
 							id='maxNumber'
 							value={priceRange[1]}
-							onChange={(e) => setPriceRange([priceRange[0], parseFloat(e.target.value)])}
+							onChange={(e) =>
+								setPriceRange([priceRange[0], parseFloat(e.target.value)])
+							}
 						/>
+						<span className='input-txt'>&nbsp;&euro;</span>
 					</div>
 				</div>
 				<div id='priceFilter' className='price-filter'>

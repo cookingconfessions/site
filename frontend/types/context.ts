@@ -38,6 +38,8 @@ export interface HomeContextData {
     openBookingModal: () => void;
     closeBookingModal: () => void;
     handleBookingFormSubmit: (booking: Booking) => void;
+    bookingErrors: string[];
+    clearBookingErrors: () => void
 }
 
 export interface ShopContextData {

@@ -82,7 +82,7 @@ a {
   color: #cc3333;
 }
 
-.login-form .password-errors{
+.password-errors, .validation-errors{
   color: #cc3333;
   font-size: 12px;
   margin-bottom: 0;

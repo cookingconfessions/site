@@ -10,6 +10,8 @@ const BookCateringModal: React.FC = () => {
 		isBookingModalOpen,
 		closeBookingModal,
 		handleBookingFormSubmit,
+		clearBookingErrors,
+		bookingErrors,
 	} = useAppContext();
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -113,22 +115,29 @@ const BookCateringModal: React.FC = () => {
 									<div className='col-md-6'>
 										<div className='input-group flex-nowrap mb-30'>
 											<input
-												type='date'
+												placeholder='Date *'
+												type='text'
 												name='date'
+												onFocus={(event) => (event.target.type = 'date')}
+												onBlur={(event) => (event.target.type = 'text')}
 												required
 												className='form-control'
-												placeholder='Event date *'
+												style={{
+													borderColor: bookingErrors.length ? 'red' : '',
+												}}
 											/>
 										</div>
 									</div>
 									<div className='col-md-6'>
 										<div className='input-group flex-nowrap mb-30'>
 											<input
-												type='time'
+												placeholder='Time *'
+												type='text'
 												name='time'
+												onFocus={(event) => (event.target.type = 'time')}
+												onBlur={(event) => (event.target.type = 'text')}
 												required
 												className='form-control'
-												placeholder='Time *'
 											/>
 										</div>
 									</div>
@@ -140,6 +149,14 @@ const BookCateringModal: React.FC = () => {
 											rows={5}></textarea>
 									</div>
 								</div>
+
+								<div className='validation-errors'>
+									{bookingErrors.length > 0 &&
+										bookingErrors.map((error, index) => (
+											<p key={index}>{error}</p>
+										))}
+								</div>
+
 								<div className='submit-button-sec d-flex justify-content-between mt-30'>
 									<button
 										className='custom-btn'
