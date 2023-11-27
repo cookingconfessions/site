@@ -12,6 +12,7 @@ const LoginForm = () => {
 	} = useAppContext();
 
 	const [username, setUserName] = useState('');
+	const [userNameInput, setUserNameInput] = useState('');
 	const [password, setPassword] = useState('');
 
 	const handleFormSubmit = (e: React.FormEvent) => {
@@ -31,6 +32,19 @@ const LoginForm = () => {
 		}
 	};
 
+	const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		e.preventDefault();
+		setUserNameInput(e.target.value);
+
+		let userNameInput = e.target.value;
+
+		if (userNameInput.split('@').length > 1) {
+			userNameInput = userNameInput.split('@')[0];
+		}
+
+		setUserName(userNameInput);
+	};
+
 	return (
 		<form
 			className='login-form login-form-login login'
@@ -41,12 +55,11 @@ const LoginForm = () => {
 					<span className='required'>*</span>
 				</label>
 				<input
-					type='text'
+					type='email'
 					className='login-Input login-Input--text input-text'
 					name='username'
-					id='username'
-					value={username}
-					onChange={(e) => setUserName(e.target.value)}
+					value={userNameInput}
+					onChange={handleUserNameChange}
 				/>
 			</p>
 			<p className='login-form-row login-form-row--wide form-row form-row-wide'>
