@@ -2,6 +2,7 @@
 import { useAppContext } from '@/context/AppContext';
 import { HeaderProp } from '@/types/home';
 import Link from 'next/link';
+import { GoogleAnalytics } from 'nextjs-google-analytics';
 import React from 'react';
 import DropdownCartSection from '../cart/DropdownCartSection';
 import UserLoginDropdown from '../login/UserLoginDropdown';
@@ -12,6 +13,7 @@ const Header: React.FC<HeaderProp> = ({ logo, theme }) => {
 
 	return (
 		<header>
+			<GoogleAnalytics trackPageViews />
 			<div
 				className={`header header-2 ${theme} ${
 					isHeaderFixed ? 'navbar-fixed' : ''

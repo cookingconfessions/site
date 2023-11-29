@@ -33,7 +33,6 @@ const LoginForm = () => {
 	};
 
 	const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		e.preventDefault();
 		setUserNameInput(e.target.value);
 
 		let userNameInput = e.target.value;
@@ -51,7 +50,7 @@ const LoginForm = () => {
 			onSubmit={handleFormSubmit}>
 			<p className='login-form-row login-form-row--wide form-row form-row-wide'>
 				<label htmlFor='username'>
-					Username or email address&nbsp;
+					Email address&nbsp;
 					<span className='required'>*</span>
 				</label>
 				<input

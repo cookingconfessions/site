@@ -156,6 +156,7 @@ class OrderView(viewsets.ViewSet):
 
         self.create_order_items(order_items, order)
         response = GetOrderSerializer(order)
+
         return Response(response.data, status=status.HTTP_201_CREATED)
 
     def are_order_details_valid(self, data: dict):

@@ -69,11 +69,15 @@ envVarGroups:
         value: placeholder-value
       - key: FRONTEND_URL
         value: "https://www.cookingconfessions.sk"
+      - key: SENDPULSE_API_ID
+        value: placeholder-value
+      - key: SENDPULSE_API_SECRET
+        value: placeholder-value
 
   - name: app-configurations
     envVars:
       - key: SITE_URL
-        value: "https://cookingconfessions.onrender.com"
+        value: "https://www.cookingconfessions.sk"
       - key: ADMIN_SITE_HEADER
         value: "Cooking Confessions Admin"
       - key: ADMIN_INDEX_TITLE
@@ -88,4 +92,6 @@ envVarGroups:
       - key: NEXT_PUBLIC_API_TIMEOUT
         value: "10000"
       - key: NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+        value: placeholder-value
+      - key: NEXT_PUBLIC_GA_MEASUREMENT_ID
         value: placeholder-value
