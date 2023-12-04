@@ -30,7 +30,7 @@ const FooterSection: React.FC<FooterProp> = ({ style }) => {
 				<div className='container'>
 					<div className='row'>
 						<div
-							className='col-lg-3 col-md-6 col-sm-6 my-2 smpadright40'
+							className='col-lg-4 col-md-6 col-sm-6 my-2 smpadright40'
 							data-aos='fade-up'
 							data-aos-duration='500'>
 							<div className='footer-content-wrapper'>
@@ -79,7 +79,7 @@ const FooterSection: React.FC<FooterProp> = ({ style }) => {
 						</div>
 
 						<div
-							className='col-lg-3 col-md-6 col-sm-6 my-2 padleft40'
+							className='col-lg-4 col-md-6 col-sm-6 my-2 padleft40'
 							data-aos='fade-up'
 							data-aos-duration='500'>
 							<div className='footer-content-wrapper'>
@@ -112,29 +112,7 @@ const FooterSection: React.FC<FooterProp> = ({ style }) => {
 						</div>
 
 						<div
-							className='col-lg-3 col-md-6 col-sm-6 my-2 padright40'
-							data-aos='fade-up'
-							data-aos-duration='500'>
-							<div className='footer-content-wrapper'>
-								<div className='footer-sec-head mb-4'>
-									<h4 className='footer-widget-title'>Instagram</h4>
-								</div>
-								<ul className='insta-feed'>
-									{menuItems.slice(0, 5).map((item) => (
-										<li key={item.id} className='foot-list'>
-											<a
-												href={companyInfo.instagramLink}
-												className='footer-link'>
-												<img src={item.image} alt='' />
-											</a>
-										</li>
-									))}
-								</ul>
-							</div>
-						</div>
-
-						<div
-							className='col-lg-3 col-md-6 col-sm-6 my-2'
+							className='col-lg-4 col-md-6 col-sm-6 my-2'
 							data-aos='fade-up'
 							data-aos-duration='500'>
 							<div className='footer-content-wrapper'>
