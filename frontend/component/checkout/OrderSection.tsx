@@ -13,6 +13,7 @@ const OrderSection: React.FC = () => {
 		canSubmitOrder,
 		mainTotal,
 		discount,
+		openLightBoxModal,
 	} = useCheckoutContext();
 
 	return (
@@ -135,9 +136,9 @@ const OrderSection: React.FC = () => {
 									your experience throughout this website, and for other
 									purposes described in our{' '}
 									<a
-										href='#'
+										type='button'
 										className='checkout-privacy-policy-link'
-										target='_blank'>
+										onClick={() => openLightBoxModal()}>
 										privacy policy
 									</a>
 									.

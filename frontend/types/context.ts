@@ -24,9 +24,8 @@ export interface HomeContextData {
     openAccordion: string | null;
     handleAccordionBtn: (itemId: string) => void;
     isLightBoxModalOpen: boolean;
-    openLightBoxModal: (product: MenuItem | null) => void;
+    openLightBoxModal: () => void;
     closeLightBoxModal: () => void;
-    product: MenuItem | null;
     isSidebarOpen: boolean;
     openSidebar: () => void;
     closeSidebar: () => void;

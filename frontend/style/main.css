@@ -4677,6 +4677,11 @@ p.no-product-text {
   background-color: #fff;
   border-radius: 10px;
 }
+
+.lightbox-modal-body {
+  font-family: "Roboto", sans-serif;
+  margin: 5px;
+}
 .quick-view-container {
   display: flex;
 }

@@ -115,11 +115,8 @@ export const useHomeContext = (): HomeContextData => {
 	const [isLightBoxModalOpen, setIsLightBoxModalOpen] = useState<boolean>(
 		false
 	);
-	const [product, setProduct] = useState<MenuItem | null>(null);
-
-	const openLightBoxModal = (product: MenuItem | null) => {
+	const openLightBoxModal = () => {
 		setIsLightBoxModalOpen(true);
-		setProduct(product);
 	};
 	const closeLightBoxModal = () => {
 		setIsLightBoxModalOpen(false);
@@ -213,7 +210,6 @@ export const useHomeContext = (): HomeContextData => {
 		isLightBoxModalOpen,
 		openLightBoxModal,
 		closeLightBoxModal,
-		product,
 		isSidebarOpen,
 		openSidebar,
 		closeSidebar,
