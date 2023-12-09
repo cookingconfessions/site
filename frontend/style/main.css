@@ -116,6 +116,10 @@ a {
   z-index: 1000;
 }
 
+.checkout-privacy-policy-text a {
+  color: blue !important;
+}
+
 /*========== BASE ==========*/
 
 *,
@@ -998,11 +1002,12 @@ ul.right-social-ul li {
 
 .sm-title {
   font-size: 20px;
-  font-family: "Lobster Two", cursive;
+  font-family: "Lobster Two", cursive, "Roboto", sans-serif;
   color: #cc3333;
   font-weight: 500;
   display: inline-block;
   margin-bottom: 10px;
+  font-style: normal !important;
 }
 
 .banner-title a {
