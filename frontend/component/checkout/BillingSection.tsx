@@ -2,6 +2,7 @@
 import { useCheckoutContext } from '@/context/CheckoutContext';
 import { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
+import PhoneInput from 'react-phone-number-input';
 
 const BillingSection = () => {
 	const {
@@ -18,6 +19,7 @@ const BillingSection = () => {
 	} = useCheckoutContext();
 
 	const [email, setEmail] = useState<string>(customer.email);
+	const [phoneNumber, setPhoneNumber] = useState<string>(customer.phoneNumber);
 
 	useEffect(() => {
 		if (isAuthenticated) {
@@ -71,11 +73,21 @@ const BillingSection = () => {
 							<abbr className='required' title='required'></abbr>
 						</label>
 						<span className='checkout-input-wrapper'>
+							<PhoneInput
+								className='input-text '
+								placeholder='Enter phone number'
+								value={phoneNumber}
+								defaultCountry='SK'
+								onChange={(value: any | undefined) =>
+									setPhoneNumber(value ?? '')
+								}
+							/>
 							<input
 								type='tel'
-								className='input-text '
+								className='display-none'
 								name='phoneNumber'
-								defaultValue={customer.phoneNumber}
+								value={phoneNumber}
+								readOnly
 								required
 							/>
 						</span>

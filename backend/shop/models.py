@@ -6,6 +6,7 @@ from django.db import models
 
 from common.models import BaseModel
 from common.utils.generators import generate_code
+from common.utils.sms_helper import send_order_ready_sms
 from menu.models import MenuItem
 from shop.utils.validators import validate_discount_code_not_already_expired
 
@@ -108,6 +109,14 @@ class Order(BaseModel):
     def __str__(self) -> str:
         return f"Order by {self.customer.name()} On {self.created_at}"
 
+    def save(self, *args, **kwargs):
+        current_status = Order.objects.get(pk=self.pk).status if self.pk else None
+
+        if self.status == 4 and self.status != current_status:
+            send_order_ready_sms(self)
+
+        super().save(*args, **kwargs)
+
     def customer_name(self):
         if not self.customer:
             return ""
@@ -128,6 +137,9 @@ class Order(BaseModel):
             return ""
         return self.customer.address()
 
+    def get_items(self):
+        return ",".join(map(str, self.items.all()))
+
 
 class OrderItem(BaseModel):
     item = models.ForeignKey(MenuItem, on_delete=models.SET_NULL, null=True)
@@ -136,7 +148,7 @@ class OrderItem(BaseModel):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
 
     def __str__(self) -> str:
-        return f"{self.quantity} {self.item.name}"
+        return f"{self.quantity} {self.item}"
 
 
 class OrderPayment(BaseModel):
