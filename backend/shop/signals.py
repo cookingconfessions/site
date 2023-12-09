@@ -1,9 +1,7 @@
 from django.db.models.signals import post_delete, post_save, pre_save
 from django.dispatch import receiver
 
-from common.utils.sms_helper import send_new_order_sms
-
-from .models import Order, OrderItem, OrderPayment
+from .models import OrderItem
 
 
 @receiver(pre_save, sender=OrderItem)
@@ -56,15 +54,3 @@ def decrement_sales_count(sender, instance, **kwargs):
     item = instance.item
     item.sales_count -= instance.quantity  # Decrement sales count
     item.save()
-
-
-@receiver(post_save, sender=Order)
-def send_sms_notification(sender, instance: Order, **kwargs):
-    if kwargs["created"] and instance.payment_method == 2:
-        send_new_order_sms(instance)
-
-
-@receiver(post_save, sender=OrderPayment)
-def send_sms_notification(sender, instance: Order, **kwargs):
-    if kwargs["created"]:
-        send_new_order_sms(instance)

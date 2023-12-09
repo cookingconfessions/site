@@ -20,8 +20,7 @@ SendPulseAPIProxy = PySendPulse(
 
 def send_new_order_sms(order: Order):
     try:
-        company_phone_number = CompanyInfo.objects.all(
-        ).first().phone_numbers.split(",")[0]
+        company_phone_number = CompanyInfo.objects.all().first().phone_numbers.split(",")[0]
         message = f"New order received from {order.customer_name()} at {order.customer_address()} phone number: {order.phone_number()}. Please check the admin panel for more details."
 
         res = SendPulseAPIProxy.sms_add_campaign_by_phones(
@@ -34,6 +33,5 @@ def send_new_order_sms(order: Order):
         except KeyError:
             logger.info(f"SMS sent for {order}")
     except Exception as e:
-        logger.error(
-            f"An error occured while sending a notification for {order}: {str(e)}")
+        logger.error(f"An error occured while sending a notification for {order}: {str(e)}")
         return

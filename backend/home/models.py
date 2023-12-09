@@ -4,8 +4,10 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.text import slugify
 
+from cloudinary import uploader
 from cloudinary.models import CloudinaryField
 from common.models import BaseModel
+from common.utils.media import cleanup_deleted_image
 from django_countries.fields import CountryField
 from menu.models import MenuItem
 
@@ -22,7 +24,20 @@ class BannerItem(BaseModel):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
 
+        try:
+            existing_object = BannerItem.objects.get(pk=self.pk)
+            if existing_object.image and existing_object.image != self.image:
+                uploader.destroy(existing_object.image.public_id, invalidate=True)
+        except BannerItem.DoesNotExist:
+            pass
+
         super(BannerItem, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        if self.image:
+            uploader.destroy(self.image.public_id, invalidate=True)
+
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return f"Banner {self.id} {self.name}"

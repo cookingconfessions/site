@@ -130,7 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'Europe/Bratislava'
+TIME_ZONE = "Europe/Bratislava"
 
 USE_I18N = True
 
@@ -157,17 +157,17 @@ if not DEBUG:
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
         },
     },
-    'root': {
-        'handlers': ['console'],
+    "root": {
+        "handlers": ["console"],
         # Set the desired log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
-        'level': 'INFO',
+        "level": "INFO",
     },
 }
 
