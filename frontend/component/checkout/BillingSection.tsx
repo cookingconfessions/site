@@ -175,7 +175,7 @@ const BillingSection = () => {
 						onChange={handlePersistUserDetails}
 						checked={persistUserDetails}
 					/>{' '}
-					<span>Save my address details for easier checkout next time</span>
+					<span>Create my account for easier checkout next time</span>
 				</label>
 			</div>
 			<div className='checkout-shipping-fields  cafeu-woo-form-shipping-form-style-custom'>
