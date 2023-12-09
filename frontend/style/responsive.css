@@ -466,9 +466,9 @@
     }
 
     .cart-menu {
-        right: 15%;
-        width: auto;
-        left: 15%;
+        right: 15% !important;
+        width: auto !important;
+        left: 15% !important;
     }
 
     .nav-list {
