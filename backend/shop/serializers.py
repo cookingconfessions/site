@@ -28,10 +28,14 @@ class CustomerSerializer(serializers.ModelSerializer):
     is_new_customer = serializers.BooleanField(default=False)
 
     def get_first_name(self, instance):
-        return instance.user.first_name
+        if instance.user:
+            return instance.user.first_name
+        return ""
 
     def get_last_name(self, instance):
-        return instance.user.last_name
+        if instance.user:
+            return instance.user.last_name
+        return ""
 
     class Meta:
         model = Customer
@@ -60,7 +64,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
     item = serializers.SerializerMethodField()
 
     def get_item(self, instance):
-        return instance.item.name
+        if instance.item:
+            return instance.item.name
+        return ""
 
     class Meta:
         model = OrderItem

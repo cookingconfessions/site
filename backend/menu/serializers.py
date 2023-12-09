@@ -48,7 +48,9 @@ class MenuItemSerializer(serializers.ModelSerializer):
     allergens = MenuItemAllergenSerializer(many=True)
 
     def get_category(self, instance):
-        return instance.category.name
+        if instance.category:
+            return instance.category.name
+        return ""
 
     class Meta:
         model = MenuItem

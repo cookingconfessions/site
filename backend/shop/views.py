@@ -1,3 +1,4 @@
+import logging
 import re
 import secrets
 import string
@@ -6,6 +7,7 @@ from typing import List
 from django.db import transaction
 
 import stripe
+from common.utils.sms_helper import send_new_order_sms
 from psycopg2 import IntegrityError
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -13,6 +15,9 @@ from rest_framework.response import Response
 
 from .models import *
 from .serializers import *
+
+
+logger = logging.getLogger(__name__)
 
 
 class DiscountCodeView(viewsets.ViewSet):
@@ -156,6 +161,7 @@ class OrderView(viewsets.ViewSet):
 
         self.create_order_items(order_items, order)
         response = GetOrderSerializer(order)
+        self.send_sms_notification(order.id)
 
         return Response(response.data, status=status.HTTP_201_CREATED)
 
@@ -172,6 +178,14 @@ class OrderView(viewsets.ViewSet):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
             serializer.save()
+
+    def send_sms_notification(self, order_id):
+        try:
+            order = Order.objects.get(pk=order_id)
+            send_new_order_sms(order)
+        except Exception as e:
+            logger.error(f"An error occured while sending a notification for {order}: {str(e)}")
+            return
 
 
 class CreateCheckoutSession(viewsets.ViewSet):
@@ -239,11 +253,21 @@ class CreateCheckoutSession(viewsets.ViewSet):
 
                     serializer.save()
 
+                self.send_sms_notification(request.data["order_id"])
+
                 return Response(serializer.data, status=status.HTTP_200_OK)
 
             except IntegrityError as e:
                 # Handle IntegrityError if needed
                 return Response({"message": "Payment saved"}, status=status.HTTP_200_OK)
+
+    def send_sms_notification(self, order_id):
+        try:
+            order = Order.objects.get(pk=order_id)
+            send_new_order_sms(order)
+        except Exception as e:
+            logger.error(f"An error occured while sending a notification for {order}: {str(e)}")
+            return
 
     def convert_to_cents(self, price):
         float_price = round(float(price), 2)
