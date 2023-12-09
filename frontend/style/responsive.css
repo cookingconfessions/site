@@ -332,7 +332,7 @@
     }
 
     #header-title {
-        font-size: 11px;
+        font-size: 11px !important;
     }
 
     .nav-list {
@@ -681,7 +681,7 @@
     }
 
     .sec-sm-title {
-        font-size: 18px !important;
+        font-size: 18px;
     }
 
     .banner-1 .text-inner {
@@ -717,7 +717,7 @@
     }
 
     .sm-title {
-        font-size: 18px !important;
+        font-size: 18px;
     }
 
     .banner-1 .slider-item-img {
