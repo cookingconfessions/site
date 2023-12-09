@@ -96,6 +96,7 @@ export interface ShopContextData {
     handlePayCashOnDelivery: () => void;
     loadDeliveryFee: () => void;
     clearStateAfterOrder: () => void;
+    isShopLoading: boolean;
 }
 
 export interface AuthContextData {

@@ -1,5 +1,6 @@
 import { useAppContext } from '@/context/AppContext';
 import Link from 'next/link';
+import { Spinner } from 'react-bootstrap';
 import ProductCard from '../menu/ProductCard';
 
 const ShopAllProductSection = () => {
@@ -8,11 +9,18 @@ const ShopAllProductSection = () => {
 		currentPage,
 		handlePageChange,
 		totalPages,
+		isShopLoading,
 	} = useAppContext();
 
 	return (
 		<div className='shop-products-wrapper'>
-			{filteredProducts.length === 0 ? (
+			{isShopLoading ? (
+				<Spinner
+					className='overlay-spinner'
+					animation='border'
+					variant='warning'
+				/>
+			) : filteredProducts.length === 0 ? (
 				<div className='no-product-container'>
 					<div className='no-product-img-container'>
 						<img src='/img/no-product.png' alt='no-product-img' />

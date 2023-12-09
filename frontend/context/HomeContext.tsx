@@ -44,7 +44,7 @@ export const useHomeContext = (): HomeContextData => {
 	useEffect(() => {
 		const filteredMenuProductList =
 			activeMenuProductTab === 'all'
-				? menuItems.slice(0, 9)
+				? menuItems.slice(9)
 				: menuItems
 						.slice(0, 19)
 						.filter(

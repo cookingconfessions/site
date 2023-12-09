@@ -30,8 +30,10 @@ export const useShopContext = (): ShopContextData => {
 	const [filteredProducts, setFilteredProducts] = useState<MenuItem[]>(
 		shopItems
 	);
+	const [isShopLoading, setIsShopLoading] = useState<boolean>(true);
 
 	const loadShopItems = () => {
+		setIsShopLoading(true);
 		useApiClient()
 			.getMenuItems()
 			.then((data) => {
@@ -39,6 +41,11 @@ export const useShopContext = (): ShopContextData => {
 
 				setShopItems(data);
 				setPriceRange([0, maximumPrice]);
+				setIsShopLoading(false);
+			})
+			.catch((_error) => {
+				toast.error('An error occured while loading the menu items :(');
+				setIsShopLoading(false);
 			});
 	};
 
@@ -494,5 +501,6 @@ export const useShopContext = (): ShopContextData => {
 		payCashOnDelivery,
 		handlePayCashOnDelivery,
 		clearStateAfterOrder,
+		isShopLoading,
 	};
 };

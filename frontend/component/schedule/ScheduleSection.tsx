@@ -35,7 +35,7 @@ const ScheduleSection = () => {
 										<p className='mb-0'>
 											Do you have a special dinner, grill party, baby shower or
 											any other event? We got you sorted! <br /> Book us now and
-											experience great delicacies from our team.
+											experience great delicacies from our team of chef.
 										</p>
 									</div>
 									<div className='banner-btn-sec mt-3'>
