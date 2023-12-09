@@ -42,7 +42,7 @@ const OrderFeatureSection = () => {
 								<img src='img/feature/african-meal-delivery.png' alt='icon' />
 							</span>
 							<h4 className='order-feature-title'>Quick Delivery</h4>
-							<p>We delivers instantly. </p>
+							<p>We deliver instantly. </p>
 						</div>
 					</div>
 					<div
