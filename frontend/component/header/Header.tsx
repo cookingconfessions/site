@@ -27,7 +27,9 @@ const Header: React.FC<HeaderProp> = ({ logo, theme }) => {
 									alt='Logo not found'
 									className='logo-img'
 								/>{' '}
-								<span id='header-title'>Cooking Confessions</span>
+								<span className='emphasized-title' id='header-title'>
+									Cooking Confessions
+								</span>
 							</Link>
 						</div>
 						<div className='header-right'>

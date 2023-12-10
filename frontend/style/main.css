@@ -1010,7 +1010,7 @@ ul.right-social-ul li {
   font-style: normal !important;
 }
 
-#header-title, .emphasized-title {
+.emphasized-title {
   font-size: 20px;
   color: #cc3333;
   font-weight: 500;
