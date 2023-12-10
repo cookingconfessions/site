@@ -1010,6 +1010,14 @@ ul.right-social-ul li {
   font-style: normal !important;
 }
 
+#header-title, .emphasized-title {
+  font-size: 20px;
+  color: #cc3333;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
 .banner-title a {
   color: #cc3333;
   text-decoration: underline;
@@ -4686,6 +4694,10 @@ p.no-product-text {
 .lightbox-modal-body {
   font-family: "Roboto", sans-serif;
   margin: 5px;
+}
+.lightbox-modal-body.sec-title {
+  font-size: 24px;
+  font-weight: 500;
 }
 .quick-view-container {
   display: flex;

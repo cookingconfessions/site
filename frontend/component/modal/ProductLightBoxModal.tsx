@@ -29,7 +29,7 @@ const ProductLightBoxModal: React.FC = () => {
 						policy.
 					</p>
 
-					<h4 className='sm-title'>Information We Collect:</h4>
+					<h4 className='emphasized-title'>Information We Collect:</h4>
 					<p>
 						We collect and process the following types of personal information:
 					</p>
@@ -47,7 +47,7 @@ const ProductLightBoxModal: React.FC = () => {
 						</li>
 					</ul>
 
-					<h4 className='sm-title'>How We Use Your Information:</h4>
+					<h4 className='emphasized-title'>How We Use Your Information:</h4>
 					<p>We use the collected information for the following purposes:</p>
 					<ul>
 						<li>
@@ -64,14 +64,14 @@ const ProductLightBoxModal: React.FC = () => {
 							orders, provide updates, and respond to your inquiries.
 						</li>
 					</ul>
-					<h4 className='sm-title'>Changes to this Privacy Policy:</h4>
+					<h4 className='emphasized-title'>Changes to this Privacy Policy:</h4>
 					<p>
 						We may update our Privacy Policy from time to time. Any changes will
 						be posted on this page, and the effective date will be updated
 						accordingly.
 					</p>
 
-					<h4 className='sm-title'>Contact Us:</h4>
+					<h4 className='emphasized-title'>Contact Us:</h4>
 					<p>
 						If you have any questions or concerns about our Privacy Policy,
 						please contact us at{' '}
