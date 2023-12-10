@@ -45,11 +45,9 @@ export const useHomeContext = (): HomeContextData => {
 		const filteredMenuProductList =
 			activeMenuProductTab === 'all'
 				? menuItems.slice(0, 10)
-				: menuItems
-						.slice(0, 19)
-						.filter(
-							(item) => item.category.toLowerCase() === activeMenuProductTab
-						);
+				: menuItems.filter(
+						(item) => item.category.toLowerCase() === activeMenuProductTab
+				  );
 		setFilteredMenuProductList(filteredMenuProductList);
 	}, [activeMenuProductTab, menuItems]);
 
