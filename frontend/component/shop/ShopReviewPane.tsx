@@ -4,10 +4,6 @@ import { useApiClient } from '@/utils/api-client';
 import React, { useEffect, useState } from 'react';
 import ShopReviewForm from './ShopReviewForm';
 
-interface ReviewTreeProps {
-	reviews: MenuItemReview[];
-}
-
 const renderReviewTree = (
 	reviews: MenuItemReview[],
 	replyCallback: () => void

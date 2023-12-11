@@ -4,7 +4,7 @@ import { CreateMenuItemReview, ShopDetailsProp } from '@/types/menu';
 import { FormEvent } from 'react';
 
 const ShopReviewForm: React.FC<ShopDetailsProp> = ({ shopData }) => {
-	const { customer, submitReview } = useAppContext();
+	const { customer, submitReview, isAuthenticated } = useAppContext();
 
 	const handleReviewSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -29,7 +29,9 @@ const ShopReviewForm: React.FC<ShopDetailsProp> = ({ shopData }) => {
 					<div className='col-sm-6 mb-30'>
 						<input
 							type='text'
-							className='form-control'
+							className={`form-control ${
+								isAuthenticated ? 'display-none' : ''
+							}`}
 							name='name'
 							defaultValue={customer.firstName}
 							placeholder='Name'
@@ -39,7 +41,9 @@ const ShopReviewForm: React.FC<ShopDetailsProp> = ({ shopData }) => {
 						<input
 							type='email'
 							name='email'
-							className='form-control'
+							className={`form-control ${
+								isAuthenticated ? 'display-none' : ''
+							}`}
 							defaultValue={customer.email}
 							placeholder='Email'
 						/>
