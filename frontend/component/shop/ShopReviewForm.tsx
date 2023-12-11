@@ -26,29 +26,34 @@ const ShopReviewForm: React.FC<ShopDetailsProp> = ({ shopData }) => {
 		<div className='form'>
 			<form action='#' onSubmit={handleReviewSubmit}>
 				<div className='row'>
-					<div className='col-sm-6 mb-30'>
+					<div
+						className={`col-sm-6 mb-30 ${
+							isAuthenticated ? 'display-none' : ''
+						}`}>
 						<input
 							type='text'
-							className={`form-control ${
-								isAuthenticated ? 'display-none' : ''
-							}`}
+							className='form-control'
 							name='name'
 							defaultValue={customer.firstName}
 							placeholder='Name'
 						/>
 					</div>
-					<div className='col-sm-6 mb-30'>
+					<div
+						className={`col-sm-6 mb-30 ${
+							isAuthenticated ? 'display-none' : ''
+						}`}>
 						<input
 							type='email'
 							name='email'
-							className={`form-control ${
-								isAuthenticated ? 'display-none' : ''
-							}`}
+							className='form-control'
 							defaultValue={customer.email}
 							placeholder='Email'
 						/>
 					</div>
-					<div className='col-md-12 mb-30'>
+					<div
+						className={`col-sm-6 mb-30 ${
+							isAuthenticated ? 'display-none' : ''
+						}`}>
 						<textarea
 							name='message'
 							id='message'
