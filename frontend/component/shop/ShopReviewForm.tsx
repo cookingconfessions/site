@@ -50,10 +50,7 @@ const ShopReviewForm: React.FC<ShopDetailsProp> = ({ shopData }) => {
 							placeholder='Email'
 						/>
 					</div>
-					<div
-						className={`col-sm-6 mb-30 ${
-							isAuthenticated ? 'display-none' : ''
-						}`}>
+					<div>
 						<textarea
 							name='message'
 							id='message'
