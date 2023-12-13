@@ -10,6 +10,7 @@ const ShopAllProductSection = () => {
 		handlePageChange,
 		totalPages,
 		isShopLoading,
+		currentItems,
 	} = useAppContext();
 
 	return (
@@ -36,7 +37,7 @@ const ShopAllProductSection = () => {
 						className='row row-cols-xxl-3 row-cols-lg-2 row-cols-md-2 row-cols-2'
 						data-aos='fade-up'
 						data-aos-duration='500'>
-						{filteredProducts.map((item) => (
+						{currentItems.map((item) => (
 							<ProductCard item={item} key={item.id} />
 						))}
 					</div>
