@@ -21,7 +21,7 @@ export const useShopContext = (): ShopContextData => {
 	const [searchQuery, setSearchQuery] = useState('');
 	const [selectedTags, setSelectedTags] = useState<string[]>([]);
 	const [cart, setCart] = useState<CartItem[]>([]);
-	const itemsPerPage: number = 9;
+	const itemsPerPage: number = 10;
 	const cartItemAmount = cart.reduce((total, item) => total + item.quantity, 0);
 
 	// Shop items
