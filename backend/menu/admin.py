@@ -21,7 +21,7 @@ class MenuItemAdmin(admin.ModelAdmin):
     )
     list_display_links = ("name",)
     exclude = ("slug", "code")
-    search_fields = ("name", "description", "category", "display_tags")
+    search_fields = ("name", "description")
     list_filter = (
         "tags",
         "category",
