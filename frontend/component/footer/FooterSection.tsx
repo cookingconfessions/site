@@ -161,8 +161,9 @@ const FooterSection: React.FC<FooterProp> = ({ style }) => {
 						<div className='row'>
 							<div className='text-center'>
 								<p className='copyright-text'>
-									© {companyInfo.name} {currentYear}. All Right Reserved.
+									© {companyInfo.name} {currentYear}.
 								</p>
+								<p>All Right Reserved.</p>
 							</div>
 						</div>
 					</div>
