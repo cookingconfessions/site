@@ -8,6 +8,7 @@ from django.utils.text import slugify
 from cloudinary import uploader
 from cloudinary.models import CloudinaryField
 from common.models import BaseModel
+from common.utils.media import cleanup_deleted_image
 from django_countries.fields import CountryField
 
 from .utils.validators import validate_closing_time_gt_opening_time
@@ -29,22 +30,16 @@ class BannerItem(BaseModel):
 
         try:
             existing_object = BannerItem.objects.get(pk=self.pk)
-            if existing_object.image and existing_object.image != self.image:
-                uploader.destroy(
-                    existing_object.image.public_id, invalidate=True)
-                logger.info(
-                    f"Deleted old image {existing_object.image} while saving new image"
-                )
+            if str(existing_object.image) != str(self.image):
+                uploader.destroy(existing_object.image.public_id, invalidate=True)
+                logger.info(f"Deleted old image {existing_object.image} while saving new image")
         except BannerItem.DoesNotExist:
             pass
 
         super(BannerItem, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        if self.image:
-            uploader.destroy(self.image.public_id, invalidate=True)
-            logger.info(
-                f"Deleted image {self.image} while deleting {self}")
+        cleanup_deleted_image(self)
 
         super().delete(*args, **kwargs)
 
@@ -127,15 +122,11 @@ class Faq(BaseModel):
 
 
 class CompanyInfo(BaseModel):
-    name = models.CharField(
-        max_length=100, default="Cooking Confessions", unique=True)
+    name = models.CharField(max_length=100, default="Cooking Confessions", unique=True)
     description = models.TextField()
-    address_line_1 = models.CharField(
-        max_length=100, help_text="Somewhere 1", unique=True)
-    address_line_2 = models.CharField(
-        max_length=100, help_text="Dinner City", unique=True)
-    email = models.EmailField(
-        max_length=100, help_text="someone@company.com", unique=True)
+    address_line_1 = models.CharField(max_length=100, help_text="Somewhere 1", unique=True)
+    address_line_2 = models.CharField(max_length=100, help_text="Dinner City", unique=True)
+    email = models.EmailField(max_length=100, help_text="someone@company.com", unique=True)
     phone_numbers = models.CharField(
         max_length=150, help_text="+123 456 789 123, +124 456 789 124", unique=True
     )

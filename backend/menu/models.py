@@ -7,6 +7,7 @@ from cloudinary import uploader
 from cloudinary.models import CloudinaryField
 from common.models import BaseModel
 from common.utils.generators import generate_code
+from common.utils.media import cleanup_deleted_image
 
 
 logger = logging.getLogger(__name__)
@@ -31,11 +32,10 @@ class MenuItemCategory(BaseModel):
     def save(self, *args, **kwargs):
         try:
             existing_object = MenuItemCategory.objects.get(pk=self.pk)
-            if existing_object.image and existing_object.image != self.image:
-                uploader.destroy(
-                    existing_object.image.public_id, invalidate=True)
+            if str(existing_object.image) != str(self.image):
+                uploader.destroy(existing_object.image.public_id, invalidate=True)
                 logger.info(
-                    f"Deleted old image {existing_object.image} while saving new image"
+                    f"Deleted old image {existing_object.image} while saving new image {self.image}"
                 )
         except MenuItemCategory.DoesNotExist:
             pass
@@ -43,8 +43,7 @@ class MenuItemCategory(BaseModel):
         super(MenuItemCategory, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        if self.image:
-            uploader.destroy(self.image.public_id, invalidate=True)
+        cleanup_deleted_image(self)
 
         super().delete(*args, **kwargs)
 
@@ -79,8 +78,7 @@ class MenuItem(BaseModel):
     slug = models.SlugField(unique=True)
     price = models.FloatField()
     is_available = models.BooleanField()
-    category = models.ForeignKey(
-        MenuItemCategory, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(MenuItemCategory, on_delete=models.SET_NULL, null=True)
     image = CloudinaryField("image")
     tags = models.ManyToManyField(MenuItemTag, blank=True)
     sales_count = models.IntegerField(default=0)
@@ -91,24 +89,16 @@ class MenuItem(BaseModel):
 
         try:
             existing_object = MenuItem.objects.get(pk=self.pk)
-            if existing_object.image and existing_object.image != self.image:
-                uploader.destroy(
-                    existing_object.image.public_id, invalidate=True)
-                logger.info(
-                    f"Deleted old image {existing_object.image} while saving new image"
-                )
-
+            if str(existing_object.image) != str(self.image):
+                uploader.destroy(existing_object.image.public_id, invalidate=True)
+                logger.info(f"Deleted old image {existing_object.image} while saving new image")
         except MenuItem.DoesNotExist:
             pass
 
         super(MenuItem, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        if self.image:
-            uploader.destroy(self.image.public_id, invalidate=True)
-            logger.info(
-                f"Deleted image {self.image} while deleting {self}"
-            )
+        cleanup_deleted_image(self)
 
         super().delete(*args, **kwargs)
 
@@ -125,10 +115,8 @@ class MenuItemReview(BaseModel):
     email = models.EmailField(max_length=100)
     message = models.TextField()
     is_visible = models.BooleanField(default=True)
-    parent = models.ForeignKey(
-        "self", on_delete=models.CASCADE, null=True, blank=True)
-    menu_item = models.ForeignKey(
-        MenuItem, on_delete=models.CASCADE, related_name="reviews")
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True)
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name="reviews")
 
     def __str__(self):
         return f"Review by {self.name} on {self.menu_item}"

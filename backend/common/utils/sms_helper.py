@@ -44,7 +44,7 @@ def send_new_order_sms(order):
 
 def send_order_ready_sms(order):
     try:
-        message = f"Hello {order.customer_name()},\n\nYour order from Cooking Confessions is ready for {'delivery' if order.delivery_mode == 1 else 'pickup'}.\n\nSee you soon!"
+        message = f"Hello {order.customer_short_name()},\n\nYour order from Cooking Confessions is ready for {'delivery' if order.delivery_mode == 1 else 'pickup'}.\n\nSee you soon!"
 
         res = SendPulseAPIProxy.sms_add_campaign_by_phones(
             "Confessions", [order.phone_number()], message

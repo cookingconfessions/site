@@ -122,6 +122,11 @@ class Order(BaseModel):
             return ""
         return self.customer.name()
 
+    def customer_short_name(self):
+        if not self.customer:
+            return ""
+        return self.customer.name().split(" ")[0]
+
     def customer_email(self):
         if not self.customer:
             return ""
