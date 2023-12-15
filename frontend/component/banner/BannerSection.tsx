@@ -39,7 +39,7 @@ const BannerSection: React.FC<BannerProps> = ({ theme }) => {
 													</h1>
 													<p className='banner-des'>{item.description}</p>
 													<div className='banner-btn-sec mt-3'>
-														<a href='' className='custom-btn'>
+														<a href='/menu' className='custom-btn'>
 															Order Now
 														</a>
 													</div>
