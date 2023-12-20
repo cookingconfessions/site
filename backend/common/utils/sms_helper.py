@@ -18,8 +18,16 @@ SendPulseAPIProxy = PySendPulse(
 
 
 def send_new_order_sms(order):
+    SendPulseAPIProxy = PySendPulse(
+        Config.get("SENDPULSE_API_ID"),
+        Config.get("SENDPULSE_API_SECRET"),
+        TOKEN_STORAGE,
+        memcached_host=Config.get("MEMCACHED_HOST"),
+    )
+
     try:
-        company_phone_number = CompanyInfo.objects.all().first().phone_numbers.split(",")[0]
+        company_phone_number = CompanyInfo.objects.all(
+        ).first().phone_numbers.split(",")[0]
 
         delivery_details = (
             f"Deliver to {order.customer_address()}" if order.delivery_mode == 1 else "Self pickup."
@@ -38,7 +46,8 @@ def send_new_order_sms(order):
         except KeyError:
             logger.info(f"SMS sent for {order}")
     except Exception as e:
-        logger.error(f"An error occured while sending a notification for {order}: {str(e)}")
+        logger.error(
+            f"An error occured while sending a notification for {order}: {str(e)}")
         return
 
 
@@ -56,5 +65,6 @@ def send_order_ready_sms(order):
         except KeyError:
             logger.info(f"SMS sent for {order}")
     except Exception as e:
-        logger.error(f"An error occured while sending a notification for {order}: {str(e)}")
+        logger.error(
+            f"An error occured while sending a notification for {order}: {str(e)}")
         return
