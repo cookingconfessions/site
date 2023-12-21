@@ -103,7 +103,7 @@ export const useShopContext = (): ShopContextData => {
 				const updatedCart = [...cart, cartItem];
 				localStorage.setItem('cart', JSON.stringify(updatedCart));
 
-				toast.success('Item added in cart!');
+				toast.success(`${itemToAdd.name} added to cart!`);
 			} else {
 				const updatedCart = [...cart];
 				updatedCart[existingItemIndex].quantity += 1;
