@@ -22,12 +22,7 @@ def send_new_order_sms(order):
         company_phone_number = CompanyInfo.objects.all(
         ).first().phone_numbers.split(",")[0]
 
-        delivery_details = (
-            f"Deliver to {order.customer_address()}" if order.delivery_mode == 1 else "Self pickup."
-        )
-        payment_details = "Cash on delivery" if order.payment_method == 2 else "Paid online"
-        order_notes = f",\nOrder notes: {order.order_notes}.\n" if order.order_notes else ".\n"
-        message = f"New order received from {order.customer_name()} at {order.created_at.strftime('%I:%M %p')}:\n\nOrder items: {order.get_items()},\nPhone number: {order.phone_number()},\nPayment: {payment_details},\nDelivery: {delivery_details}{order_notes}\nPlease check the admin panel for more details,\nHappy cooking!"
+        message = f"New order received from {order.customer_name()} at {order.created_at.strftime('%I:%M %p')}.\n\nHappy cooking!"
 
         res = send_pulse.sms_add_campaign_by_phones(
             "Confessions", [company_phone_number], message
