@@ -22,7 +22,7 @@ def send_new_order_sms(order):
         company_phone_number = CompanyInfo.objects.all(
         ).first().phone_numbers.split(",")[0]
 
-        message = f"New order received from {order.customer_name()} at {order.created_at.strftime('%I:%M %p')}.\n\nHappy cooking!"
+        message = f"New order received from {order.customer_name()} contact {order.phone_number()}.\n\nHappy cooking!"
 
         res = send_pulse.sms_add_campaign_by_phones(
             "Confessions", [company_phone_number], message
