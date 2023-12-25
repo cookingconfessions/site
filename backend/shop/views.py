@@ -282,8 +282,8 @@ class CheckoutView(viewsets.ViewSet):
 
 class ShopStatusView(viewsets.ViewSet):
     serializer_class = ShopStatusSerializer
-    queryset = ShopStatus.objects.all()[0]
 
     def list(self, request, *args, **kwargs):
-        serializer = self.serializer_class(self.queryset, many=False)
+        queryset = ShopStatus.objects.first()
+        serializer = self.serializer_class(queryset, many=False)
         return Response(serializer.data)

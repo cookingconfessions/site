@@ -40,10 +40,10 @@ class MessageView(viewsets.ViewSet):
 
 class CompanyInfoView(viewsets.ViewSet):
     serializer_class = CompanyInfoSerializer
-    queryset = CompanyInfo.objects.all()[0]
 
     def list(self, request, *args, **kwargs):
-        serializer = self.serializer_class(self.queryset, many=False)
+        queryset = CompanyInfo.objects.first()
+        serializer = self.serializer_class(queryset, many=False)
         return Response(serializer.data)
 
 
