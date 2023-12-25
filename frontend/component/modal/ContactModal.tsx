@@ -123,7 +123,7 @@ const ContactModal: React.FC = () => {
 										Cancel
 									</button>
 									<button type='submit' className='custom-btn'>
-										Send Message
+										Send
 									</button>
 								</div>
 							</form>
