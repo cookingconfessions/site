@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from shop.models import Customer, DiscountCode, Order, OrderItem, OrderPayment
+from shop.models import *
 
 
 class OrderItemInline(admin.TabularInline):
@@ -10,7 +10,8 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "phone_number", "country", "address_line1", "address_line2")
+    list_display = ("name", "email", "phone_number", "country",
+                    "address_line1", "address_line2")
     list_display_links = ("name",)
     search_fields = ("name",)
     list_per_page = 20
@@ -73,5 +74,14 @@ class DiscountCodeAdmin(admin.ModelAdmin):
 class OrderPaymentAdmin(admin.ModelAdmin):
     list_display = ("order", "payment_reference", "created_at")
     list_display_links = ("order",)
-    search_fields = ("order__customer_name", "order__customer_email", "order__phone_number")
+    search_fields = ("order__customer_name",
+                     "order__customer_email", "order__phone_number")
+    list_per_page = 20
+
+
+@admin.register(ShopStatus)
+class ShopStatusAdmin(admin.ModelAdmin):
+    list_display = ("is_open", "opens_at")
+    list_display_links = ("opens_at",)
+    sortable_by = ("opens_at",)
     list_per_page = 20
