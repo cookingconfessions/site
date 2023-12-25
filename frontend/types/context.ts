@@ -2,7 +2,7 @@ import { Stripe } from "@stripe/stripe-js";
 import { FormEvent, SetStateAction } from "react";
 import { LoginDetails } from "./auth";
 import { BannerItem, Booking, CompanyInfo, Faq, Message, Schedule } from "./home";
-import { CartItem, CouponCode, CreateCustomer, CreateMenuItemReview, CreateOrder, Customer, MenuItem, MenuItemCategory } from "./menu";
+import { CartItem, CouponCode, CreateCustomer, CreateMenuItemReview, CreateOrder, Customer, MenuItem, MenuItemCategory, ShopStatus } from "./menu";
 
 export interface HomeContextData {
     currentYear: number;
@@ -96,6 +96,10 @@ export interface ShopContextData {
     loadDeliveryFee: () => void;
     clearStateAfterOrder: () => void;
     isShopLoading: boolean;
+    shopStatus: ShopStatus;
+    loadShopStatus: () => void;
+    showShopStatusModal: boolean;
+    handleShopStatusModal: () => void
 }
 
 export interface AuthContextData {

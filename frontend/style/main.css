@@ -4691,6 +4691,11 @@ p.no-product-text {
   border-radius: 10px;
 }
 
+.shop-status-modal {
+  width: fit-content;
+  height: fit-content;
+}
+
 .lightbox-modal-body {
   font-family: "Roboto", sans-serif;
   margin: 5px;

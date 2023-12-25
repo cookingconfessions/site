@@ -12,7 +12,7 @@ class MenuItemsView(viewsets.ReadOnlyModelViewSet):
     queryset = MenuItem.objects.all().order_by(
         # Sort by is_available in descending order (True first)
         "-is_available",
-        "-sales_count"    # Sort by sales_count in descending order
+        "-sales_count",  # Sort by sales_count in descending order
     )
     lookup_field = "slug"
 

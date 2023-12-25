@@ -3,7 +3,7 @@ import { useAppContext } from '@/context/AppContext';
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 
-const ProductLightBoxModal: React.FC = () => {
+const PrivacyPolicyModal: React.FC = () => {
 	const {
 		isLightBoxModalOpen,
 		closeLightBoxModal,
@@ -107,4 +107,4 @@ const ProductLightBoxModal: React.FC = () => {
 	);
 };
 
-export default ProductLightBoxModal;
+export default PrivacyPolicyModal;

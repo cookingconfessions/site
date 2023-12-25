@@ -188,7 +188,7 @@ class OrderView(viewsets.ViewSet):
             return
 
 
-class CreateCheckoutSession(viewsets.ViewSet):
+class CheckoutView(viewsets.ViewSet):
     def create(self, request):
         if request.data["total"] is None:
             return Response(
@@ -272,3 +272,12 @@ class CreateCheckoutSession(viewsets.ViewSet):
     def convert_to_cents(self, price):
         float_price = round(float(price), 2)
         return round(float_price * 100)
+
+
+class ShopStatusView(viewsets.ViewSet):
+    serializer_class = ShopStatusSerializer
+    queryset = ShopStatus.objects.all()[0]
+
+    def list(self, request, *args, **kwargs):
+        serializer = self.serializer_class(self.queryset, many=False)
+        return Response(serializer.data)

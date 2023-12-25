@@ -7,6 +7,7 @@ import {
 	CreateOrder,
 	Customer,
 	MenuItem,
+	ShopStatus,
 } from '@/types/menu';
 import { useApiClient } from '@/utils/api-client';
 import { ShopHelper } from '@/utils/shop-helper';
@@ -118,7 +119,7 @@ export const useShopContext = (): ShopContextData => {
 				toast.success('Item list updated in cart!');
 			}
 		} else {
-			toast.warning('Item not found in filteredProducts.');
+			toast.warning('Item not found, please try again later.');
 		}
 	};
 
@@ -342,6 +343,29 @@ export const useShopContext = (): ShopContextData => {
 		setPayCashOnDelivery(!payCashOnDelivery);
 	};
 
+	// Shop status
+	const [shopStatus, setShopStatus] = useState<ShopStatus>({
+		status: '',
+		opens_at: '',
+	});
+	const [showShopStatusModal, setShowShopStatusModal] = useState<boolean>(
+		false
+	);
+
+	const handleShopStatusModal = () => {
+		setShowShopStatusModal(!showShopStatusModal);
+	};
+	const loadShopStatus = () => {
+		useApiClient()
+			.getShopStatus()
+			.then((status) => {
+				setShopStatus(status);
+			})
+			.catch((_error) => {
+				toast.error('An error occured while loading the shop status :(');
+			});
+	};
+
 	// Filter products based on the selected options
 	useEffect(() => {
 		let sortedProducts = [...shopItems];
@@ -502,5 +526,9 @@ export const useShopContext = (): ShopContextData => {
 		handlePayCashOnDelivery,
 		clearStateAfterOrder,
 		isShopLoading,
+		shopStatus,
+		loadShopStatus,
+		showShopStatusModal,
+		handleShopStatusModal,
 	};
 };

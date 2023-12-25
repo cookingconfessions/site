@@ -6,7 +6,8 @@ import Header from '../header/Header';
 import BookCateringModal from '../modal/BookCateringModal';
 import ContactModal from '../modal/ContactModal';
 import LoginModal from '../modal/LoginModal';
-import ProductLightBoxModal from '../modal/ProductLightBoxModal';
+import PrivacyPolicyModal from '../modal/PrivacyPolicyModal';
+import ShopStatusModal from '../modal/ShopStatusModal';
 import SidebarSection from '../sidebar/SidebarSection';
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
@@ -22,7 +23,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 			<ContactModal />
 			<LoginModal />
 			<BookCateringModal />
-			<ProductLightBoxModal />
+			<PrivacyPolicyModal />
+			<ShopStatusModal />
 		</div>
 	);
 };

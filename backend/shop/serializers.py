@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from rest_framework import serializers
 
 from .models import *
@@ -143,3 +145,21 @@ class OrderPaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderPayment
         fields = ("order", "payment_reference")
+
+
+class ShopStatusSerializer(serializers.ModelSerializer):
+    status = serializers.SerializerMethodField()
+    opens_at = serializers.SerializerMethodField()
+
+    def get_status(self, instance):
+        for key, value in instance.STATUS:
+            if key == instance.status:
+                return value
+        return instance.status
+
+    def get_opens_at(self, instance):
+        return timezone.localtime(instance.opens_at).strftime("%A %I:%M %p")
+
+    class Meta:
+        model = ShopStatus
+        fields = ("status", "opens_at")

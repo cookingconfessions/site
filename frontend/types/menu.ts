@@ -144,3 +144,8 @@ export interface OrderPayment {
     paymentIntentId: string;
     orderId: string;
 }
+
+export interface ShopStatus {
+    status: string;
+    opensAt: string;
+}

@@ -11,6 +11,9 @@ const CouponSection = () => {
 		deliveryFee,
 		couponCode,
 		applyCoupon,
+		shopStatus,
+		loadShopStatus,
+		handleShopStatusModal,
 	} = useAppContext();
 	const [mainTotal, setMainTotal] = useState<number>(0);
 	const [discount, setDiscount] = useState<number>(0);
@@ -35,6 +38,10 @@ const CouponSection = () => {
 
 		setMainTotal(total);
 	}, [cartTotal, couponCode, deliveryFee]);
+
+	useEffect(() => {
+		loadShopStatus();
+	}, []);
 
 	return (
 		<section>
@@ -107,9 +114,17 @@ const CouponSection = () => {
 									<div className='submit-cart'>
 										<p className='multiple'>Checkout with multiple items</p>
 										<div className='subbit-cart-buttons mt-15'>
-											<Link className='custom-btn' href='/checkout'>
-												Checkout
-											</Link>
+											{shopStatus.status === 'Open' ? (
+												<Link className='custom-btn' href='/checkout'>
+													Checkout
+												</Link>
+											) : (
+												<button
+													onClick={() => handleShopStatusModal()}
+													className='custom-btn'>
+													Checkout
+												</button>
+											)}
 										</div>
 									</div>
 								)}

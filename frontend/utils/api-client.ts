@@ -1,6 +1,6 @@
 import { LoginDetails, ResetPasswordConfirmation, Token } from "@/types/auth";
 import { BannerItem, Booking, CompanyInfo, Faq, Message, Schedule } from "@/types/home";
-import { CouponCode, CreateCustomer, CreateMenuItemReview, CreateOrder, Customer, MenuItem, MenuItemCategory, MenuItemReview, Order, OrderPayment, StripePaymentIntentResponse } from "@/types/menu";
+import { CouponCode, CreateCustomer, CreateMenuItemReview, CreateOrder, Customer, MenuItem, MenuItemCategory, MenuItemReview, Order, OrderPayment, ShopStatus, StripePaymentIntentResponse } from "@/types/menu";
 import axios from "axios";
 import humps from 'humps';
 
@@ -26,6 +26,7 @@ interface ApiClient {
     createPaymentIntent: (orderTotal: number) => Promise<StripePaymentIntentResponse>;
     recordPayment: (order: OrderPayment) => Promise<OrderPayment>;
     submitReview: (menuItemSlug: string, review: CreateMenuItemReview) => Promise<MenuItemReview>;
+    getShopStatus: () => Promise<ShopStatus>;
 }
 
 const PROTECTED_ENDPOINTS = ['/auth/profile/', '/auth/logout/'];
@@ -162,6 +163,11 @@ const recordPayment = async (order: OrderPayment) => {
     return res.data;
 }
 
+const getShopStatus = async () => {
+    const res = await api.get<ShopStatus>("/shop/status/");
+    return res.data;
+}
+
 const login = async (user: LoginDetails) => {
     const res = await api.post<Token>("/auth/token/", user);
     return res.data;
@@ -215,6 +221,7 @@ export const useApiClient = (): ApiClient => {
         validateCouponCode,
         createCustomer,
         getCustomer,
+        getShopStatus,
         createOrder,
         createPaymentIntent,
         recordPayment,
