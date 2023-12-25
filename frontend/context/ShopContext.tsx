@@ -346,7 +346,7 @@ export const useShopContext = (): ShopContextData => {
 	// Shop status
 	const [shopStatus, setShopStatus] = useState<ShopStatus>({
 		status: '',
-		opens_at: '',
+		opensAt: '',
 	});
 	const [showShopStatusModal, setShowShopStatusModal] = useState<boolean>(
 		false
