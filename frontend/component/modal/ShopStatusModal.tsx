@@ -21,10 +21,9 @@ const ShopStatusModal: React.FC = () => {
 	return (
 		<Modal
 			backdropClassName='lightbox-modal-backdrop'
-			className='shop-status-modal'
 			show={showShopStatusModal}
 			onHide={handleShopStatusModal}
-			size='lg'
+			size='sm'
 			centered>
 			<Modal.Body className='lightbox-modal-body'>
 				<p>

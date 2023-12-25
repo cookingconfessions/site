@@ -4691,9 +4691,9 @@ p.no-product-text {
   border-radius: 10px;
 }
 
-.shop-status-modal {
-  width: fit-content;
-  height: fit-content;
+#shop-status-modal {
+  width: fit-content !important;
+  height: fit-content !important;
 }
 
 .lightbox-modal-body {
