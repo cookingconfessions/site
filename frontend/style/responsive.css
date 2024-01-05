@@ -203,10 +203,6 @@
 }
 
 @media screen and (min-width: 576px) and (max-width: 767px) {
-    .availability {
-        margin-bottom: 390px;
-    }
-
     .footer-link img {
         height: 60px;
     }
@@ -311,7 +307,7 @@
 
 @media screen and (min-width: 400px) and (max-width: 575px) {
     .availability {
-        margin-bottom: 390px;
+        margin-bottom: 400px;
     }
 
     .footer-link img {
@@ -437,10 +433,6 @@
 }
 
 @media screen and (max-width:400px) {
-    .availability {
-        margin-bottom: 390px;
-    }
-
     .wrapper {
         padding-right: 4px !important;
     }
@@ -965,7 +957,7 @@
 
     .availability {
         margin-top: 0;
-        margin-bottom: 325px;
+        margin-bottom: 390px;
     }
 
     .reply-comment {
