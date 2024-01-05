@@ -2437,23 +2437,23 @@ table.table tr {
   overflow-x: hidden;
 }
 
-table.cart-image {
+.cart-table-image {
   width: 25%;
 }
 
-table.cart-product-name {
+.cart-table-product-name {
   width: 20%;
 }
 
-table.cart-price {
+.cart-table-price {
   width: 10%;
 }
 
-table.cart-quantity {
+.cart-table-quantity {
   width: 35%;
 }
 
-table.cart-action {
+.cart-table-action {
   width:10%;
 }
 

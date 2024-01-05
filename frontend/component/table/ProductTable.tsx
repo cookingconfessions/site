@@ -19,21 +19,21 @@ const ProductTable: React.FC<ProductProps> = ({
 						<table className='table'>
 							<thead className='product-table'>
 								<tr>
-									<th scope='col' className='cart-image'>
+									<th scope='col' className='cart-table-image'>
 										Image
 									</th>
-									<th scope='col' className='cart-product-name'>
+									<th scope='col' className='cart-table-product-name'>
 										Name
 									</th>
-									<th scope='col' className='cart-price'>
+									<th scope='col' className='cart-table-price'>
 										Price
 									</th>
 									{cartTable && (
-										<th scope='col' className='cart-quantity-head'>
+										<th scope='col' className='cart-table-quantity'>
 											Quantity
 										</th>
 									)}
-									<th scope='col' className='cart-action'></th>
+									<th scope='col' className='cart-table-action'></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -53,17 +53,19 @@ const ProductTable: React.FC<ProductProps> = ({
 								) : (
 									array.map((item) => (
 										<tr key={item.id}>
-											<td className='cart-image'>
+											<td className='cart-table-image'>
 												<div className='cart-pd-img'>
 													<img src={item.image} alt={item.name} />
 												</div>
 											</td>
-											<td className='cart-product-name'>
+											<td className='cart-table-product-name'>
 												<Link href={`/menu/${item.slug}`}>{item.name}</Link>
 											</td>
-											<td className='cart-price'>{item.price}&nbsp;&euro;</td>
+											<td className='cart-table-price'>
+												{item.price}&nbsp;&euro;
+											</td>
 											{cartTable && (
-												<td className='qty-td cart-quantity'>
+												<td className='qty-td cart-table-quantity'>
 													<form action='#'>
 														<div className='input-group quantity'>
 															<span
@@ -97,7 +99,7 @@ const ProductTable: React.FC<ProductProps> = ({
 												</td>
 											)}
 
-											<td className='cart-action'>
+											<td className='cart-table-action'>
 												<a
 													className='qt-btn product-table-delete-btn'
 													role='button'

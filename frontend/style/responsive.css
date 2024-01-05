@@ -203,6 +203,10 @@
 }
 
 @media screen and (min-width: 576px) and (max-width: 767px) {
+    .availability {
+        margin-bottom: 390px;
+    }
+
     .footer-link img {
         height: 60px;
     }
@@ -306,12 +310,16 @@
 }
 
 @media screen and (min-width: 400px) and (max-width: 575px) {
+    .availability {
+        margin-bottom: 390px;
+    }
+
     .footer-link img {
         height: 124px;
     }
 
     .cpy-8 {
-        padding-top: 60px;
+        padding-top: 80px;
         padding-bottom: 60px;
     }
 
@@ -429,6 +437,14 @@
 }
 
 @media screen and (max-width:400px) {
+    .availability {
+        margin-bottom: 390px;
+    }
+
+    .wrapper {
+        padding-right: 4px !important;
+    }
+
     .hero4-title {
         font-size: 36px;
     }
