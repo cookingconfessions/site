@@ -49,10 +49,6 @@ export const CheckoutProvider: React.FC<AppProviderProps> = ({ children }) => {
 	const [stripePromise, setStripePromise] = useState<Promise<Stripe | null>>(
 		new Promise<null>(() => null)
 	);
-	const [clientSecret, setClientSecret] = useState<string>('');
-	const [isLoadingClientSecret, setIsLoadingClientSecret] = useState<boolean>(
-		true
-	);
 	const [isPaymentSectionValid, setIsPaymentSectionValid] = useState<boolean>(
 		false
 	);
@@ -111,8 +107,6 @@ export const CheckoutProvider: React.FC<AppProviderProps> = ({ children }) => {
 
 	const clearPaymentIntent = () => {
 		setMainTotal(0);
-		setClientSecret('');
-		setIsLoadingClientSecret(true);
 	};
 
 	useEffect(() => {
@@ -157,37 +151,30 @@ export const CheckoutProvider: React.FC<AppProviderProps> = ({ children }) => {
 		setStripePromise(stripePromise);
 	}, [payCashOnDelivery]);
 
-	useEffect(() => {
-		if (!cart.length) {
-			return;
-		}
-
+	const createPaymentIntent = () => {
 		if (mainTotal === 0) {
-			return;
+			return Promise.resolve('');
 		}
 
 		const checkoutSession = JSON.parse(
 			localStorage.getItem('checkoutSession') ?? '{}'
 		) as StripePaymentIntentResponse;
 
-		if (checkoutSession?.amount === mainTotal) {
-			return setClientSecret(checkoutSession.clientSecret);
+		if (checkoutSession.amount === mainTotal) {
+			return Promise.resolve(checkoutSession.clientSecret);
 		}
 
-		useApiClient()
+		return useApiClient()
 			.createPaymentIntent(mainTotal)
 			.then((res) => {
-				setClientSecret(res.clientSecret);
-				setIsLoadingClientSecret(false);
-				localStorage.removeItem('checkoutSession');
 				localStorage.setItem('checkoutSession', JSON.stringify(res));
+				return res.clientSecret;
 			})
 			.catch((_err) => {
-				setClientSecret('');
-				setIsLoadingClientSecret(false);
 				toast.error('Error while creating payment intent');
+				return '';
 			});
-	}, [mainTotal, shouldDeliverOrder]);
+	};
 
 	const contextValue: CheckoutContextData = {
 		...appContext,
@@ -196,8 +183,7 @@ export const CheckoutProvider: React.FC<AppProviderProps> = ({ children }) => {
 		handleOrderSubmit,
 		handleOrderFormChange,
 		stripePromise,
-		clientSecret,
-		isLoadingClientSecret,
+		createPaymentIntent,
 		clearPaymentIntent,
 		updatePaymentSectionValidity,
 	};

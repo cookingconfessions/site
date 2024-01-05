@@ -12,7 +12,7 @@ import {
 import { useApiClient } from '@/utils/api-client';
 import { ShopHelper } from '@/utils/shop-helper';
 import Aos from 'aos';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 export const useShopContext = (): ShopContextData => {
@@ -167,7 +167,7 @@ export const useShopContext = (): ShopContextData => {
 				};
 
 				setCart((prevCart) => [...prevCart, newItem]);
-				toast.success('Product added to cart!');
+				toast.success(`${itemToAdd.name} added to cart!`);
 			} else if (existingItemIndex !== -1) {
 				const updatedCart = [...cart];
 				updatedCart[existingItemIndex].quantity += quantity;
@@ -328,7 +328,9 @@ export const useShopContext = (): ShopContextData => {
 	// Delivery
 	const [deliveryFee, setDeliveryFee] = useState<number>(0.0);
 	const [shouldDeliverOrder, setShouldDeliverOrder] = useState<boolean>(true);
-	const handleShouldDeliverOrder = () => {
+	const handleShouldDeliverOrder = (event: ChangeEvent<HTMLInputElement>) => {
+		event.preventDefault();
+
 		setShouldDeliverOrder(!shouldDeliverOrder);
 	};
 	const loadDeliveryFee = () => {
@@ -339,7 +341,9 @@ export const useShopContext = (): ShopContextData => {
 
 	// Payment
 	const [payCashOnDelivery, setPayCashOnDelivery] = useState<boolean>(false);
-	const handlePayCashOnDelivery = () => {
+	const handlePayCashOnDelivery = (event: ChangeEvent<HTMLInputElement>) => {
+		event.preventDefault();
+
 		setPayCashOnDelivery(!payCashOnDelivery);
 	};
 

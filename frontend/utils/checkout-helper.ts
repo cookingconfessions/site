@@ -23,4 +23,9 @@ export class CheckoutHelper {
             };
         });
     };
+
+    static convertToCents(price: number): number {
+        const floatPrice: number = Math.round(parseFloat(price.toFixed(2)) * 100);
+        return floatPrice;
+    }
 };

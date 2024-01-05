@@ -1,5 +1,5 @@
 import { Stripe } from "@stripe/stripe-js";
-import { FormEvent, SetStateAction } from "react";
+import { ChangeEvent, FormEvent, SetStateAction } from "react";
 import { LoginDetails } from "./auth";
 import { BannerItem, Booking, CompanyInfo, Faq, Message, Schedule } from "./home";
 import { CartItem, CouponCode, CreateCustomer, CreateMenuItemReview, CreateOrder, Customer, MenuItem, MenuItemCategory, ShopStatus } from "./menu";
@@ -90,9 +90,9 @@ export interface ShopContextData {
     handleOpenReviewModal: () => void;
     deliveryFee: number;
     shouldDeliverOrder: boolean;
-    handleShouldDeliverOrder: () => void;
+    handleShouldDeliverOrder: (event: ChangeEvent<HTMLInputElement>) => void;
     payCashOnDelivery: boolean;
-    handlePayCashOnDelivery: () => void;
+    handlePayCashOnDelivery: (event: ChangeEvent<HTMLInputElement>) => void;
     loadDeliveryFee: () => void;
     clearStateAfterOrder: () => void;
     isShopLoading: boolean;
@@ -129,9 +129,8 @@ export interface CheckoutContextData extends AppContextData {
     discount: number;
     handleOrderSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
     handleOrderFormChange: (event: FormEvent<HTMLFormElement>) => void;
-    clientSecret: string | undefined;
     stripePromise: Promise<Stripe | null>
-    isLoadingClientSecret: boolean;
     updatePaymentSectionValidity: (isValid: boolean) => void;
+    createPaymentIntent: () => Promise<string>;
     clearPaymentIntent: () => void;
 }

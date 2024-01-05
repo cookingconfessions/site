@@ -15,15 +15,25 @@ const ProductTable: React.FC<ProductProps> = ({
 		<div className='cart-section cpy-8'>
 			<div className='container'>
 				<div className='row' data-aos='fade-up' data-aos-duration='500'>
-					<div className='table-responsive'>
+					<div>
 						<table className='table'>
 							<thead className='product-table'>
 								<tr>
-									<th scope='col'>Image</th>
-									<th scope='col'>Name</th>
-									<th scope='col'>Price</th>
-									{cartTable && <th scope='col'>Quantity</th>}
-									<th scope='col'>Action</th>
+									<th scope='col' className='cart-image'>
+										Image
+									</th>
+									<th scope='col' className='cart-product-name'>
+										Name
+									</th>
+									<th scope='col' className='cart-price'>
+										Price
+									</th>
+									{cartTable && (
+										<th scope='col' className='cart-quantity-head'>
+											Quantity
+										</th>
+									)}
+									<th scope='col' className='cart-action'></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -43,17 +53,17 @@ const ProductTable: React.FC<ProductProps> = ({
 								) : (
 									array.map((item) => (
 										<tr key={item.id}>
-											<td>
+											<td className='cart-image'>
 												<div className='cart-pd-img'>
 													<img src={item.image} alt={item.name} />
 												</div>
 											</td>
-											<td>
+											<td className='cart-product-name'>
 												<Link href={`/menu/${item.slug}`}>{item.name}</Link>
 											</td>
-											<td>{item.price}&nbsp;&euro;</td>
+											<td className='cart-price'>{item.price}&nbsp;&euro;</td>
 											{cartTable && (
-												<td className='qty-td'>
+												<td className='qty-td cart-quantity'>
 													<form action='#'>
 														<div className='input-group quantity'>
 															<span
@@ -87,7 +97,7 @@ const ProductTable: React.FC<ProductProps> = ({
 												</td>
 											)}
 
-											<td>
+											<td className='cart-action'>
 												<a
 													className='qt-btn product-table-delete-btn'
 													role='button'

@@ -221,7 +221,7 @@
         font-size: 60px;
     }
     .cpy-8{
-        padding: 70px 0;
+        padding: 80px 0;
     }
     .describe {
         padding: 60px 0;
@@ -544,7 +544,7 @@
   }
   /* quick view */
     .cpy-8 {
-        padding-top: 55px;
+        padding-top: 80px;
         padding-bottom: 55px;
     }
 
@@ -798,6 +798,10 @@
 }
 
 @media screen and (max-width:767px) {
+    .wrapper {
+        padding-right: 8px;
+    }
+
     .hero4-title {
         font-size: 52px;
     }

@@ -48,8 +48,7 @@ class CustomerView(viewsets.ViewSet):
 
     def create(self, request, *args, **kwargs):
         if not self.are_user_details_valid(request.data):
-            Response({"error": "Missing details"},
-                     status=status.HTTP_400_BAD_REQUEST)
+            Response({"error": "Missing details"}, status=status.HTTP_400_BAD_REQUEST)
         email = request.data.pop("email")
 
         try:
@@ -74,8 +73,7 @@ class CustomerView(viewsets.ViewSet):
                 return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
             user = user_serializer.save()
-            customer_serializer = CreateCustomerSerializer(
-                data={**request.data, "user": user.id})
+            customer_serializer = CreateCustomerSerializer(data={**request.data, "user": user.id})
 
             if customer_serializer.is_valid():
                 customer = customer_serializer.save()
@@ -133,8 +131,7 @@ class OrderView(viewsets.ViewSet):
         discount_code = None  # Initialize discount_code
         if request.data["discount_code"]:
             try:
-                discount_code = DiscountCode.objects.get(
-                    code=request.data["discount_code"])
+                discount_code = DiscountCode.objects.get(code=request.data["discount_code"])
             except DiscountCode.DoesNotExist:
                 return Response(
                     {"error": "Discount code not found"}, status=status.HTTP_404_NOT_FOUND
@@ -175,8 +172,7 @@ class OrderView(viewsets.ViewSet):
 
     def create_order_items(self, order_items: List[dict], order: dict):
         for order_item in order_items:
-            serializer = CreateOrderItemSerializer(
-                data={**order_item, "order": order.id})
+            serializer = CreateOrderItemSerializer(data={**order_item, "order": order.id})
 
             if not serializer.is_valid():
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -188,8 +184,7 @@ class OrderView(viewsets.ViewSet):
             order = Order.objects.get(pk=order_id)
             send_new_order_sms(order)
         except Exception as e:
-            logger.error(
-                f"An error occured while sending a notification for {order}: {str(e)}")
+            logger.error(f"An error occured while sending a notification for {order}: {str(e)}")
             return
 
 
@@ -238,41 +233,33 @@ class CheckoutView(viewsets.ViewSet):
 
         try:
             payment = OrderPayment.objects.get(order=request.data["order_id"])
-
-            # Payment already exists, return the response
             serializer = OrderPaymentSerializer(payment)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         except OrderPayment.DoesNotExist:
-            try:
-                # Payment doesn't exist, create a new payment instance
-                serializer = OrderPaymentSerializer(
-                    data={
-                        "order": request.data["order_id"],
-                        "payment_reference": request.data["payment_intent_id"],
-                    }
-                )
-                with transaction.atomic():
-                    if not serializer.is_valid():
-                        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            serializer = OrderPaymentSerializer(
+                data={
+                    "order": request.data["order_id"],
+                    "payment_reference": request.data["payment_intent_id"],
+                }
+            )
 
-                    serializer.save()
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            serializer.save()
 
-                self.send_sms_notification(request.data["order_id"])
+            self.send_sms_notification(request.data["order_id"])
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
-                return Response(serializer.data, status=status.HTTP_200_OK)
-
-            except IntegrityError as e:
-                # Handle IntegrityError if needed
-                return Response({"message": "Payment saved"}, status=status.HTTP_200_OK)
+        except IntegrityError as e:
+            return Response({"message": "Payment saved"}, status=status.HTTP_200_OK)
 
     def send_sms_notification(self, order_id):
         try:
             order = Order.objects.get(pk=order_id)
             send_new_order_sms(order)
         except Exception as e:
-            logger.error(
-                f"An error occured while sending a notification for {order}: {str(e)}")
+            logger.error(f"An error occured while sending a notification for {order}: {str(e)}")
             return
 
     def convert_to_cents(self, price):

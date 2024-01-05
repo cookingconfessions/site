@@ -13,6 +13,7 @@ const OrderForm = () => {
 		handleOrderFormChange,
 		payCashOnDelivery,
 		updatePaymentSectionValidity,
+		createPaymentIntent,
 	} = useCheckoutContext();
 
 	const stripe = useStripe();
@@ -24,10 +25,8 @@ const OrderForm = () => {
 
 	const router = useRouter();
 
-	const confirmOnlinePayment = async (event: FormEvent) => {
-		event.preventDefault();
-
-		if (!stripe || !elements) {
+	const confirmOnlinePayment = async (clientSecret: string) => {
+		if (!stripe || !elements || !clientSecret) {
 			return;
 		}
 
@@ -35,6 +34,7 @@ const OrderForm = () => {
 
 		const { error } = await stripe.confirmPayment({
 			elements,
+			clientSecret,
 			confirmParams: {
 				return_url: `${window.location.origin}/checkout-success`,
 			},
@@ -80,7 +80,9 @@ const OrderForm = () => {
 			await handleOrderSubmit(event);
 		}
 
-		await confirmOnlinePayment(event);
+		const clientSecret = await createPaymentIntent();
+
+		await confirmOnlinePayment(clientSecret);
 	};
 
 	useEffect(() => {

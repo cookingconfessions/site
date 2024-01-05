@@ -2427,14 +2427,41 @@ ul.post-list {
   background: #292929;
 }
 
+.table {
+  table-layout: fixed;
+}
+
 table.table tr {
   vertical-align: middle;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+table.cart-image {
+  width: 25%;
+}
+
+table.cart-product-name {
+  width: 20%;
+}
+
+table.cart-price {
+  width: 10%;
+}
+
+table.cart-quantity {
+  width: 35%;
+}
+
+table.cart-action {
+  width:10%;
 }
 
 .shopping-btn {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 14px !important;
 }
 
 .coupon-form {
